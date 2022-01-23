@@ -53,6 +53,22 @@ body {
     }
 }
 
+.text-box{
+    background: none;
+    text-align: center;
+    font-size: 20px;
+    border: $default-border-size solid $third-color;
+    color: $primary-color;
+    padding: 14px 20px;
+    outline: none;
+    border-radius: 50px;
+    transition: 0.25s;
+
+    &:focus {
+        border-color: cyan;
+    }
+}
+
 h1 {
     margin: 0;
     font-size: 70px;
@@ -93,8 +109,10 @@ p {
         font-size: 17px;
     }
 
-    .button{
+    .button,
+    .text-box {
         font-size: 17px;
+        padding: 10px 20px;
     }
 
     .small-icon{

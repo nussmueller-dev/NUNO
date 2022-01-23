@@ -1,0 +1,53 @@
+@import "sizes";
+
+:host{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex: 1;
+}
+
+.use-nuno-account,
+.use-temp-account{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .button{
+        margin-top: 20px;
+    }
+
+    .text-box{
+        margin-top: 20px;
+    }
+}
+
+.use-temp-account{
+    .button{
+        margin-top: 15px;
+    }
+}
+
+.or{
+    margin: 0 100px;
+}
+
+@media only screen and (max-width: $mobile-querry) {
+    .title{
+        word-spacing: 100vw;
+    }
+
+    main{
+        flex-direction: column;
+    }
+}
