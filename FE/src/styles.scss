@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(15, 15, 15);
+    color: white;
+}
+
+* {
+    font-family: sans-serif;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.button {
+    background: none;
+    display: block;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    color: white;
+    padding: 14px 20px;
+    outline: none;
+    opacity: 1;
+    border-radius: 24px;
+    transition: 0.25s;
+    
+    cursor: pointer;
+
+    &:hover {
+        background-color: #2ecc71;
+    }
+
+    &.deactivated {
+        opacity: 0.2;
+        border: 2px solid rgb(161, 161, 161);
+        cursor: default;
+
+        &:hover {
+            background-color: #2ecc7000;
+        }
+    }
+}
