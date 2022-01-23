@@ -1,3 +1,6 @@
+@import "colors";
+@import "sizes";
+
 html,
 body {
     display: flex;
@@ -5,8 +8,8 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: rgb(15, 15, 15);
-    color: white;
+    background-color: $background-color;
+    color: $primary-color;
 }
 
 * {
@@ -17,29 +20,84 @@ body {
 
 .button {
     background: none;
-    display: block;
+    display: flex;
+    align-items: center;
     text-align: center;
-    border: 2px solid #2ecc71;
-    color: white;
+    font-size: 20px;
+    border: $default-border-size solid $secondary-color;
+    color: $primary-color;
     padding: 14px 20px;
     outline: none;
     opacity: 1;
-    border-radius: 24px;
+    border-radius: 50px;
     transition: 0.25s;
-    
+
     cursor: pointer;
 
+    img{
+        margin-right: 10px;
+    }
+
     &:hover {
-        background-color: #2ecc71;
+        background-color: $secondary-color;
     }
 
     &.deactivated {
         opacity: 0.2;
-        border: 2px solid rgb(161, 161, 161);
+        border: 2px solid $secondary-button-color;
         cursor: default;
 
         &:hover {
-            background-color: #2ecc7000;
+            background-color: transparent;
         }
+    }
+}
+
+h1 {
+    margin: 0;
+    font-size: 85px;
+}
+
+h2 {
+    margin: 0;
+    font-size: 40px;
+}
+
+h3 {
+    margin: 0;
+    font-size: 35px;
+}
+
+p {
+    font-size: 25px;
+}
+
+.small-icon{
+    height: 25px;
+}
+
+@media only screen and (max-width: $mobile-querry) {
+    h1 {
+        font-size: 50px;
+    }
+    
+    h2 {
+        font-size: 25px;
+    }
+    
+    h3 {
+        font-size: 20px;
+    }
+    
+    p {
+        font-size: 17px;
+    }
+
+    .button{
+        font-size: 17px;
+    }
+
+    .small-icon{
+        height: 20px;
     }
 }

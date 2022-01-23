@@ -1,8 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@700&display=swap');
+@import "sizes";
 
-:host{
+:host {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
     width: 100%;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    >* {
+        margin-top: 40px;
+    }
+
+    .nuno-logo{
+        height: 99px;
+    }    
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: $mobile-querry) {
+    .title {
+        >* {
+            margin-top: 20px;
+        }
+        
+        .nuno-logo{
+            height: 80px;
+        }
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+
+        .button:last-child{
+            margin-top: 30px;
+        }
+    }
 }
