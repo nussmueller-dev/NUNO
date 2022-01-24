@@ -7,6 +7,7 @@ import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { SelectUsernameComponent } from './pages/select-username/select-username.component';
 import { BackHeaderComponent } from './shared/components/back-header/back-header.component';
 import { LeaveHeaderComponent } from './shared/components/leave-header/leave-header.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { LeaveHeaderComponent } from './shared/components/leave-header/leave-hea
     WelcomeComponent,
     SelectUsernameComponent,
     BackHeaderComponent,
-    LeaveHeaderComponent
+    LeaveHeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
