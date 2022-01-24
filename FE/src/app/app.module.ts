@@ -9,6 +9,7 @@ import { BackHeaderComponent } from './shared/components/back-header/back-header
 import { LeaveHeaderComponent } from './shared/components/leave-header/leave-header.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { JoinGameComponent } from './pages/join-game/join-game.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RegisterComponent } from './pages/register/register.component';
     BackHeaderComponent,
     LeaveHeaderComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    JoinGameComponent
   ],
   imports: [
     BrowserModule,
