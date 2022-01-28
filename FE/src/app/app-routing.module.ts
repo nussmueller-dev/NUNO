@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { JoinGameComponent } from './pages/join-game/join-game.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { RulesComponent } from './pages/rules/rules.component';
 import { SelectUsernameComponent } from './pages/select-username/select-username.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'join', component: JoinGameComponent },
+  { path: 'rules', component: RulesComponent },
   // { path: '404', component: E404Component },
 
   { path: '**', redirectTo: 'welcome' },

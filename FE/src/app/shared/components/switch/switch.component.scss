@@ -1,0 +1,85 @@
+@import "colors";
+@import "sizes";
+
+:host {
+    position: relative;
+    display: inline-block;
+    width: 90px;
+    height: 51px;
+
+    &.disabled {
+        cursor: default;
+
+        .slider {
+            background-color: rgb(124, 124, 124);
+            cursor: default;
+        }
+
+        .slider:before {
+            background-color: rgb(167, 164, 164);
+            cursor: default;
+        }
+    }
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 39px;
+    width: 39px;
+    left: 6px;
+    bottom: 6px;
+    background-color: $primary-color;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider.selected {
+    background-color: $secondary-color;
+}
+
+.selected.slider:before {
+    transform: translateX(39px);
+}
+
+.slider.round {
+    border-radius: 51px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media only screen and (max-width: $mobile-querry) {
+    :host{
+        width: 60px;
+        height: 34px;
+    }
+
+    .slider:before {
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+    }
+
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .selected.slider:before {
+        transform: translateX(26px);
+    }
+}

@@ -10,6 +10,8 @@ import { LeaveHeaderComponent } from './shared/components/leave-header/leave-hea
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { JoinGameComponent } from './pages/join-game/join-game.component';
+import { RulesComponent } from './pages/rules/rules.component';
+import { SwitchComponent } from './shared/components/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { JoinGameComponent } from './pages/join-game/join-game.component';
     LeaveHeaderComponent,
     LoginComponent,
     RegisterComponent,
-    JoinGameComponent
+    JoinGameComponent,
+    RulesComponent,
+    SwitchComponent
   ],
   imports: [
     BrowserModule,

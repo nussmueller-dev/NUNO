@@ -1,0 +1,46 @@
+@import "sizes";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    > * {
+        margin-top: 20px;
+    }
+
+    td {
+        * {
+            vertical-align: middle;
+        }
+    }
+
+    .rule {
+        height: 50px;
+    }
+
+    .switch-cell {
+        padding-right: 10px;
+    }
+
+    .info-cell {
+        padding-left: 10px;
+    }
+}
+
+
+@media only screen and (max-width: $mobile-querry) {
+    .hide-on-mobile{
+        display: none;
+    }
+}

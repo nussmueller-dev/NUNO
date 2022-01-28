@@ -18,6 +18,10 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+table {
+    border-collapse: collapse;
+}
+
 .button {
     background: none;
     display: flex;
@@ -80,6 +84,7 @@ a{
 h1 {
     margin: 0;
     font-size: 70px;
+    text-align: center;
 }
 
 h2 {

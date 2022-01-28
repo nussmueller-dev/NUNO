@@ -1,0 +1,20 @@
+<app-back-header></app-back-header>
+<h1>Spielregeln <span class="hide-on-mobile">festlegen</span></h1>
+
+<main>
+    <table class="rules">
+        <tr class="rule" *ngFor="let rule of rules">
+            <td class="switch-cell">
+                <app-switch class="switch" [(state)]="rule.defaultOn"></app-switch>
+            </td>
+            <td class="name-cell">
+                <h3>{{rule.name}}</h3>
+            </td>
+            <td class="info-cell">
+                <img src="assets/icons/info.svg" alt="Info" class="info-icon small-icon">
+            </td>
+        </tr>
+    </table>
+
+    <button class="button">Weiter</button>
+</main>
