@@ -3,6 +3,7 @@
 :host{
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
 }
@@ -27,6 +28,5 @@
     .back-icon{
         margin: 10px;
         height: 35px;
-        cursor: pointer;
     }
 }

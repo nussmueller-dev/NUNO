@@ -1,0 +1,33 @@
+@import "sizes";
+@import "colors";
+
+:host{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.nuno-logo{
+    margin: 20px;
+    height: 75px;
+}
+
+.exit-button{
+    margin: 20px;
+    height: 60px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: $mobile-querry) {
+    .nuno-logo{
+        margin: 10px;
+        height: 35px;
+    }
+    
+    .exit-button{
+        margin: 10px;
+        height: 35px;
+    }
+}

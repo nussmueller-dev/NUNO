@@ -38,7 +38,7 @@ table {
 
     cursor: pointer;
 
-    img{
+    img, svg-icon{
         margin-right: 10px;
     }
 
@@ -57,6 +57,50 @@ table {
 
         &:hover {
             background-color: transparent;
+        }
+    }
+}
+
+.icon-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: none;
+    aspect-ratio: 1;
+    border: $default-border-size solid $secondary-color;
+    border-radius: 50px;
+    outline: none;
+    transition: 0.25s;
+
+    svg-icon{
+        height: 80%;
+        width: 80%;
+
+        svg{
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    &:hover {
+        background-color: $secondary-color;
+    }
+
+    &.delete{
+        border-color: $delete-color;
+
+        svg{
+            fill: $delete-color;
+            transition: 0.25s;
+        }
+
+        &:hover {
+            background-color: $delete-color;
+
+            svg{
+                fill: $primary-color;
+            }
         }
     }
 }
@@ -139,5 +183,12 @@ p {
 
     .medium-icon{
         height: 25px;
+    }
+
+    .icon-button{
+        svg-icon{
+            height: 100%;
+            width: 100%;
+        }
     }
 }

@@ -5,6 +5,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RulesComponent } from './pages/rules/rules.component';
 import { SelectUsernameComponent } from './pages/select-username/select-username.component';
+import { WaitingForStartComponent } from './pages/waiting-for-start/waiting-for-start.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'join', component: JoinGameComponent },
   { path: 'rules', component: RulesComponent },
+  { path: 'waiting', component: WaitingForStartComponent },
   // { path: '404', component: E404Component },
 
   { path: '**', redirectTo: 'welcome' },
