@@ -67,6 +67,7 @@ table {
     justify-content: center;
     text-align: center;
     background: none;
+    height: 60px;
     aspect-ratio: 1;
     border: $default-border-size solid $secondary-color;
     border-radius: 50px;
@@ -186,6 +187,8 @@ p {
     }
 
     .icon-button{
+        height: 40px;
+        
         svg-icon{
             height: 100%;
             width: 100%;
