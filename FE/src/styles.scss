@@ -172,6 +172,10 @@ p {
         font-size: 17px;
     }
 
+    .hide-on-mobile{
+        display: none !important;
+    }
+
     .button,
     .text-box {
         font-size: 17px;
@@ -188,7 +192,7 @@ p {
 
     .icon-button{
         height: 40px;
-        
+
         svg-icon{
             height: 100%;
             width: 100%;
