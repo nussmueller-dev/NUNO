@@ -38,8 +38,19 @@ main {
     }
 }
 
+footer{
+    .button{
+        margin-bottom: 20px;
+    }
+}
 
 @media only screen and (max-width: $mobile-querry) {
+    footer{
+        .button{
+            margin-bottom: 10px;
+        }
+    }
+
     .rule{
         height: 50px;
     }

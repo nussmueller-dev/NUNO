@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+  <g>
+    <rect width="24" height="24" fill="none"/>
+    <g transform="translate(24) rotate(90)">
+      <g>
+        <path d="M0,0H24V24H0Z" fill="none"/>
+      </g>
+      <g>
+        <path d="M6.23,20.23,8,22,18,12,8,2,6.23,3.77,14.46,12Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

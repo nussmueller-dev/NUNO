@@ -15,6 +15,7 @@ import { SwitchComponent } from './shared/components/switch/switch.component';
 import { WaitingForStartComponent } from './pages/waiting-for-start/waiting-for-start.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
+import { ManagePlayersComponent } from './pages/manage-players/manage-players.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     JoinGameComponent,
     RulesComponent,
     SwitchComponent,
-    WaitingForStartComponent
+    WaitingForStartComponent,
+    ManagePlayersComponent
   ],
   imports: [
     BrowserModule,
