@@ -1,15 +1,23 @@
+using Microsoft.EntityFrameworkCore;
+using NUNO_Backend.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#if (DEBUG)
+  var connectionString = builder.Configuration.GetConnectionString("DebugConnection");
+#else
+  var connectionString = builder.Configuration.GetConnectionString("ServerConnection");
+#endif
+
+builder.Services.AddDbContextPool<NunoDbContext>(options =>
+  options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
   app.UseSwagger();
   app.UseSwaggerUI();
