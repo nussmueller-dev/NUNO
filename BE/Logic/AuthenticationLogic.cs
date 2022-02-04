@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using NUNO_Backend.Database;
 using NUNO_Backend.Database.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +9,22 @@ namespace NUNO_Backend.Logic {
   public class AuthenticationLogic {
     private const double EXPIRY_DURATION_HOURS = 12;
 
-    public string BuildToken(string key, string issuer, User user) {
+    private readonly IConfiguration _configuration;
+    private readonly NunoDbContext _dbContext;
+
+    public AuthenticationLogic(IConfiguration configuration, NunoDbContext dbContext) {
+      _configuration = configuration;
+      _dbContext = dbContext;
+    }
+
+    public string BuildToken(User user) {
+      var key = _configuration["Jwt:Key"];
+      var issuer = _configuration["Jwt:Issuer"];
+
       var claims = new[] {
             new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Role, user.Role.ToString()),
-            new Claim(ClaimTypes.NameIdentifier,
-            Guid.NewGuid().ToString())
+            new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
         };
 
       var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
@@ -24,26 +35,41 @@ namespace NUNO_Backend.Logic {
       return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
     }
 
-    public bool IsTokenValid(string key, string issuer, string token) {
-      var mySecret = Encoding.UTF8.GetBytes(key);
-      var mySecurityKey = new SymmetricSecurityKey(mySecret);
+    public User GetUserFromToken(string token) {
       var tokenHandler = new JwtSecurityTokenHandler();
+      var tokenValidationParameters = GetTokenValidationParameters();
 
-      try {
-        tokenHandler.ValidateToken(token,
-        new TokenValidationParameters {
-          ValidateIssuerSigningKey = true,
-          ValidateIssuer = true,
-          ValidateAudience = true,
-          ValidIssuer = issuer,
-          ValidAudience = issuer,
-          IssuerSigningKey = mySecurityKey,
-        }, out SecurityToken validatedToken);
-      } catch {
-        return false;
+      if (token is null || token.Length == 0) {
+        return null;
       }
 
-      return true;
+      try {
+        tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+      } catch {
+        return null;
+      }
+
+      var securityToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
+      var username = securityToken.Claims.First(x => x.Type == ClaimTypes.Name).Value;
+
+      return _dbContext.Users.FirstOrDefault(x => x.Username == username);
+    }
+
+    private TokenValidationParameters GetTokenValidationParameters() {
+      var key = _configuration["Jwt:Key"];
+      var issuer = _configuration["Jwt:Issuer"];
+
+      var secret = Encoding.UTF8.GetBytes(key);
+      var securityKey = new SymmetricSecurityKey(secret);
+
+      return new TokenValidationParameters {
+        ValidateIssuerSigningKey = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidIssuer = issuer,
+        ValidAudience = issuer,
+        IssuerSigningKey = securityKey,
+      };
     }
   }
 }

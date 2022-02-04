@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NUNO_Backend.Database;
+using NUNO_Backend.Helpers;
+using NUNO_Backend.Logic;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
       (builder.Configuration["Jwt:Key"]))
   };
 });
+
+builder.Services.AddScoped<AuthenticationLogic>();
+builder.Services.AddScoped<CurrentUserHelper>();
 
 var app = builder.Build();
 

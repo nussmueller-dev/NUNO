@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NUNO_Backend.Enums;
+using NUNO_Backend.Logic;
 
 namespace NUNO_Backend.Helpers {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-  public class AuthorizeAttribute {
+  public class AuthorizeAttribute : Attribute, IAuthorizationFilter {
     private IList<RoleType> _allowedRoles = new List<RoleType>();
 
     public AuthorizeAttribute() { }
@@ -20,34 +22,22 @@ namespace NUNO_Backend.Helpers {
     }
 
     public void OnAuthorization(AuthorizationFilterContext context) {
-      var authorisationId = context.HttpContext.Session.GetString(SessionKeys.AuthorizationId);
+      var token = context.HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-      var authenticationHelper =
-          context.HttpContext.RequestServices.GetService(typeof(AuthenticationHelper)) as AuthenticationHelper;
+      var authenticationLogic = context.HttpContext.RequestServices.GetService(typeof(AuthenticationLogic)) as AuthenticationLogic;
+      var currentUserHelper = context.HttpContext.RequestServices.GetService(typeof(CurrentUserHelper)) as CurrentUserHelper;
 
-      var currentUserHelper =
-          context.HttpContext.RequestServices.GetService(typeof(CurrentUserHelper)) as CurrentUserHelper;
+      var user = authenticationLogic.GetUserFromToken(token);
 
-      if (authorisationId is null || !authenticationHelper.IsAuthorized(new Guid(authorisationId))) {
-        Unauthorized(context);
-      } else {
-        var user = authenticationHelper.GetUserFromGuid(new Guid(authorisationId));
-
-        if (user is null) {
-          Unauthorized(context);
-          return;
-        }
-
-        if (_allowedRoles.Count == 0 || _allowedRoles.Contains(user.Role)) {
-          currentUserHelper.SetCurrentUser(user);
-        } else {
-          Unauthorized(context);
-        }
+      if (user is null) {
+        context.Result = new UnauthorizedResult();
       }
-    }
 
-    private void Unauthorized(AuthorizationFilterContext context) {
-      context.Result = new RedirectResult(url: "~/Authentication/Unauthorized");
+      if (_allowedRoles.Count == 0 || _allowedRoles.Contains(user.Role)) {
+        currentUserHelper.SetCurrentUser(user);
+      } else {
+        context.Result = new UnauthorizedResult();
+      }
     }
   }
 }
