@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace NUNO_Backend.Helpers.Validators {
-  public class EmailValidation : ValidationAttribute {
-    public EmailValidation() {
+  public class EmailValidationAttribute : ValidationAttribute {
+    public EmailValidationAttribute() {
       ErrorMessage = "Diese Emailadresse ist ungültig";
     }
 

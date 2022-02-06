@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace NUNO_Backend.Helpers.Validators {
-  public class PasswordValidation : ValidationAttribute {
+  public class PasswordValidationAttribute : ValidationAttribute {
     private const string specialSymbols = "§°+¦\"@*#ç°%§&¬/|(¢)=?´`~!][{}_-.:,;<>\\";
 
-    public PasswordValidation() {
+    public PasswordValidationAttribute() {
       ErrorMessage = "Passwort ist zu unsicher";
     }
 
