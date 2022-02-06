@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using NUNO_Backend.Database;
 using NUNO_Backend.Helpers;
 using NUNO_Backend.Logic;
+using NUNO_Backend.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddScoped<AuthenticationLogic>();
 builder.Services.AddScoped<CurrentUserHelper>();
+builder.Services.AddScoped<BindingModelFactory>();
 
 var app = builder.Build();
 
