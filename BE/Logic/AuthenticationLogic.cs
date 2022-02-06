@@ -7,9 +7,11 @@ using NUNO_Backend.Models.BindingModels;
 using NUNO_Backend.Models.ViewModels;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Cryptography;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using NUNO_Backend.Enums;
 
 namespace NUNO_Backend.Logic {
   public class AuthenticationLogic {
@@ -35,8 +37,24 @@ namespace NUNO_Backend.Logic {
       return new LoginViewModel(user, token);
     }
 
-    public LoginViewModel GetUserInformations() {
-      User user = _currentUserHelper.CurrentUser;
+    public User Register(RegisterBindingModel registerModel) {
+      var user = new User();
+
+      user.Email = registerModel.Email;
+      user.Username = registerModel.Username;
+
+      user.Salt = GetSalt();
+      user.PasswordHash = HashPassword(registerModel.Password, user.Salt);
+      user.Role = RoleType.Player;
+
+      _dbContext.Users.Add(user);
+      _dbContext.SaveChanges();
+
+      return user;
+    }
+
+    public LoginViewModel GetUserInformations(User user = null) {
+      user = user ?? _currentUserHelper.CurrentUser;
 
       var token = BuildToken(user);
 
@@ -118,33 +136,13 @@ namespace NUNO_Backend.Logic {
       return Convert.ToBase64String(hashedPassword);
     }
 
-    public bool IsValidEmail(string email) {
-      if (string.IsNullOrWhiteSpace(email))
-        return false;
+    private string GetSalt() {
+      byte[] salt;
+      do {
+        salt = RandomNumberGenerator.GetBytes(128 / 8);
+      } while (salt.Any(x => x == 0));
 
-      try {
-        email = Regex.Replace(email, @"(@)(.+)$", DomainMapper, RegexOptions.None, TimeSpan.FromMilliseconds(200));
-
-        string DomainMapper(Match match) {
-          var idn = new IdnMapping();
-
-          string domainName = idn.GetAscii(match.Groups[2].Value);
-
-          return match.Groups[1].Value + domainName;
-        }
-      } catch (RegexMatchTimeoutException e) {
-        return false;
-      } catch (ArgumentException e) {
-        return false;
-      }
-
-      try {
-        return Regex.IsMatch(email,
-            @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-            RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
-      } catch (RegexMatchTimeoutException) {
-        return false;
-      }
+      return Convert.ToBase64String(salt);
     }
   }
 }

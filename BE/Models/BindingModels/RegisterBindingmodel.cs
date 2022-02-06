@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace NUNO_Backend.Models.BindingModels {
-  public class RegisterBindingmodel {
+  public class RegisterBindingModel {
     [Required]
     public string Email { get; set; }
     [Required]
