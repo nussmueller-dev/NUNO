@@ -1,10 +1,10 @@
 # NUNO
 
-A muliplayer uno game for young people and also young people
+A multiplayer UNO game for young people and also young people
 
 ---
 **NOTE**
 
-This project is not yet completed
+This project is not completed yet!
 
 ---
