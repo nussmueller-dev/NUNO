@@ -29,7 +29,7 @@ namespace NUNO_Backend.Controllers {
     [HttpPost("login")]
     public IActionResult Login(LoginBindingModel model) {
       var response = _authenticationLogic.Login(model);
-
+       
       if (response is null) {
         return BadRequest(new { message = "Benutzername oder Passwort ist falsch" });
       }

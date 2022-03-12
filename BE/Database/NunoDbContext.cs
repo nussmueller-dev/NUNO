@@ -4,6 +4,7 @@ using NUNO_Backend.Database.Entities;
 namespace NUNO_Backend.Database {
   public class NunoDbContext : DbContext {
     public DbSet<User> Users { get; set; }
+    public DbSet<TempUser> TempUsers { get; set; }
 
     public NunoDbContext(DbContextOptions<NunoDbContext> options) : base(options) { }
   }

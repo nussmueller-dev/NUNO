@@ -8,6 +8,7 @@ namespace NUNO_Backend.Models.BindingModels {
     [EmailExists]
     public string Email { get; set; }
     [Required]
+    [DoesntContain('@', ErrorMessage = "Der Benutzername darf kein '@' beinhalten")]
     [UsernameExists]
     public string Username { get; set; }
     [Required]

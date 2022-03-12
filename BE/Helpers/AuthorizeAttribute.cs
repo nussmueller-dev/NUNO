@@ -31,6 +31,7 @@ namespace NUNO_Backend.Helpers {
 
       if (user is null) {
         context.Result = new UnauthorizedResult();
+        return;
       }
 
       if (_allowedRoles.Count == 0 || _allowedRoles.Contains(user.Role)) {

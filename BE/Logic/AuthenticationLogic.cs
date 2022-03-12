@@ -28,7 +28,7 @@ namespace NUNO_Backend.Logic {
     }
 
     public LoginViewModel Login(LoginBindingModel model) {
-      User user = _dbContext.Users.FirstOrDefault(x => x.Username == model.Username);
+      User user = _dbContext.Users.FirstOrDefault(x => x.Username == model.Username || x.Email == model.Username);
 
       if (user is null || !CheckPassword(user, model.Password)) return null;
 
