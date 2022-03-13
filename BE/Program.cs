@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 
 builder.Services.AddScoped<AuthenticationLogic>();
+builder.Services.AddScoped<TempUserLogic>();
 builder.Services.AddScoped<CurrentUserHelper>();
 builder.Services.AddScoped<BindingModelFactory>();
 

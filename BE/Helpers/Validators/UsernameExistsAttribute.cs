@@ -1,4 +1,5 @@
 ﻿using NUNO_Backend.Database;
+using NUNO_Backend.Logic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NUNO_Backend.Helpers.Validators {
@@ -10,12 +11,18 @@ namespace NUNO_Backend.Helpers.Validators {
     protected override ValidationResult IsValid(object value, ValidationContext validationContext) {
       var username = (string)value;
       var dbContext = (NunoDbContext)validationContext.GetService(typeof(NunoDbContext));
+      var tempUserLogic = (TempUserLogic)validationContext.GetService(typeof(TempUserLogic));
 
       if (username is null) {
         return ValidationResult.Success;
       }
 
-      return dbContext.Users.Any(x => x.Username == username) ? new ValidationResult(ErrorMessage) : ValidationResult.Success;
+      tempUserLogic.FilterTempUsers();
+
+      var tempUserExists = dbContext.TempUsers.Any(x => x.Username == username);
+      var normalUserExists = dbContext.Users.Any(x => x.Username == username);
+
+      return normalUserExists || tempUserExists ? new ValidationResult(ErrorMessage) : ValidationResult.Success;
     }
   }
 }
