@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using NUNO_Backend.Database.Interfaces;
 using NUNO_Backend.Enums;
 using NUNO_Backend.Logic;
 
@@ -26,8 +27,13 @@ namespace NUNO_Backend.Helpers {
 
       var authenticationLogic = context.HttpContext.RequestServices.GetService(typeof(AuthenticationLogic)) as AuthenticationLogic;
       var currentUserHelper = context.HttpContext.RequestServices.GetService(typeof(CurrentUserHelper)) as CurrentUserHelper;
+      var tempUserLogic = context.HttpContext.RequestServices.GetService(typeof(TempUserLogic)) as TempUserLogic;
 
-      var user = authenticationLogic.GetUserFromToken(token);
+      IUser user = authenticationLogic.GetUserFromToken(token);
+
+      if (user is null) {
+        user = tempUserLogic.GetTempUserFromSessionId(token);
+      }
 
       if (user is null) {
         context.Result = new UnauthorizedResult();

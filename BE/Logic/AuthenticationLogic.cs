@@ -54,7 +54,7 @@ namespace NUNO_Backend.Logic {
     }
 
     public LoginViewModel GetUserInformations(User user = null) {
-      user = user ?? _currentUserHelper.CurrentUser;
+      user = user ?? (User)_currentUserHelper.CurrentUser;
 
       var token = BuildToken(user);
 

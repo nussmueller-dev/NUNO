@@ -1,6 +1,7 @@
 ﻿namespace NUNO_Backend.Enums {
   public enum RoleType {
-    Player =1,
+    TempUser = 0,
+    Player = 1,
     Admin = 2,
     Owner = 3
   }

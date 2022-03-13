@@ -3,7 +3,7 @@ using NUNO_Backend.Database.Entities;
 
 namespace NUNO_Backend.Logic {
   public class TempUserLogic {
-    const int MaxTempUserLifetime = 48;
+    private const int EXPIRY_DURATION_HOURS = 48;
     private readonly NunoDbContext _dbContext;
 
     public TempUserLogic(NunoDbContext dbContext) {
@@ -11,7 +11,7 @@ namespace NUNO_Backend.Logic {
     }
 
     public void FilterTempUsers() {
-      var outdatedTempUsers = _dbContext.TempUsers.Where(x => DateTime.Now > x.LastLoginDate.AddHours(MaxTempUserLifetime)).ToList();
+      var outdatedTempUsers = _dbContext.TempUsers.Where(x => DateTime.Now > x.LastLoginDate.AddHours(EXPIRY_DURATION_HOURS)).ToList();
 
       foreach (var tempUser in outdatedTempUsers) {
         _dbContext.TempUsers.Remove(tempUser);
@@ -27,6 +27,11 @@ namespace NUNO_Backend.Logic {
       newTempuser.Username = name;
       newTempuser.SessionId = Guid.NewGuid().ToString();
       return newTempuser;
+    }
+
+    public TempUser GetTempUserFromSessionId(string sessionId) {
+      FilterTempUsers();
+      return _dbContext.TempUsers.FirstOrDefault(x => x.SessionId == sessionId);
     }
   }
 }
