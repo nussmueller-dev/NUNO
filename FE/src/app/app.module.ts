@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,8 +15,10 @@ import { RulesComponent } from './pages/rules/rules.component';
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { WaitingForStartComponent } from './pages/waiting-for-start/waiting-for-start.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ManagePlayersComponent } from './pages/manage-players/manage-players.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,15 +33,19 @@ import { ManagePlayersComponent } from './pages/manage-players/manage-players.co
     RulesComponent,
     SwitchComponent,
     WaitingForStartComponent,
-    ManagePlayersComponent
+    ManagePlayersComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularSvgIconModule.forRoot()
+    FormsModule,
+    AngularSvgIconModule.forRoot(),
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,10 @@
 <h1>Registrieren</h1>
 
 <main>
-    <input placeholder="Email" type="email" class="text-box">
-    <input placeholder="Benutzername" type="text" class="text-box">
-    <input placeholder="Passwort" type="password" class="text-box">
-    <button class="button">Registrieren</button>
+  <form class="input" (ngSubmit)="register()" ngModelOptions="standalone">
+    <input placeholder="Email" type="email" class="text-box" name="email" [(ngModel)]="email" />
+    <input placeholder="Benutzername" type="text" class="text-box" name="username" [(ngModel)]="username" />
+    <input placeholder="Passwort" type="password" class="text-box" name="password" [(ngModel)]="password" />
+    <input type="submit" class="button" value="Registrieren">
+  </form>
 </main>

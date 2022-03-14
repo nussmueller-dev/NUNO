@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  BACKENDURL: 'https://nussmueller.li/be/'
 };
