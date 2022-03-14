@@ -1,0 +1,66 @@
+@import "src/app/shared/styles/mixins/popup.scss";
+
+:host{
+    @include popup;
+}
+
+.popup-holder{
+    padding: 20px;
+}
+
+.error-icon{
+    height: 120px;
+    margin-bottom: 30px;
+    transform: scale(2);
+}
+
+.message{
+    margin-bottom: 30px;
+    white-space: pre-line;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+button {
+    border: 0;
+    background: none;
+    display: block;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 20px;
+    outline: none;
+    color: white;
+    transition: 0.25s;
+    border-radius: 24px;
+    transition: 0.25s;
+    opacity: 1;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #2ecc71;
+    }
+
+    &.cancel {
+        border-color: rgb(129, 129, 129);
+
+        &:hover {
+            background-color: rgb(129, 129, 129);
+        }
+    }
+
+    &.deactivated {
+        opacity: 0.2;
+        border: 2px solid rgb(161, 161, 161);
+        cursor: default;
+
+        &:hover {
+            background-color: #2ecc7000;
+        }
+    }
+}

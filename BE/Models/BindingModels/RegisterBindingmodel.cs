@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NUNO_Backend.Models.BindingModels {
   public class RegisterBindingModel {
-    [Required]
+    [Required(ErrorMessage = "Die Email muss angegeben werden")]
     [EmailValidation]
     [EmailExists]
     public string Email { get; set; }

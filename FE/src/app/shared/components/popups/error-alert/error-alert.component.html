@@ -1,0 +1,9 @@
+<div [@holderShownHidden]="{ value: popupService.errorModal.errorModalShown ? 'shown' : 'hidden' }" class="popup-holder">
+    <img src="/assets/icons/error.svg" alt="error-icon" class="error-icon">
+
+    <p class="message">{{popupService.errorModal.message}}</p>
+
+    <div class="buttons">
+        <button class="close" (click)="close()">Okay</button>
+    </div>
+</div>

@@ -19,6 +19,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ManagePlayersComponent } from './pages/manage-players/manage-players.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { ErrorAlertComponent } from './shared/components/popups/error-alert/error-alert.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,14 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     SwitchComponent,
     WaitingForStartComponent,
     ManagePlayersComponent,
+    ErrorAlertComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MatSnackBarModule,
     AngularSvgIconModule.forRoot(),
     BrowserAnimationsModule
   ],
