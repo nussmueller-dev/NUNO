@@ -1,3 +1,4 @@
+import { RoleType } from './../constants/roles';
 import { Injectable } from '@angular/core';
 import { LocalStorageConstants } from '../constants/localstorage-constants';
 
@@ -11,6 +12,14 @@ export class LocalStorageService {
 
   public set username(username: string){
     localStorage.setItem(LocalStorageConstants.USERNAME, username);
+  }
+
+  public get role(): RoleType {
+    return +(localStorage.getItem(LocalStorageConstants.ROLE) ?? 0);
+  }
+
+  public set role(role: RoleType){
+    localStorage.setItem(LocalStorageConstants.ROLE, (+role).toString());
   }
 
   public get token(): string {

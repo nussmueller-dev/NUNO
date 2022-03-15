@@ -25,7 +25,7 @@ namespace NUNO_Backend.Controllers {
       }
 
       var currentUser = (TempUser)_currentUserHelper.CurrentUser;
-      var viewModel = new TempUserViewModel(currentUser.SessionId, currentUser.Username);
+      var viewModel = new TempUserViewModel(currentUser.SessionId, currentUser.Username, currentUser.Role);
 
       return Ok(viewModel);
     }
@@ -33,7 +33,7 @@ namespace NUNO_Backend.Controllers {
     [HttpPost("create")]
     public IActionResult Create([FromBody] TempUserBindingModel model) {
       var tempUser = _tempUserLogic.CreateTempUser(model.Username);
-      var viewModel = new TempUserViewModel(tempUser.SessionId, tempUser.Username);
+      var viewModel = new TempUserViewModel(tempUser.SessionId, tempUser.Username, tempUser.Role);
 
       return Ok(viewModel);
     }
