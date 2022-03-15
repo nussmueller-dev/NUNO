@@ -1,6 +1,6 @@
 export class AuthenticationViewModel {
-    id?: number;
-    username?: string;
-    email?: string;
-    token?: string;
+    id: number = 0;
+    username: string = '';
+    email: string = '';
+    token: string = '';
 }

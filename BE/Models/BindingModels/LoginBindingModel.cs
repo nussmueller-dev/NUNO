@@ -2,9 +2,9 @@
 
 namespace NUNO_Backend.Models.BindingModels {
   public class LoginBindingModel {
-    [Required]
+    [Required(ErrorMessage = "Der Benutzername muss angegeben werden")]
     public string Username { get; set; }
-    [Required]
+    [Required(ErrorMessage = "Das Passwort muss angegeben werden")]
     public string Password { get; set; }
   }
 }

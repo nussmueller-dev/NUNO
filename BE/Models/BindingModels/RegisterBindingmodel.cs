@@ -7,11 +7,11 @@ namespace NUNO_Backend.Models.BindingModels {
     [EmailValidation]
     [EmailExists]
     public string Email { get; set; }
-    [Required]
+    [Required(ErrorMessage = "Der Benutzername muss angegeben werden")]
     [DoesntContain('@', ErrorMessage = "Der Benutzername darf kein '@' beinhalten")]
     [UsernameExists]
     public string Username { get; set; }
-    [Required]
+    [Required(ErrorMessage = "Das Passwort muss angegeben werden")]
     [PasswordValidation]
     public string Password { get; set; }
   }

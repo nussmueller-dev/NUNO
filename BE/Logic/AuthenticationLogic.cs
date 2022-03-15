@@ -34,7 +34,7 @@ namespace NUNO_Backend.Logic {
 
       var token = BuildToken(user);
 
-      return new LoginViewModel(user, token);
+      return new LoginViewModel(user, token, user.Role);
     }
 
     public User Register(RegisterBindingModel registerModel) {
@@ -58,7 +58,7 @@ namespace NUNO_Backend.Logic {
 
       var token = BuildToken(user);
 
-      return new LoginViewModel(user, token);
+      return new LoginViewModel(user, token, user.Role);
     }
 
     public User GetUserFromToken(string token) {

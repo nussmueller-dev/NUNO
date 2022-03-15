@@ -1,4 +1,4 @@
 export class TempUserViewModel {
-    sessionId?: string;
-    username?: string;
+    sessionId: string = '';
+    username: string = '';
 }

@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../../shared/services/local-storage.service';
 import { PopupService } from './../../shared/services/popup.service';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private localStorageService: LocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -28,12 +30,17 @@ export class RegisterComponent implements OnInit {
         errorMessage += e.error.errors[key][0] + '\n';
       }
 
-      console.log(errorMessage);
+      if(errorMessage.length === 0){
+        errorMessage = 'Es ist etwas schiefgelaufen'
+      }
 
       this.popupService.errorModal.showErrorMessage(errorMessage);
     });
 
-    console.log(authenticationViewModel);
-    console.log('Register');
+    if(authenticationViewModel){
+      this.localStorageService.username = authenticationViewModel.username;
+      this.localStorageService.token = authenticationViewModel.token;
+      
+    }
   }
 }

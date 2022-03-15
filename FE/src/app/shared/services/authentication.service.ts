@@ -25,4 +25,8 @@ export class AuthenticationService {
 
     return lastValueFrom(this.httpClient.post<AuthenticationViewModel>(environment.BACKENDURL + 'users/login', bindingModel));
   }
+
+  public async getTokenEndDate(){
+    
+  }
 }
