@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-username',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select-username.component.scss']
 })
 export class SelectUsernameComponent implements OnInit {
+  targetNavigationPoint?: string;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.targetNavigationPoint = this.route.snapshot.queryParamMap.get('method') ?? undefined;
+
+    if(this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create'){
+      this.router.navigate(['/welcome']);
+    }
   }
-
 }

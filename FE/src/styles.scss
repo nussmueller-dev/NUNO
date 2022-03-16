@@ -57,6 +57,10 @@ svg-icon{
 
     &.secondary{
         border-color: $secondary-button-color;
+
+        &:hover {
+            background-color: $secondary-button-color;
+        }
     }
 
     &.deactivated {

@@ -2,6 +2,7 @@ import { CurrentUserService } from './../../shared/services/current-user.service
 import { PopupService } from './../../shared/services/popup.service';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,13 +14,22 @@ export class RegisterComponent implements OnInit {
   email: string = '';
   password: string = '';
 
+  targetNavigationPoint?: string;
+
   constructor(
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
-    private CurrentUserService: CurrentUserService
+    private CurrentUserService: CurrentUserService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.targetNavigationPoint = this.route.snapshot.queryParamMap.get('method') ?? undefined;
+
+    if(this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create'){
+      this.router.navigate(['/welcome']);
+    }
   }
 
   async register(){
@@ -39,6 +49,12 @@ export class RegisterComponent implements OnInit {
 
     if(authenticationViewModel){
       this.CurrentUserService.setCurrentUser(authenticationViewModel);
+
+      if(this.targetNavigationPoint === 'join'){
+        this.router.navigate(['/join']);
+      }else{
+        this.router.navigate(['/rules']);
+      }
     }
   }
 }
