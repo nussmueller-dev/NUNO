@@ -8,13 +8,13 @@
     <h3>Du hast folgende Optionen:</h3>
 
     <div class="buttons">
-        <a class="button" routerLink="/username">
+        <a class="button" routerLink="/username" [queryParams]="{ methode: 'join'}">
             <img src="assets/icons/add-group.svg" class="small-icon">
             <span>Spiel beitreten</span>
         </a>
-        <button class="button">
+        <a class="button" routerLink="/username" [queryParams]="{ methode: 'create'}">
             <img src="assets/icons/edit.svg" class="small-icon">
             <span>Spiel erstellen</span>
-        </button>
+        </a>
     </div>
 </div>

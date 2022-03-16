@@ -1,11 +1,11 @@
-<app-back-header></app-back-header>
+<app-back-header backUrl="/welcome"></app-back-header>
 
 <h1 class="title">Benutzername wählen</h1>
 
 <main>
     <div class="use-nuno-account">
         <h3>NUNO-Account verwenden</h3>
-        <a class="button" routerLink="/login">Zum NUNO-Login</a>
+        <a class="button" routerLink="/login" queryParamsHandling="merge">Zum NUNO-Login</a>
     </div>
 
     <h1 class="or">oder</h1>

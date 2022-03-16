@@ -1,4 +1,4 @@
-import { LocalStorageService } from './../../shared/services/local-storage.service';
+import { CurrentUserService } from './../../shared/services/current-user.service';
 import { PopupService } from './../../shared/services/popup.service';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
-    private localStorageService: LocalStorageService
+    private CurrentUserService: CurrentUserService
   ) { }
 
   ngOnInit(): void {
@@ -38,9 +38,7 @@ export class RegisterComponent implements OnInit {
     });
 
     if(authenticationViewModel){
-      this.localStorageService.username = authenticationViewModel.username;
-      this.localStorageService.token = authenticationViewModel.token;
-      
+      this.CurrentUserService.setCurrentUser(authenticationViewModel);
     }
   }
 }

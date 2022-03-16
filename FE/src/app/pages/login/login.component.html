@@ -1,4 +1,4 @@
-<app-back-header></app-back-header>
+<app-back-header backUrl="/username"></app-back-header>
 <h1>Login</h1>
 
 <main>
@@ -6,5 +6,5 @@
     <input placeholder="Passwort" type="password" class="text-box">
     <button class="button">Login</button>
     <p>oder Registrieren</p>
-    <a class="button" routerLink="/register">Registrieren</a>
+    <a class="button" routerLink="/register" queryParamsHandling="merge">Registrieren</a>
 </main>

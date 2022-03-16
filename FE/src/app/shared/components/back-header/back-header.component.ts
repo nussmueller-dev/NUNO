@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-back-header',
   templateUrl: './back-header.component.html',
   styleUrls: ['./back-header.component.scss']
 })
-export class BackHeaderComponent implements OnInit {
+export class BackHeaderComponent {
+  @Input() backUrl?: string;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ){}
 
-  ngOnInit(): void {
+  navBack(){
+    this.router.navigate([this.backUrl],  { queryParamsHandling: 'merge' });
   }
-
 }

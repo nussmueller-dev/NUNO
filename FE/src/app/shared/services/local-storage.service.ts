@@ -29,4 +29,12 @@ export class LocalStorageService {
   public set token(token: string){
     localStorage.setItem(LocalStorageConstants.TOKEN, token);
   }
+
+  public get sessionId(): string {
+    return localStorage.getItem(LocalStorageConstants.TOKEN) ?? '';
+  }
+
+  public set sessionId(sessionId: string){
+    localStorage.setItem(LocalStorageConstants.TEMP_ID, sessionId);
+  }
 }
