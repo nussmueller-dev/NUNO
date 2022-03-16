@@ -4,8 +4,12 @@ import { SelectUsernameComponent } from './../pages/select-username/select-usern
 import { WelcomeComponent } from './../pages/welcome/welcome.component';
 import { transition, trigger } from '@angular/animations';
 import { slideLeft, slideRight } from './animations/route-animations';
+import { JoinGameComponent } from '../pages/join-game/join-game.component';
+import { RulesComponent } from '../pages/rules/rules.component';
+import { WaitingForStartComponent } from '../pages/waiting-for-start/waiting-for-start.component';
+import { ManagePlayersComponent } from '../pages/manage-players/manage-players.component';
 
-export const STATES = ['welcome', 'username', 'login', 'register'] as const;
+export const STATES = ['welcome', 'username', 'login', 'register', 'join', 'rules', 'waiting', 'managePlayers'] as const;
 
 export type ExampleAppState = typeof STATES[number];
 
@@ -35,6 +39,26 @@ export const stateConfiguration: Record<ExampleAppState, StateConfiguration> = {
         path: 'register',
         component: RegisterComponent,
         order: 3
+    },
+    join: { 
+        path: 'join', 
+        component: JoinGameComponent ,
+        order: 4
+    },
+    rules: { 
+        path: 'rules', 
+        component: RulesComponent ,
+        order: 5
+    },
+    waiting: { 
+        path: 'waiting', 
+        component: WaitingForStartComponent,
+        order: 6 
+    },
+    managePlayers: { 
+        path: 'manage-players', 
+        component: ManagePlayersComponent,
+        order: 7 
     }
 };
 
