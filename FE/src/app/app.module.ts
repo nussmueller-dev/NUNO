@@ -21,6 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { ErrorAlertComponent } from './shared/components/popups/error-alert/error-alert.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
+import { routes } from './shared/routes';
 
 @NgModule({
   declarations: [
@@ -39,12 +41,13 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ErrorAlertComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     MatSnackBarModule,
     AngularSvgIconModule.forRoot(),
+    RouterModule.forRoot(routes),
     BrowserAnimationsModule
   ],
   providers: [

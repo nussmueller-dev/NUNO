@@ -8,20 +8,24 @@ import { RulesComponent } from './pages/rules/rules.component';
 import { SelectUsernameComponent } from './pages/select-username/select-username.component';
 import { WaitingForStartComponent } from './pages/waiting-for-start/waiting-for-start.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { routes } from './shared/routes';
 
-const routes: Routes = [
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'username', component: SelectUsernameComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'join', component: JoinGameComponent },
-  { path: 'rules', component: RulesComponent },
-  { path: 'waiting', component: WaitingForStartComponent },
-  { path: 'manage-players', component: ManagePlayersComponent },
+// const routes: Routes = routes
+// [
+//   ...routes
+  // { path: 'welcome', component: WelcomeComponent },
+  // { path: 'username', component: SelectUsernameComponent },
+  // { path: 'login', component: LoginComponent },
+  // { path: 'register', component: RegisterComponent },
+  // { path: 'join', component: JoinGameComponent },
+  // { path: 'rules', component: RulesComponent },
+  // { path: 'waiting', component: WaitingForStartComponent },
+  // { path: 'manage-players', component: ManagePlayersComponent },
+
   // { path: '404', component: E404Component },
 
-  { path: '**', redirectTo: 'welcome' },
-];
+  // { path: '**', redirectTo: 'welcome' },
+// ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
