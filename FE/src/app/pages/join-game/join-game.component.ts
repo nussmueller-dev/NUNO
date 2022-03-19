@@ -1,3 +1,4 @@
+import { CurrentUserService } from './../../shared/services/current-user.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinGameComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private currentUserService: CurrentUserService
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.currentUserService.checkAuthentication();
   }
-
 }

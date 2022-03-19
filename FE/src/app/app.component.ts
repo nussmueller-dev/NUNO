@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CurrentUserService } from './shared/services/current-user.service';
+import { Component, OnInit } from '@angular/core';
 import { routerTransition } from './shared/routes';
 
 @Component({
@@ -7,4 +8,12 @@ import { routerTransition } from './shared/routes';
   styleUrls: ['./app.component.scss'],
   animations: [routerTransition]
 })
-export class AppComponent { }
+export class AppComponent implements OnInit { 
+  constructor(
+    private currentUserService: CurrentUserService 
+  ){}
+
+  ngOnInit() {
+    this.currentUserService.tryReAuthentication();
+  }
+}
