@@ -23,6 +23,7 @@ import { ErrorAlertComponent } from './shared/components/popups/error-alert/erro
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { routes } from './shared/routes';
+import { SuccessAlertComponent } from './shared/components/popups/success-alert/success-alert.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { routes } from './shared/routes';
     WaitingForStartComponent,
     ManagePlayersComponent,
     ErrorAlertComponent,
+    SuccessAlertComponent,
   ],
   imports: [
     AppRoutingModule,

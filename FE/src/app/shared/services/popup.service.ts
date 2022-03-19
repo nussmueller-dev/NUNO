@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { SuccesModal } from './modals/succes-modal';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
 import { ErrorModal } from './modals/error-modal';
 
 @Injectable({
@@ -9,6 +8,7 @@ import { ErrorModal } from './modals/error-modal';
 })
 export class PopupService {
     public errorModal = new ErrorModal();
+    public succesModal = new SuccesModal();
 
     constructor(
         private snackBar: MatSnackBar

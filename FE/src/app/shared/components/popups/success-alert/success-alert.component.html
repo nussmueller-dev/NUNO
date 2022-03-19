@@ -1,0 +1,9 @@
+<div [@holderShownHidden]="{ value: popupService.succesModal.succesModalShown ? 'shown' : 'hidden' }" class="popup-holder succes-popup-holder">
+    <img src="/assets/icons/success.png" alt="succes-icon" class="succes-icon">
+    
+    <p class="message">{{popupService.succesModal.message}}</p>
+
+    <div class="buttons">
+        <button class="button close" (click)="close()">Okay</button>
+    </div>
+</div>
