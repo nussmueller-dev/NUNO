@@ -8,6 +8,7 @@
     background-color: rgba(0, 0, 0, 0.781);
     backdrop-filter: blur(3px);
     overflow: hidden;
+    user-select: none;
 
     position: fixed;
     top: 0;

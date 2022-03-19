@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
         errorMessage += e.error.errors[key][0] + '\n';
       }
 
+      if(e.error.message){
+        errorMessage = e.error.message;
+      }
+
       if(errorMessage.length === 0){
         errorMessage = 'Es ist etwas schiefgelaufen'
       }

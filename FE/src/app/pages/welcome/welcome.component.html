@@ -17,4 +17,10 @@
             <span>Spiel erstellen</span>
         </a>
     </div>
+    <div class="buttons logout" *ngIf="currentUserService.userIsAuthorized">
+        <button class="button red" (click)="logout()">
+            <img src="assets/icons/exit.svg" class="small-icon">
+            <span>Abmelden</span>
+        </button>
+    </div>
 </div>

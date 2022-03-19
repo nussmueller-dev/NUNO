@@ -63,6 +63,14 @@ svg-icon{
         }
     }
 
+    &.red{
+        border-color: $delete-color;
+
+        &:hover {
+            background-color: $delete-color;
+        }
+    }
+
     &.deactivated {
         opacity: 0.2;
         border: 2px solid $secondary-button-color;

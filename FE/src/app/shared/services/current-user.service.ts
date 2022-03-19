@@ -1,3 +1,4 @@
+import { PopupService } from 'src/app/shared/services/popup.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { TempUserViewModel } from './../models/view-models/temp-user-view-model';
@@ -15,13 +16,14 @@ export class CurrentUserService {
   public role?: RoleType;
   public token?: string;
   public sessionId?: string;
-  private userIsAuthorized = false;
+  public userIsAuthorized = false;
   private initialCheckCompleted = false;
 
   constructor(
     private localStorageService: LocalStorageService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private popupService: PopupService
   ) { }
 
   public setCurrentUser(authenticationViewModel: AuthenticationViewModel){
@@ -86,5 +88,19 @@ export class CurrentUserService {
     }
 
     this.initialCheckCompleted = true;
+  }
+
+  public logout(){
+    this.localStorageService.token = '';
+    this.localStorageService.sessionId = '';
+    
+    this.username = undefined;
+    this.sessionId = undefined;
+    this.role = undefined;
+
+    this.userIsAuthorized = false;
+    this.router.navigate(['/welcome']);
+
+    this.popupService.succesModal.showSuccesMessage('Erfolgreich abgemeldet');
   }
 }

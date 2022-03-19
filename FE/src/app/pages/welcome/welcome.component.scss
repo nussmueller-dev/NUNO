@@ -34,6 +34,10 @@
         justify-content: space-between;
         margin-top: 40px;
         width: 100%;
+
+        &.logout{
+            justify-content: center;
+        }
     }
 }
 
@@ -51,6 +55,10 @@
     .buttons {
         flex-direction: column;
         align-items: center;
+
+        &.logout{
+            margin-top: 0px !important;
+        }
 
         .button:last-child{
             margin-top: 30px;
