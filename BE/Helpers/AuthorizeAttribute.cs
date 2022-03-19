@@ -14,12 +14,12 @@ namespace NUNO_Backend.Helpers {
 
     public AuthorizeAttribute() { }
 
-    public AuthorizeAttribute(RoleType allowedRole) {
-      _allowedRoles.Add(allowedRole);
-    }
+    public AuthorizeAttribute(params RoleType[] allowedRoles) {
+      foreach (var role in allowedRoles) {
+        _allowedRoles.Add(role);
 
-    public AuthorizeAttribute(IList<RoleType> allowedRole) {
-      _allowedRoles = allowedRole;
+        AddBiggerTypes(role);
+      }
     }
 
     public void OnAuthorization(AuthorizationFilterContext context) {
@@ -29,9 +29,12 @@ namespace NUNO_Backend.Helpers {
       var currentUserHelper = context.HttpContext.RequestServices.GetService(typeof(CurrentUserHelper)) as CurrentUserHelper;
       var tempUserLogic = context.HttpContext.RequestServices.GetService(typeof(TempUserLogic)) as TempUserLogic;
 
-      IUser user = authenticationLogic.GetUserFromToken(token);
+      IUser user = null;
+      if (_allowedRoles.Count != 1 || !_allowedRoles.Contains(RoleType.TempUser)) {
+        user = authenticationLogic.GetUserFromToken(token);
+      }
 
-      if (user is null) {
+      if (user is null && (_allowedRoles.Count == 0 || _allowedRoles.Contains(RoleType.TempUser))) {
         user = tempUserLogic.GetTempUserFromSessionId(token);
       }
 
@@ -44,6 +47,17 @@ namespace NUNO_Backend.Helpers {
         currentUserHelper.SetCurrentUser(user);
       } else {
         context.Result = new UnauthorizedResult();
+      }
+    }
+
+    private void AddBiggerTypes(RoleType allowedRole) {
+      if (allowedRole == RoleType.Admin) {
+        _allowedRoles.Add(RoleType.Owner);
+      }
+
+      if (allowedRole == RoleType.Player) {
+        _allowedRoles.Add(RoleType.Owner);
+        _allowedRoles.Add(RoleType.Admin);
       }
     }
   }

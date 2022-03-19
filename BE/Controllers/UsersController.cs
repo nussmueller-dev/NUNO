@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NUNO_Backend.Database.Entities;
+using NUNO_Backend.Enums;
 using NUNO_Backend.Helpers;
 using NUNO_Backend.Logic;
 using NUNO_Backend.Models.BindingModels;
@@ -37,13 +38,13 @@ namespace NUNO_Backend.Controllers {
       return Ok(response);
     }
 
-    [Authorize]
+    [Authorize(RoleType.Player, RoleType.Admin)]
     [HttpGet("token/enddate")]
     public DateTime GetTokenEndDate() {
       return _currentUserHelper.Token.ValidTo;
     }
 
-    [Authorize]
+    [Authorize(RoleType.Player)]
     [HttpPost("authenticate/token")]
     public IActionResult Authenticate() {
       var response = _authenticationLogic.GetUserInformations();

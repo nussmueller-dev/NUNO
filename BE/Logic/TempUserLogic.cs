@@ -24,7 +24,7 @@ namespace NUNO_Backend.Logic {
       FilterTempUsers();
       var newTempuser = new TempUser();
 
-      newTempuser.Username = name;
+      newTempuser.Username = name.Trim();
       newTempuser.SessionId = Guid.NewGuid().ToString();
       return newTempuser;
     }

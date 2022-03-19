@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NUNO_Backend.Database.Entities;
+using NUNO_Backend.Enums;
 using NUNO_Backend.Helpers;
 using NUNO_Backend.Logic;
 using NUNO_Backend.Models.BindingModels;
@@ -18,6 +19,15 @@ namespace NUNO_Backend.Controllers {
       _currentUserHelper = currentUserHelper;
     }
 
+    [HttpPost("create")]
+    public IActionResult Create([FromBody] TempUserBindingModel model) {
+      var tempUser = _tempUserLogic.CreateTempUser(model.Username);
+      var viewModel = new TempUserViewModel(tempUser.SessionId, tempUser.Username, tempUser.Role);
+
+      return Ok(viewModel);
+    }
+
+    [Authorize(RoleType.TempUser)]
     [HttpGet("current")]
     public IActionResult Info() {
       if (_currentUserHelper.CurrentUser.GetType() != typeof(TempUser)) {
@@ -26,14 +36,6 @@ namespace NUNO_Backend.Controllers {
 
       var currentUser = (TempUser)_currentUserHelper.CurrentUser;
       var viewModel = new TempUserViewModel(currentUser.SessionId, currentUser.Username, currentUser.Role);
-
-      return Ok(viewModel);
-    }
-
-    [HttpPost("create")]
-    public IActionResult Create([FromBody] TempUserBindingModel model) {
-      var tempUser = _tempUserLogic.CreateTempUser(model.Username);
-      var viewModel = new TempUserViewModel(tempUser.SessionId, tempUser.Username, tempUser.Role);
 
       return Ok(viewModel);
     }

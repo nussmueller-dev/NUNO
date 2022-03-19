@@ -40,8 +40,8 @@ namespace NUNO_Backend.Logic {
     public User Register(RegisterBindingModel registerModel) {
       var user = new User();
 
-      user.Email = registerModel.Email;
-      user.Username = registerModel.Username;
+      user.Email = registerModel.Email.Trim();
+      user.Username = registerModel.Username.Trim();
 
       user.Salt = GetSalt();
       user.PasswordHash = HashPassword(registerModel.Password, user.Salt);

@@ -17,6 +17,8 @@ namespace NUNO_Backend.Helpers.Validators {
         return ValidationResult.Success;
       }
 
+      username = username.Trim();
+
       tempUserLogic.FilterTempUsers();
 
       var tempUserExists = dbContext.TempUsers.Any(x => x.Username == username);

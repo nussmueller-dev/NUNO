@@ -15,6 +15,8 @@ namespace NUNO_Backend.Helpers.Validators {
         return ValidationResult.Success;
       }
 
+      email = email.Trim();
+
       return dbContext.Users.Any(x => x.Email == email) ? new ValidationResult(ErrorMessage) : ValidationResult.Success;
     }
   }
