@@ -1,3 +1,4 @@
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { CurrentUserService } from './shared/services/current-user.service';
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from './shared/routes';
@@ -10,8 +11,8 @@ import { routerTransition } from './shared/routes';
 })
 export class AppComponent implements OnInit { 
   constructor(
-    private currentUserService: CurrentUserService 
-  ){}
+    private currentUserService: CurrentUserService
+  ){ }
 
   ngOnInit() {
     this.currentUserService.tryReAuthentication();
