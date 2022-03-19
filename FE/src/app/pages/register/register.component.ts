@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private popupService: PopupService,
-    private CurrentUserService: CurrentUserService,
+    private currentUserService: CurrentUserService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     });
 
     if(authenticationViewModel){
-      this.CurrentUserService.setCurrentUser(authenticationViewModel);
+      this.currentUserService.setCurrentUser(authenticationViewModel);
 
       if(this.targetNavigationPoint === 'join'){
         this.router.navigate(['/join']);
