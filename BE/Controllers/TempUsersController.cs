@@ -46,5 +46,20 @@ namespace NUNO_Backend.Controllers {
 
       return Ok(viewModel);
     }
+
+    [Authorize(RoleType.TempUser)]
+    [HttpDelete("current")]
+    public IActionResult DeleteTempUser() {
+      if (_currentUserHelper.CurrentUser.GetType() != typeof(TempUser)) {
+        return Unauthorized();
+      }
+
+      var currentUser = (TempUser)_currentUserHelper.CurrentUser;
+
+      _dbContext.TempUsers.Remove(currentUser);
+      _dbContext.SaveChanges();
+
+      return Ok();
+    }
   }
 }

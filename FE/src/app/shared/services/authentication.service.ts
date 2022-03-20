@@ -57,4 +57,12 @@ export class AuthenticationService {
       }
     }));
   }
+
+  public async deleteCurrentTempUser(sessionId: string){
+    return lastValueFrom(this.httpClient.delete(environment.BACKENDURL + 'users/temp/current', {
+      headers: {
+        'Authorization': 'Session ' + sessionId
+      }
+    }));
+  }
 }

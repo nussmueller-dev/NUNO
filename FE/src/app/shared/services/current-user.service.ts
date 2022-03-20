@@ -91,6 +91,10 @@ export class CurrentUserService {
   }
 
   public logout(){
+    if(this.sessionId && this.role === RoleType.TempUser){
+      this.authenticationService.deleteCurrentTempUser(this.sessionId);
+    }
+
     this.localStorageService.token = '';
     this.localStorageService.sessionId = '';
     
