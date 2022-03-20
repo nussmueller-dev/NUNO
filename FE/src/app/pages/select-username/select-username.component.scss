@@ -17,6 +17,18 @@ main{
     flex: 1;
 }
 
+.input{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    >*{
+        margin-top: 20px;
+    }
+}
+
 .use-nuno-account,
 .use-temp-account{
     display: flex;

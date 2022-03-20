@@ -12,7 +12,9 @@
     
     <div class="use-temp-account">
         <h3>Temporärer Name verwenden</h3>
-        <input type="text" class="text-box" placeholder="Benutzername">
-        <button class="button">Weiter</button>
+        <form class="input" (ngSubmit)="createTempUser()" ngModelOptions="standalone">
+            <input placeholder="Benutzername" type="text" class="text-box" name="username" [(ngModel)]="tempUserName" />
+            <input type="submit" class="button" value="Weiter">
+        </form>
     </div>
 </main>

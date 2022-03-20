@@ -12,7 +12,6 @@ namespace NUNO_Backend.Helpers.Validators {
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext) {
       var email = (string)value;
-      var dbContext = (NunoDbContext)validationContext.GetService(typeof(NunoDbContext));
 
       if (email is null) {
         return new ValidationResult(ErrorMessage);

@@ -3,7 +3,7 @@ using NUNO_Backend.Database.Entities;
 
 namespace NUNO_Backend.Logic {
   public class TempUserLogic {
-    private const int EXPIRY_DURATION_HOURS = 48;
+    private const int EXPIRY_DURATION_HOURS = 12;
     private readonly NunoDbContext _dbContext;
 
     public TempUserLogic(NunoDbContext dbContext) {
@@ -26,6 +26,10 @@ namespace NUNO_Backend.Logic {
 
       newTempuser.Username = name.Trim();
       newTempuser.SessionId = Guid.NewGuid().ToString();
+
+      _dbContext.TempUsers.Add(newTempuser);
+      _dbContext.SaveChanges();
+
       return newTempuser;
     }
 

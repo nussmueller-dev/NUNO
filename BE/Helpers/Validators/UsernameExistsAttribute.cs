@@ -17,6 +17,7 @@ namespace NUNO_Backend.Helpers.Validators {
         return ValidationResult.Success;
       }
 
+      var tempusers = dbContext.TempUsers.ToList();
       username = username.Trim();
 
       tempUserLogic.FilterTempUsers();
