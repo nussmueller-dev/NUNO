@@ -15,7 +15,7 @@ export class LocalStorageService {
   }
 
   public get sessionId(): string {
-    return localStorage.getItem(LocalStorageConstants.TOKEN) ?? '';
+    return localStorage.getItem(LocalStorageConstants.TEMP_ID) ?? '';
   }
 
   public set sessionId(sessionId: string){

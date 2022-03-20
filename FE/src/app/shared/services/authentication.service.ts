@@ -51,7 +51,7 @@ export class AuthenticationService {
   } 
 
   public async getCurrentTempUser(sessionId: string){
-    return lastValueFrom(this.httpClient.post<TempUserViewModel>(environment.BACKENDURL + 'users/temp/current', {}, {
+    return lastValueFrom(this.httpClient.get<TempUserViewModel>(environment.BACKENDURL + 'users/temp/current', {
       headers: {
         'Authorization': 'Session ' + sessionId
       }
