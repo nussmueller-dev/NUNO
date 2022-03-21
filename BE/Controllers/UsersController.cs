@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using AuthorizeAttribute = NUNO_Backend.Helpers.AuthorizeAttribute;
 
 namespace NUNO_Backend.Controllers {
-  [Route("Users")]
+  [Route("users")]
   [ApiController]
   public class UsersController : ControllerBase {
     private AuthenticationLogic _authenticationLogic;
