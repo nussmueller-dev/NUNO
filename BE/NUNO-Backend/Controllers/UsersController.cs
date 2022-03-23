@@ -4,7 +4,6 @@ using Authentication.Logic;
 using Authentication.Models.BindingModels;
 using Data.Enums;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
 
 namespace NUNO_Backend.Controllers {
   [Route("users")]

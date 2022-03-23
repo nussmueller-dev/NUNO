@@ -2,7 +2,6 @@
 using Authentication.Logic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Reflection;
 using System.Text;
 
 namespace NUNO_Backend.Extensions {

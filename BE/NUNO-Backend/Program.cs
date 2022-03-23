@@ -1,8 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using NUNO_Backend.Extensions;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 

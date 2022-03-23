@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Authentication.Helpers;
+﻿using Authentication.Helpers;
 using Authentication.Logic;
 using Data.Enums;
 using Data.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

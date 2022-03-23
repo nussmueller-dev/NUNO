@@ -6,7 +6,6 @@ using Authentication.Models.ViewModels;
 using Data;
 using Data.Entities;
 using Data.Enums;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NUNO_Backend.Controllers {
