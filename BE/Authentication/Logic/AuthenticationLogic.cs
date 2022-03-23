@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.IdentityModel.Tokens;
-using NUNO_Backend.Database;
+﻿using NUNO_Backend.Database;
 using NUNO_Backend.Database.Entities;
 using NUNO_Backend.Helpers;
 using NUNO_Backend.Models.BindingModels;
 using NUNO_Backend.Models.ViewModels;
 using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using NUNO_Backend.Enums;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace NUNO_Backend.Logic {
   public class AuthenticationLogic {
