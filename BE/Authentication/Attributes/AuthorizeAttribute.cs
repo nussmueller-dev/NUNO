@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Authentication.Helpers;
+using Authentication.Logic;
+using Data.Enums;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using NUNO_Backend.Database.Interfaces;
-using NUNO_Backend.Enums;
-using NUNO_Backend.Logic;
 
-namespace NUNO_Backend.Helpers {
+namespace Authentication.Attributes {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
   public class AuthorizeAttribute : Attribute, IAuthorizationFilter {
     private IList<RoleType> _allowedRoles = new List<RoleType>();

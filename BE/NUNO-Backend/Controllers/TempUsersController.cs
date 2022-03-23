@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Authentication.Attributes;
+using Authentication.Helpers;
+using Authentication.Logic;
+using Authentication.Models.BindingModels;
+using Authentication.Models.ViewModels;
+using Data;
+using Data.Entities;
+using Data.Enums;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NUNO_Backend.Database;
-using NUNO_Backend.Database.Entities;
-using NUNO_Backend.Enums;
-using NUNO_Backend.Helpers;
-using NUNO_Backend.Helpers.Validators;
-using NUNO_Backend.Logic;
-using NUNO_Backend.Models.BindingModels;
-using NUNO_Backend.Models.ViewModels;
 
 namespace NUNO_Backend.Controllers {
   [Route("users/temp")]

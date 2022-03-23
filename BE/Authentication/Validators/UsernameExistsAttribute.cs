@@ -1,8 +1,8 @@
-﻿using NUNO_Backend.Database;
-using NUNO_Backend.Logic;
+﻿using Authentication.Logic;
+using Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace NUNO_Backend.Helpers.Validators {
+namespace Authentication.Validators {
   public class UsernameExistsAttribute : ValidationAttribute {
     public UsernameExistsAttribute() {
       ErrorMessage = "Dieser Benutzername ist bereits vergeben";

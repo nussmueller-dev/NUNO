@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NUNO_Backend.Models.BindingModels {
+namespace Authentication.Models.BindingModels {
   public class LoginBindingModel {
     [Required(ErrorMessage = "Der Benutzername muss angegeben werden")]
     public string Username { get; set; }

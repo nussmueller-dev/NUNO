@@ -1,6 +1,6 @@
-﻿using NUNO_Backend.Enums;
+﻿using Data.Enums;
 
-namespace NUNO_Backend.Models.ViewModels {
+namespace Authentication.Models.ViewModels {
   public class TempUserViewModel {
     public string SessionId { get; set; }
     public string Username { get; set; }

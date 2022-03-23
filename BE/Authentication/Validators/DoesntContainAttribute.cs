@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NUNO_Backend.Helpers.Validators {
+namespace Authentication.Validators {
   public class DoesntContainAttribute : ValidationAttribute {
     private char _invalidChar;
 

@@ -1,10 +1,9 @@
-﻿using NUNO_Backend.Database;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace NUNO_Backend.Helpers.Validators {
+namespace Authentication.Validators {
   public class EmailValidationAttribute : ValidationAttribute {
     public EmailValidationAttribute() {
       ErrorMessage = "Diese Emailadresse ist ungültig";

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Authentication.Helpers;
+using Authentication.Logic;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using NUNO_Backend.Helpers;
-using NUNO_Backend.Logic;
 using System.Reflection;
 using System.Text;
 

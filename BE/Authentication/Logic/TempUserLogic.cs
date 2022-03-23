@@ -1,7 +1,7 @@
-﻿using NUNO_Backend.Database;
-using NUNO_Backend.Database.Entities;
+﻿using Data;
+using Data.Entities;
 
-namespace NUNO_Backend.Logic {
+namespace Authentication.Logic {
   public class TempUserLogic {
     private const int EXPIRY_DURATION_HOURS = 12;
     private readonly NunoDbContext _dbContext;

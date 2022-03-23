@@ -1,6 +1,6 @@
-﻿using NUNO_Backend.Enums;
+﻿using Data.Enums;
 
-namespace NUNO_Backend.Database.Interfaces {
+namespace Data.Interfaces {
   public interface IUser {
     public string Username { get; set; }
     public RoleType Role { get; }

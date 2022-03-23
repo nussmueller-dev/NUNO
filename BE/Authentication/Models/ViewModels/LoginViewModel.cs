@@ -1,7 +1,7 @@
-﻿using NUNO_Backend.Database.Entities;
-using NUNO_Backend.Enums;
+﻿using Data.Entities;
+using Data.Enums;
 
-namespace NUNO_Backend.Models.ViewModels {
+namespace Authentication.Models.ViewModels {
   public class LoginViewModel {
     public int Id { get; set; }
     public string Username { get; set; }

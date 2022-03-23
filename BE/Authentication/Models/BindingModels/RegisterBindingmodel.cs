@@ -1,7 +1,7 @@
-﻿using NUNO_Backend.Helpers.Validators;
+﻿using Authentication.Validators;
 using System.ComponentModel.DataAnnotations;
 
-namespace NUNO_Backend.Models.BindingModels {
+namespace Authentication.Models.BindingModels {
   public class RegisterBindingModel {
     [Required(ErrorMessage = "Die Email muss angegeben werden")]
     [EmailValidation]

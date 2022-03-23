@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUNO_Backend.Database.Entities;
+﻿using Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace NUNO_Backend.Database {
+namespace Data {
   public class NunoDbContext : DbContext {
     public DbSet<User> Users { get; set; }
     public DbSet<TempUser> TempUsers { get; set; }

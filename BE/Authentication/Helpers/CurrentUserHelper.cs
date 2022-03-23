@@ -1,8 +1,7 @@
-﻿using NUNO_Backend.Database.Entities;
-using NUNO_Backend.Database.Interfaces;
+﻿using Data.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace NUNO_Backend.Helpers {
+namespace Authentication.Helpers {
   public class CurrentUserHelper {
     public IUser CurrentUser { get; private set; } = null;
     public JwtSecurityToken Token { get; private set; } = null;

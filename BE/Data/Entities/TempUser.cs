@@ -1,8 +1,8 @@
-﻿using NUNO_Backend.Database.Interfaces;
-using NUNO_Backend.Enums;
+﻿using Data.Enums;
+using Data.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NUNO_Backend.Database.Entities {
+namespace Data.Entities {
   public class TempUser : IUser {
     public int Id { get; set; }
     public string Username { get; set; }

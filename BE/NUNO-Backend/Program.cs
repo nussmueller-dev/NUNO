@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using NUNO_Backend.Database;
-using NUNO_Backend.Helpers;
-using NUNO_Backend.Logic;
-using NUNO_Backend.Models;
 using NUNO_Backend.Extensions;
 using System.Text;
 

@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NUNO_Backend.Database;
+﻿using Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace NUNO_Backend.Extensions {
   public static class DatabaseExtension {

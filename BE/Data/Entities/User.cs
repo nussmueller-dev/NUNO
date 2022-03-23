@@ -1,7 +1,7 @@
-﻿using NUNO_Backend.Database.Interfaces;
-using NUNO_Backend.Enums;
+﻿using Data.Enums;
+using Data.Interfaces;
 
-namespace NUNO_Backend.Database.Entities {
+namespace Data.Entities {
   public class User : IUser {
     public int Id { get; set; }
     public string Email { get; set; }

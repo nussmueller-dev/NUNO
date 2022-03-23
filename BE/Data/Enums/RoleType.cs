@@ -1,4 +1,4 @@
-﻿namespace NUNO_Backend.Enums {
+﻿namespace Data.Enums {
   public enum RoleType {
     TempUser = 0,
     Player = 1,

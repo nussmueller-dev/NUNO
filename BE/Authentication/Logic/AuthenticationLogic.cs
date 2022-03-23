@@ -1,20 +1,20 @@
-﻿using NUNO_Backend.Database;
-using NUNO_Backend.Database.Entities;
-using NUNO_Backend.Helpers;
-using NUNO_Backend.Models.BindingModels;
-using NUNO_Backend.Models.ViewModels;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Security.Cryptography;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
-using NUNO_Backend.Enums;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Data;
+using Authentication.Helpers;
+using Authentication.Models.BindingModels;
+using Data.Entities;
+using Authentication.Models.ViewModels;
+using Data.Enums;
 
-namespace NUNO_Backend.Logic {
+namespace Authentication.Logic {
   public class AuthenticationLogic {
     private const double EXPIRY_DURATION_HOURS = 12;
 

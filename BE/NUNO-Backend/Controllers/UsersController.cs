@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Authentication.Attributes;
+using Authentication.Helpers;
+using Authentication.Logic;
+using Authentication.Models.BindingModels;
+using Data.Enums;
 using Microsoft.AspNetCore.Mvc;
-using NUNO_Backend.Database.Entities;
-using NUNO_Backend.Enums;
-using NUNO_Backend.Helpers;
-using NUNO_Backend.Logic;
-using NUNO_Backend.Models.BindingModels;
 using System.Security.Cryptography;
-using AuthorizeAttribute = NUNO_Backend.Helpers.AuthorizeAttribute;
 
 namespace NUNO_Backend.Controllers {
   [Route("users")]

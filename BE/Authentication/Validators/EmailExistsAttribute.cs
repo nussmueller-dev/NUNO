@@ -1,7 +1,7 @@
-﻿using NUNO_Backend.Database;
+﻿using Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace NUNO_Backend.Helpers.Validators {
+namespace Authentication.Validators {
   public class EmailExistsAttribute : ValidationAttribute {
     public EmailExistsAttribute() {
       ErrorMessage = "Diese Emailadresse ist bereits vergeben";
