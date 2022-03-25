@@ -1,4 +1,4 @@
 ﻿namespace Game.Interfaces.Entities {
-  public interface ICard {
+  public interface IRules {
   }
 }

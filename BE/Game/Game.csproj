@@ -10,4 +10,8 @@
     <Folder Include="UNO\Entities\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
 </Project>
