@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Game.Interfaces.Entities;
 
 namespace Game.Interfaces {
-  internal interface IGameLogic {
+  public interface IGameLogic {
+    public void Reset();
+    public ICard TakeCard();
+    public bool LayCard();
   }
 }
