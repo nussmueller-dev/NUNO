@@ -16,6 +16,6 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    
+    this.signalrPlayerOrderService.stopConnection();
   }
 }

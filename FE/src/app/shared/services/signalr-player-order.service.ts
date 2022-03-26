@@ -19,7 +19,7 @@ export class SignalrPlayerOrderService {
 
     if (this.connectionActive) {
       await this.hubConnection?.stop();
-      console.log('Connection restarting');
+      console.log('Connection for PlayerOrder restarting');
     }
 
     this.hubConnection = new SignalR.HubConnectionBuilder()
@@ -31,14 +31,19 @@ export class SignalrPlayerOrderService {
     this.hubConnection
       .start()
       .then(() => {
-        console.log('Connection started');
+        console.log('Connection for PlayerOrder started');
         this.connectionActive = true;
       })
-      .catch(err => console.log('Error while starting connection: ' + err));
+      .catch(err => console.log('Error while starting connection for PlayerOrder: ' + err));
 
     this.hubConnection.onclose(() => {
+      console.log('Closeing');
       this.connectionActive = false;
       this.startConnection();
     });
+  }
+
+  public stopConnection(){
+    this.hubConnection?.stop();
   }
 }
