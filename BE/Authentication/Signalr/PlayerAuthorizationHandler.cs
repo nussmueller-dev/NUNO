@@ -4,7 +4,7 @@ using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace SignalR.Authentication {
+namespace Authentication.Signalr {
   public class PlayerAuthorizationHandler : AuthorizationHandler<PlayerAuthorizationRequirement> {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

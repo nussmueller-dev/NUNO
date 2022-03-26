@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
-namespace SignalR.Hubs {
+namespace Game.Hubs {
   [Authorize(Policy = "PlayerAuthorization")]
   public class PlayerOrderHub : Hub { }
 }

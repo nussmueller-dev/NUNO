@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace SignalR.Authentication {
+namespace Authentication.Signalr {
   public class PlayerAuthorizationRequirement : IAuthorizationRequirement { }
 }

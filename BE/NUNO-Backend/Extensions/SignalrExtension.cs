@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using SignalR.Authentication;
-using SignalR.Hubs;
+﻿using Authentication.Signalr;
+using Game.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NUNO_Backend.Extensions {
   public static class SignalrExtension {

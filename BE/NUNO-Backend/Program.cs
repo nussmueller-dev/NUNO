@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.AddDatabaseProject();
 builder.AddAuthenticationProject();
 builder.AddModelsProject();
+builder.AddGameProject();
 builder.AddSignalrProject();
 
 var app = builder.Build();
