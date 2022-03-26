@@ -25,18 +25,18 @@ namespace Game {
       return Sessions.FirstOrDefault(x => x.Id == sessionId);
     }
 
-    public List<Player> ReorderPlayers(int sessionId, List<int> playerIds) {
+    public List<Player> ReorderPlayers(int sessionId, List<string> playerNames) {
       var session = GetSession(sessionId);
 
-      if (session is null || session.Players.Count != playerIds.Count) {
+      if (session is null || session.Players.Count != playerNames.Count) {
         return null;
       }
 
-      if (!playerIds.All(x => session.Players.Any(y => y.UserId == x))) {
+      if (!playerNames.All(x => session.Players.Any(y => y.Username == x))) {
         return null;
       }
 
-      var newPlayersList = playerIds.Select(x => session.Players.First(y => y.UserId == x)).ToList();
+      var newPlayersList = playerNames.Select(x => session.Players.First(y => y.Username == x)).ToList();
       session.Players = newPlayersList;
       
       return newPlayersList;
