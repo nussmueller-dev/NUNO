@@ -1,9 +1,9 @@
-﻿using Data.Entities;
+﻿using Data.Interfaces;
 using Game.Interfaces.Entities;
 
 namespace Game.Entities {
   public class Player {
-    private User User { get; set; }
+    private IUser User { get; set; }
     public string Username { 
       get {
         return User.Username;  
@@ -12,7 +12,7 @@ namespace Game.Entities {
     public bool IsCreator { get; }
     public List<ICard> Cards { get; set; }
 
-    public Player(User user, bool isCreator = false) {
+    public Player(IUser user, bool isCreator = false) {
       User = user;
       IsCreator = isCreator;
     }

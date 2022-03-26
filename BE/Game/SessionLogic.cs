@@ -1,4 +1,4 @@
-﻿using Data.Entities;
+﻿using Data.Interfaces;
 using Game.Entities;
 using Game.Interfaces.Entities;
 
@@ -7,7 +7,7 @@ namespace Game {
     private Random Random = new Random();
     private List<Session> Sessions = new List<Session>();
 
-    public Session CreateSession(IRules rules, User creator) {
+    public Session CreateSession(IRules rules, IUser creator) {
       var newSession = new Session();
 
       do {

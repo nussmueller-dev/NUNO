@@ -1,16 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using Authentication.Helpers;
+using Game;
+using Game.Interfaces.Entities;
+using Game.UNO.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NUNO_Backend.Controllers {
   [Route("sessions")]
   [ApiController]
   public class SessionController : ControllerBase {
-    [HttpPost("create")]
-    public IActionResult Create() {
+    private readonly SessionLogic _sessionLogic;
+    private readonly CurrentUserHelper _currentUserHelper;
+
+    public SessionController(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
+      _sessionLogic = sessionLogic;
+      _currentUserHelper = currentUserHelper;
+    }
+
+    [HttpPost("create/uno")]
+    public IActionResult CreateUnoSession([FromBody] UnoRules rules) {
+      var session = _sessionLogic.CreateSession(rules, _currentUserHelper.CurrentUser);
       
-      
-      return Ok();
+      return Ok(session.Id);
     }
   }
 }
