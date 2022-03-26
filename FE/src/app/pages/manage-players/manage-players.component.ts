@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { SignalrPlayerOrderService } from './../../shared/services/signalr-player-order.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
@@ -7,12 +8,24 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./manage-players.component.scss']
 })
 export class ManagePlayersComponent implements OnInit, OnDestroy {
+  sessionId?: number;
+
   constructor(
-    private signalrPlayerOrderService: SignalrPlayerOrderService
+    private signalrPlayerOrderService: SignalrPlayerOrderService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
   
   async ngOnInit() {
-    await this.signalrPlayerOrderService.startConnection();
+    await this.signalrPlayerOrderService.startConnection();    
+    
+    let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
+
+    if(sessionId){
+      this.sessionId = +sessionId;
+    }else{
+      this.router.navigate(['/rules']);
+    }
   }
   
   ngOnDestroy() {

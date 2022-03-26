@@ -107,4 +107,10 @@ export class CurrentUserService {
 
     this.popupService.succesModal.showSuccesMessage('Erfolgreich abgemeldet');
   }
+
+  public async awaitInitialCheckCompleted(){
+    while(!this.initialCheckCompleted){
+      await sleep(10);
+    }
+  }
 }
