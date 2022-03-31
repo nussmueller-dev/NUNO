@@ -17,7 +17,9 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   ) { }
   
   async ngOnInit() {
-    await this.signalrPlayerOrderService.startConnection();    
+    await this.signalrPlayerOrderService.start();    
+
+    this.signalrPlayerOrderService.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
     
     let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
 
@@ -29,6 +31,6 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.signalrPlayerOrderService.stopConnection();
+    this.signalrPlayerOrderService.stop();
   }
 }
