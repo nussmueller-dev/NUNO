@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Component, HostBinding, HostListener } from '@angular/core';
 import { modalAnimation } from 'src/app/shared/animations/modal-animation';
 import { PopupService } from 'src/app/shared/services/popup.service';
 
