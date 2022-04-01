@@ -1,7 +1,7 @@
+import { Injectable } from '@angular/core';
+import * as SignalR from "@microsoft/signalr";
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
-import * as SignalR from "@aspnet/signalr";
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,14 @@ export class SignalrService {
 
   constructor(
     private currentUserService: CurrentUserService
-  ){}
-  
+  ) { }
+
   public async startConnection(restarting: boolean = false) {
-    if(this.connectionClosed && restarting){
+    if (this.connectionClosed && restarting) {
       return;
     }
 
-    if(!this.connectionClosed && !restarting){
+    if (!this.connectionClosed && !restarting) {
       await this.hubConnection?.stop();
     }
 
@@ -29,10 +29,10 @@ export class SignalrService {
     let authenticationKey = this.currentUserService.token ?? this.currentUserService.sessionId;
 
     this.hubConnection = new SignalR.HubConnectionBuilder()
-    .withUrl(environment.BACKENDURL + 'playerorder', {
-      accessTokenFactory: () => authenticationKey ?? ''
-    })
-    .build();
+      .withUrl(environment.BACKENDURL + 'playerorder', {
+        accessTokenFactory: () => authenticationKey ?? ''
+      })
+      .build();
 
     this.hubConnection
       .start()
@@ -46,7 +46,7 @@ export class SignalrService {
     });
   }
 
-  public stopConnection(){
+  public stopConnection() {
     this.connectionClosed = true;
     this.hubConnection?.stop();
   }

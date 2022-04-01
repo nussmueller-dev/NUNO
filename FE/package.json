@@ -20,7 +20,6 @@
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
-    "@aspnet/signalr": "^1.0.27",
     "@microsoft/signalr": "^6.0.3",
     "angular-svg-icon": "^13.0.0",
     "rxjs": "~7.4.0",
