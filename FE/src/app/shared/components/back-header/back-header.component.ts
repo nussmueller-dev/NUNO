@@ -8,12 +8,13 @@ import { Router } from '@angular/router';
 })
 export class BackHeaderComponent {
   @Input() backUrl?: string;
+  @Input() clearQueryParams: boolean = false;
 
   constructor(
     private router: Router
   ){}
 
   navBack(){
-    this.router.navigate([this.backUrl],  { queryParamsHandling: 'merge' });
+    this.router.navigate([this.backUrl],  { queryParamsHandling: this.clearQueryParams ? '' : 'merge' });
   }
 }

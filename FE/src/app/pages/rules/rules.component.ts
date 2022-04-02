@@ -25,6 +25,8 @@ export class RulesComponent implements OnInit {
   }
 
   async next(){
+    await this.currentUserService.checkAuthentication();
+    
     let sessionId = await this.sessionService.createUnoSession(this.rules);
 
     this.router.navigate(['/manage-players'],  { queryParams: { sessionId: sessionId } });
