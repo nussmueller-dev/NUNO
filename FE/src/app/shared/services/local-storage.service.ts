@@ -1,4 +1,3 @@
-import { RoleType } from './../constants/roles';
 import { Injectable } from '@angular/core';
 import { LocalStorageConstants } from '../constants/localstorage-constants';
 
