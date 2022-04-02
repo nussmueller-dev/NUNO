@@ -13,7 +13,7 @@ namespace Game.Hubs {
 
     public override Task OnConnectedAsync() {
       string name = Context.ConnectionId;
-      var user = Clients.Client(name + "lul").SendAsync("test");
+      var user = Clients.Client(name).SendAsync("test");
 
       return base.OnConnectedAsync();
     }

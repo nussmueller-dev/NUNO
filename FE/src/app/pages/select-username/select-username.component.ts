@@ -26,6 +26,7 @@ export class SelectUsernameComponent implements OnInit {
 
     if(this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create'){
       this.router.navigate(['/welcome']);
+      return;
     }
 
     if(this.currentUserService.userIsAuthorized){

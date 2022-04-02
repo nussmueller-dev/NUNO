@@ -1,5 +1,7 @@
-﻿using Authentication.Helpers;
+﻿using Authentication.Attributes;
+using Authentication.Helpers;
 using Game;
+using Game.Attributes;
 using Game.Interfaces.Entities;
 using Game.UNO.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +18,21 @@ namespace NUNO_Backend.Controllers {
       _currentUserHelper = currentUserHelper;
     }
 
+    [Authorize]
     [HttpPost("create/uno")]
     public IActionResult CreateUnoSession([FromBody] UnoRules rules) {
       var session = _sessionLogic.CreateSession(rules, _currentUserHelper.CurrentUser);
       
       return Ok(session.Id);
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpPost("players/reorder")]
+    public IActionResult ReorderPlayers([FromBody] List<string> playerNames) {
+      //var session = _sessionLogic.ReorderPlayers()
+
+      return Ok();
     }
   }
 }

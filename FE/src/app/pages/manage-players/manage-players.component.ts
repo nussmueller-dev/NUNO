@@ -24,17 +24,16 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     await this.currentUserService.checkAuthentication();
 
-    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder');    
-
-    this.signalrConnection.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
-    
     let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
-
+    
     if(sessionId){
       this.sessionId = +sessionId;
     }else{
       this.router.navigate(['/rules']);
     }
+
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder');    
+    this.signalrConnection.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
   }
   
   ngOnDestroy() {
