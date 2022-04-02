@@ -1,10 +1,13 @@
+import { sleep } from './../../constants/sleep';
 import * as SignalR from "@microsoft/signalr";
 import { CurrentUserService } from "../current-user.service";
+import { DateTime, Duration } from "luxon";
 
 export class SignalrConnection {
   private hubConnection?: SignalR.HubConnection;
   private connectionClosed = true;
   private serverUrl: string = '';
+  private lastRestartTime: DateTime = DateTime.local();
 
   constructor(
     private currentUserService: CurrentUserService
@@ -20,6 +23,7 @@ export class SignalrConnection {
       .withUrl(this.serverUrl, {
         accessTokenFactory: () => authenticationKey ?? ''
       })
+      .configureLogging(SignalR.LogLevel.None)
       .build();
 
     await this.startConnection();
@@ -28,6 +32,7 @@ export class SignalrConnection {
   public async stop() {
     this.connectionClosed = true;
     await this.hubConnection?.stop();
+    console.log(); 
   }
 
   public addEvent(methode: string, fn: (...args: any[]) => void) {
@@ -43,13 +48,28 @@ export class SignalrConnection {
       await this.hubConnection?.stop();
     }
 
+    if(restarting){
+      let time5SeccondsAgo = DateTime.local().minus(Duration.fromMillis(5000));
+      let requiredDelay = time5SeccondsAgo.diff(this.lastRestartTime).milliseconds * -1;
+      
+      if(requiredDelay > 0){
+        await sleep(requiredDelay);
+      }
+      
+      console.log('%cSignalR connection restarting', 'color: orange');
+      this.lastRestartTime = DateTime.local();
+    }
+
     this.connectionClosed = false;
 
     await this.hubConnection?.start()
       .then(() => {
-        console.log('SignalR connection started');
+        console.log('%cSignalR connection started', 'color: lime');
       })
-      .catch(err => console.log('Error while starting SignalR connection: ' + err));
+      .catch(err => {
+        console.log('%cError while starting SignalR connection: ' + err, 'color: red');
+        this.startConnection(true);
+      });
 
     this.hubConnection?.onclose(() => {
       this.startConnection(true);
