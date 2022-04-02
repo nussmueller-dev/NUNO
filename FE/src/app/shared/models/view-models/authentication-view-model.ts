@@ -1,4 +1,5 @@
 import { RoleType } from './../../constants/roles';
+
 export class AuthenticationViewModel {
     id: number = 0;
     username: string = '';
