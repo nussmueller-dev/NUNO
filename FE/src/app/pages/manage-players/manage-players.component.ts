@@ -11,6 +11,7 @@ import { CurrentUserService } from 'src/app/shared/services/current-user.service
 })
 export class ManagePlayersComponent implements OnInit, OnDestroy {
   private signalrConnection: SignalrConnection;
+  playerNames: Array<string> = [];
   sessionId?: number;
 
   constructor(
@@ -32,11 +33,15 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
       this.router.navigate(['/rules']);
     }
 
-    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder');    
-    this.signalrConnection.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder?sessionId=' + sessionId);    
+    this.signalrConnection.addEvent('reorder', this.reorderPlayers);
   }
   
   ngOnDestroy() {
     this.signalrConnection.stop();
+  }
+
+  reorderPlayers(newPlayerNames: Array<string>){
+    console.log(newPlayerNames);
   }
 }

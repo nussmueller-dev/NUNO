@@ -1,8 +1,7 @@
 ﻿using Authentication.Attributes;
 using Authentication.Helpers;
 using Game;
-using Game.Attributes;
-using Game.Interfaces.Entities;
+using Game.CustomAuthentication;
 using Game.UNO.Entities;
 using Microsoft.AspNetCore.Mvc;
 

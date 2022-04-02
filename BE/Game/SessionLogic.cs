@@ -25,6 +25,26 @@ namespace Game {
       return Sessions.FirstOrDefault(x => x.Id == sessionId);
     }
 
+    public void RemoveConnectionId(string connectionId) {
+      var players = Sessions.SelectMany(x => x.Players).ToList();
+      var player = players.FirstOrDefault(x => x.ConnectionIds.Contains(connectionId));
+
+      player?.ConnectionIds.Remove(connectionId);
+    }
+
+    public bool IsUserInSession(int sessionId, IUser user) {
+      var session = GetSession(sessionId);
+      if (session is null) {
+        return false;
+      }
+
+      if (session.Players.Any(x => x.Username == user.Username)) {
+        return true;
+      }
+
+      return false;
+    }
+
     public List<Player> ReorderPlayers(int sessionId, List<string> playerNames) {
       var session = GetSession(sessionId);
 

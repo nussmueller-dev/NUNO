@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Authentication.Signalr {
+namespace Game.CustomAuthentication {
   public class PlayerAuthorizationRequirement : IAuthorizationRequirement { }
 }

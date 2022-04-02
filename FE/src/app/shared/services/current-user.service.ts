@@ -74,27 +74,27 @@ export class CurrentUserService {
     let sessionId = this.localStorageService.sessionId;
 
     if (token) {
-      let authViewModel = await this.authenticationService.loginWithToken(token).catch(() => {});
-
-      if (authViewModel) {
+      await this.authenticationService.loginWithToken(token)
+      .then((authViewModel) => {
         this.setCurrentUser(authViewModel);
-        this.initialCheckCompleted = true;
-        return;
-      } else {
-        this.localStorageService.token = '';
-      }
+      })
+      .catch((error) => {
+        if(error.status === 401){
+          this.localStorageService.token = '';
+        }
+      });
     }
 
     if (sessionId) {
-      let tempUserViewModel = await this.authenticationService.getCurrentTempUser(sessionId).catch(() => {});
-
-      if (tempUserViewModel) {
+      await this.authenticationService.getCurrentTempUser(sessionId)
+      .then((tempUserViewModel) => {
         this.setCurrentTempUser(tempUserViewModel);
-        this.initialCheckCompleted = true;
-        return;
-      } else {
-        this.localStorageService.sessionId = '';
-      }
+      })
+      .catch((error) => {
+        if(error.status === 401){
+          this.localStorageService.sessionId = '';
+        }
+      });
     }
 
     this.initialCheckCompleted = true;

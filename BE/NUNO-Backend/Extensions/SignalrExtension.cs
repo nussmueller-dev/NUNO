@@ -1,4 +1,4 @@
-﻿using Authentication.Signalr;
+﻿using Game.CustomAuthentication;
 using Game.Hubs;
 using Microsoft.AspNetCore.Authorization;
 

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Game.Attributes {
+namespace Game.CustomAuthentication {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
   public class AuthorizePlayerAttribute : Attribute, IAuthorizationFilter {
     public void OnAuthorization(AuthorizationFilterContext context) {
@@ -17,13 +17,7 @@ namespace Game.Attributes {
         return;
       }
 
-      var session = sessionLogic.GetSession(sessionId);
-      if (session is null) {
-        context.Result = new UnauthorizedResult();
-        return;
-      }
-
-      if(!session.Players.Any(x => x.Username == currentUserHelper.CurrentUser.Username)) {
+      if (!sessionLogic.IsUserInSession(sessionId, currentUserHelper.CurrentUser)) {
         context.Result = new UnauthorizedResult();
         return;
       }
