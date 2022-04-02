@@ -26,63 +26,63 @@ export class CurrentUserService {
     private popupService: PopupService
   ) { }
 
-  public setCurrentUser(authenticationViewModel: AuthenticationViewModel){
+  public setCurrentUser(authenticationViewModel: AuthenticationViewModel) {
     this.localStorageService.token = authenticationViewModel.token;
 
     this.username = authenticationViewModel.username;
     this.token = authenticationViewModel.token;
     this.role = authenticationViewModel.role;
-    
+
     this.userIsAuthorized = true;
   }
-  
-  public setCurrentTempUser(tempUserViewModel: TempUserViewModel){
+
+  public setCurrentTempUser(tempUserViewModel: TempUserViewModel) {
     this.localStorageService.sessionId = tempUserViewModel.sessionId;
-    
+
     this.username = tempUserViewModel.username;
     this.sessionId = tempUserViewModel.sessionId;
     this.role = tempUserViewModel.role;
-    
+
     this.userIsAuthorized = true;
   }
 
-  public async checkAuthentication(){
-    while(!this.initialCheckCompleted){
+  public async checkAuthentication() {
+    while (!this.initialCheckCompleted) {
       await sleep(50);
     }
 
-    if(this.userIsAuthorized){
+    if (this.userIsAuthorized) {
       return;
     }
-    
+
     this.userIsAuthorized = false;
     this.router.navigate(['/welcome']);
   }
 
-  public async tryReAuthentication(){
+  public async tryReAuthentication() {
     let token = this.localStorageService.token;
     let sessionId = this.localStorageService.sessionId;
 
-    if(token){
-      let authViewModel = await this.authenticationService.loginWithToken(token);
+    if (token) {
+      let authViewModel = await this.authenticationService.loginWithToken(token).catch(() => {});
 
-      if(authViewModel){
+      if (authViewModel) {
         this.setCurrentUser(authViewModel);
         this.initialCheckCompleted = true;
         return;
-      }else{
+      } else {
         this.localStorageService.token = '';
       }
     }
 
-    if(sessionId){
-      let tempUserViewModel = await this.authenticationService.getCurrentTempUser(sessionId);
+    if (sessionId) {
+      let tempUserViewModel = await this.authenticationService.getCurrentTempUser(sessionId).catch(() => {});
 
-      if(tempUserViewModel){
+      if (tempUserViewModel) {
         this.setCurrentTempUser(tempUserViewModel);
         this.initialCheckCompleted = true;
         return;
-      }else{
+      } else {
         this.localStorageService.sessionId = '';
       }
     }
@@ -90,14 +90,14 @@ export class CurrentUserService {
     this.initialCheckCompleted = true;
   }
 
-  public logout(){
-    if(this.sessionId && this.role === RoleType.TempUser){
+  public logout() {
+    if (this.sessionId && this.role === RoleType.TempUser) {
       this.authenticationService.deleteCurrentTempUser(this.sessionId);
     }
 
     this.localStorageService.token = '';
     this.localStorageService.sessionId = '';
-    
+
     this.username = undefined;
     this.sessionId = undefined;
     this.role = undefined;
@@ -108,8 +108,8 @@ export class CurrentUserService {
     this.popupService.succesModal.showSuccesMessage('Erfolgreich abgemeldet');
   }
 
-  public async awaitInitialCheckCompleted(){
-    while(!this.initialCheckCompleted){
+  public async awaitInitialCheckCompleted() {
+    while (!this.initialCheckCompleted) {
       await sleep(10);
     }
   }

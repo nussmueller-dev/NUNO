@@ -13,7 +13,7 @@ export class JoinGameComponent implements OnInit {
     private currentUserService: CurrentUserService
   ) { }
 
-  ngOnInit() {
-    this.currentUserService.checkAuthentication();
+  async ngOnInit() {
+    await this.currentUserService.checkAuthentication();
   }
 }
