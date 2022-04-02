@@ -8,10 +8,14 @@ export class SignalrConnection {
   private connectionClosed = true;
   private serverUrl: string = '';
   private lastRestartTime: DateTime = DateTime.local();
+  private onConnectedEvent?: (...args: any[]) => void;
 
   constructor(
-    private currentUserService: CurrentUserService
-  ) { }
+    private currentUserService: CurrentUserService,
+    onConnectedEvent?: (...args: any[]) => void
+  ) {
+    this.onConnectedEvent = onConnectedEvent;
+  }
 
   public async start(url: string) {
     this.serverUrl = url;
@@ -37,6 +41,10 @@ export class SignalrConnection {
 
   public addEvent(methode: string, fn: (...args: any[]) => void) {
     this.hubConnection?.on(methode, fn);
+  }
+
+  public setOnConnectedEvent(fn: (...args: any[]) => void){
+    this.onConnectedEvent = fn;
   }
 
   private async startConnection(restarting: boolean = false) {
@@ -65,6 +73,10 @@ export class SignalrConnection {
     await this.hubConnection?.start()
       .then(() => {
         console.log('%cSignalR connection started', 'color: lime');
+
+        if(this.onConnectedEvent){
+          this.onConnectedEvent();
+        }
       })
       .catch(err => {
         console.log('%cError while starting SignalR connection: ' + err, 'color: red');
