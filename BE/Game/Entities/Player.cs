@@ -9,7 +9,7 @@ namespace Game.Entities {
         return User.Username;  
       } 
     }
-    public IList<string> ConnectionIds { get; } = new List<string>();
+    public IList<string> PlayerOrderConnectionIds { get; } = new List<string>();
     public bool IsCreator { get; }
     public List<ICard> Cards { get; set; }
 

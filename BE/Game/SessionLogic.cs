@@ -27,9 +27,9 @@ namespace Game {
 
     public void RemoveConnectionId(string connectionId) {
       var players = Sessions.SelectMany(x => x.Players).ToList();
-      var player = players.FirstOrDefault(x => x.ConnectionIds.Contains(connectionId));
+      var player = players.FirstOrDefault(x => x.PlayerOrderConnectionIds.Contains(connectionId));
 
-      player?.ConnectionIds.Remove(connectionId);
+      player?.PlayerOrderConnectionIds.Remove(connectionId);
     }
 
     public bool IsUserInSession(int sessionId, IUser user) {

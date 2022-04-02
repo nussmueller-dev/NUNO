@@ -19,6 +19,7 @@ export class SignalrConnection {
 
   public async start(url: string) {
     this.serverUrl = url;
+    this.connectionClosed = false;
 
     await this.currentUserService.awaitInitialCheckCompleted();
     let authenticationKey = this.currentUserService.token ?? this.currentUserService.sessionId;
@@ -36,7 +37,6 @@ export class SignalrConnection {
   public async stop() {
     this.connectionClosed = true;
     await this.hubConnection?.stop();
-    console.log(); 
   }
 
   public addEvent(methode: string, fn: (...args: any[]) => void) {
@@ -49,6 +49,7 @@ export class SignalrConnection {
 
   private async startConnection(restarting: boolean = false) {
     if (this.connectionClosed && restarting) {
+      console.log('%cSignalR connection closed', 'color: #356986');
       return;
     }
 
@@ -67,8 +68,6 @@ export class SignalrConnection {
       console.log('%cSignalR connection restarting', 'color: orange');
       this.lastRestartTime = DateTime.local();
     }
-
-    this.connectionClosed = false;
 
     await this.hubConnection?.start()
       .then(() => {

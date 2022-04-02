@@ -21,7 +21,7 @@ namespace Game.Hubs {
       var session = _sessionLogic.GetSession(int.Parse(querySessionId));
       var player = session.Players.First(x => x.Username == username);
 
-      player.ConnectionIds.Add(Context.ConnectionId);
+      player.PlayerOrderConnectionIds.Add(Context.ConnectionId);
 
       return base.OnConnectedAsync();
     }
