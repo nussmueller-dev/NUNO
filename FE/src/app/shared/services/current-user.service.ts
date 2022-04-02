@@ -19,6 +19,16 @@ export class CurrentUserService {
   public userIsAuthorized = false;
   private initialCheckCompleted = false;
 
+  public get authenticationKey() { 
+    if(this.token){
+      return 'Bearer ' + this.token;
+    } else if (this.sessionId) {
+      return 'Session ' + this.sessionId;
+    }else{
+      return 'Upsi dupsi';
+    }
+  }
+
   constructor(
     private localStorageService: LocalStorageService,
     private authenticationService: AuthenticationService,
