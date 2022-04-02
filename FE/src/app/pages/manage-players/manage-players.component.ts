@@ -1,6 +1,8 @@
+import { environment } from './../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SignalrPlayerOrderService } from './../../shared/services/signalr-player-order.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 
 @Component({
   selector: 'app-manage-players',
@@ -8,18 +10,23 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./manage-players.component.scss']
 })
 export class ManagePlayersComponent implements OnInit, OnDestroy {
+  private signalrConnection: SignalrConnection;
   sessionId?: number;
 
   constructor(
-    private signalrPlayerOrderService: SignalrPlayerOrderService,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private currentUserService: CurrentUserService
+  ) {
+    this.signalrConnection = new SignalrConnection(currentUserService);
+  }
   
   async ngOnInit() {
-    await this.signalrPlayerOrderService.start();    
+    await this.currentUserService.checkAuthentication();
 
-    this.signalrPlayerOrderService.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder');    
+
+    this.signalrConnection.addEvent('test', () => { console.log('Dis könnte ein Test sein'); });
     
     let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
 
@@ -31,6 +38,6 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.signalrPlayerOrderService.stop();
+    this.signalrConnection.stop();
   }
 }

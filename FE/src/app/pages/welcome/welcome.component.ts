@@ -1,6 +1,5 @@
-import { SignalrService } from './../../shared/services/signalr.service';
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-welcome',

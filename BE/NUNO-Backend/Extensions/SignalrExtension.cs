@@ -15,8 +15,8 @@ namespace NUNO_Backend.Extensions {
     }
 
     public static void MapSignalrHubs(this WebApplication app) {
-      app.MapHub<PlayerOrderHub>("/playerorder");
-      app.MapHub<TestHub>("/test");
+      app.MapHub<PlayerOrderHub>("/hubs/playerorder");
+      app.MapHub<TestHub>("/hubs/test");
     }
   }
 }
