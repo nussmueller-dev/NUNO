@@ -1,11 +1,18 @@
 ﻿using Data.Interfaces;
 using Game.Entities;
+using Game.Hubs;
 using Game.Interfaces.Entities;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Game {
   public class SessionLogic {
-    private Random Random = new Random();
+    private readonly IHubContext<PlayerOrderHub> _playerOrderHub;
+    private readonly Random Random = new Random();
     private List<Session> Sessions = new List<Session>();
+
+    public SessionLogic(IHubContext<PlayerOrderHub> playerOrderHub) { 
+      _playerOrderHub = playerOrderHub;
+    }
 
     public Session CreateSession(IRules rules, IUser creator) {
       var newSession = new Session();
@@ -45,6 +52,19 @@ namespace Game {
       return false;
     }
 
+    public bool IsUserCreatorFromSession(int sessionId, IUser user) {
+      var session = GetSession(sessionId);
+      if (session is null) {
+        return false;
+      }
+
+      if (session.Players.Any(x => x.IsCreator && x.Username == user.Username)) {
+        return true;
+      }
+
+      return false;
+    }
+
     public List<Player> ReorderPlayers(int sessionId, List<string> playerNames) {
       var session = GetSession(sessionId);
 
@@ -52,7 +72,7 @@ namespace Game {
         return null;
       }
 
-      if (!playerNames.All(x => session.Players.Any(y => y.Username == x))) {
+      if (!session.Players.All(x => playerNames.Any(y => x.Username == y ))) {
         return null;
       }
 
@@ -60,6 +80,22 @@ namespace Game {
       session.Players = newPlayersList;
       
       return newPlayersList;
+    }
+
+    public void InformAboutPlayerOrderChanged(int sessionId) {
+      var session = GetSession(sessionId);
+
+      if (session is null) {
+        return;
+      }
+
+      var playerNames = session.Players.Select(x => x.Username);
+
+      foreach (var player in session.Players) {
+        foreach (var connectionId in player.PlayerOrderConnectionIds) {
+          _playerOrderHub.Clients.Client(connectionId).SendAsync("reorder", playerNames);
+        }
+      }
     }
   }
 }

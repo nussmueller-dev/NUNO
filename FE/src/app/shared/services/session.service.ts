@@ -21,4 +21,37 @@ export class SessionService {
       }
     }));
   }
+
+  public async getCreator(sessionId: number){
+    return lastValueFrom(this.httpClient.get<string>(environment.BACKENDURL + 'sessions/creator', {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
+
+  public async getPlayerOrder(sessionId: number){
+    return lastValueFrom(this.httpClient.get<Array<string>>(environment.BACKENDURL + 'sessions/players/order', {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
+
+  public async setPlayerOrder(sessionId: number, usernames: Array<string>){
+    return lastValueFrom(this.httpClient.post<Array<string>>(environment.BACKENDURL + 'sessions/players/order', usernames, {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
 }

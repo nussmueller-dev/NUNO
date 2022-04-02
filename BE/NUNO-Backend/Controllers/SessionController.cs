@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace NUNO_Backend.Controllers {
   [Route("sessions")]
   [ApiController]
+  [Produces("application/json")]
   public class SessionController : ControllerBase {
     private readonly SessionLogic _sessionLogic;
     private readonly CurrentUserHelper _currentUserHelper;
@@ -27,11 +28,42 @@ namespace NUNO_Backend.Controllers {
 
     [Authorize]
     [AuthorizePlayer]
-    [HttpPost("players/reorder")]
-    public IActionResult ReorderPlayers([FromBody] List<string> playerNames) {
-      //var session = _sessionLogic.ReorderPlayers()
+    [HttpGet("creator")]
+    public IActionResult GetCreator([FromQuery] int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
 
-      return Ok();
+      if (session is null) {
+        return Unauthorized();
+      }
+
+      var creatorName = session.Players.FirstOrDefault(x => x.IsCreator)?.Username;
+
+      return Ok(creatorName);
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpGet("players/order")]
+    public IActionResult GerPlayerOrder([FromQuery] int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+
+      if (session is null) {
+        return Unauthorized();
+      }
+
+      var playerNames = session.Players.Select(x => x.Username).ToList();
+
+      return Ok(playerNames);
+    }
+
+    [Authorize]
+    [AuthorizeCreator]
+    [HttpPost("players/order")]
+    public IActionResult ReorderPlayers([FromQuery] int sessionId, [FromBody] List<string> playerNames) {
+      var newPlayerList = _sessionLogic.ReorderPlayers(sessionId, playerNames);
+      var newPlayerOrder = newPlayerList.Select(x => x.Username).ToList();
+
+      return Ok(newPlayerOrder);
     }
   }
 }

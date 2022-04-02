@@ -8,11 +8,11 @@ export class SignalrConnection {
   private connectionClosed = true;
   private serverUrl: string = '';
   private lastRestartTime: DateTime = DateTime.local();
-  private onConnectedEvent?: (...args: any[]) => void;
+  private onConnectedEvent?: Function;
 
   constructor(
     private currentUserService: CurrentUserService,
-    onConnectedEvent?: (...args: any[]) => void
+    onConnectedEvent?: Function
   ) {
     this.onConnectedEvent = onConnectedEvent;
   }
@@ -43,7 +43,7 @@ export class SignalrConnection {
     this.hubConnection?.on(methode, fn);
   }
 
-  public setOnConnectedEvent(fn: (...args: any[]) => void){
+  public setOnConnectedEvent(fn: Function){
     this.onConnectedEvent = fn;
   }
 

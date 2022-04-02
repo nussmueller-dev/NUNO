@@ -13,24 +13,13 @@
     <h3>Spieler verwalten</h3>
 
     <div class="players">
-        <div class="player">
+        <div class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
             <div class="drag-drop-bar">
                 <svg-icon class="arrow-icon up" src="/assets/icons/expand-down.svg"></svg-icon>
                 <svg-icon class="arrow-icon down" src="/assets/icons/expand-down.svg"></svg-icon>
             </div>
 
-            <p class="name">StephanRossegger</p>
-            
-            <svg-icon class="leave-icon" src="/assets/icons/exit.svg"></svg-icon>
-        </div>
-
-        <div class="player me">
-            <div class="drag-drop-bar">
-                <svg-icon class="arrow-icon up" src="/assets/icons/expand-down.svg"></svg-icon>
-                <svg-icon class="arrow-icon down" src="/assets/icons/expand-down.svg"></svg-icon>
-            </div>
-
-            <p class="name">StephanRossegger</p>
+            <p class="name">{{player}}</p>
             
             <svg-icon class="leave-icon" src="/assets/icons/exit.svg"></svg-icon>
         </div>
