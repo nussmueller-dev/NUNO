@@ -25,6 +25,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './shared/routes';
 import { SuccessAlertComponent } from './shared/components/popups/success-alert/success-alert.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { PlayComponent } from './pages/play/play.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     ManagePlayersComponent,
     ErrorAlertComponent,
     SuccessAlertComponent,
+    PlayComponent,
   ],
   imports: [
     AppRoutingModule,
