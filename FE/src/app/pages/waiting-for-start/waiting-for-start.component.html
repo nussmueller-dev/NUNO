@@ -10,13 +10,9 @@
 <main>
     <h3>Mitspieler</h3>
     <div class="players">
-        <div class="player">
-            <p class="name">StephanRossegger</p>
-            <p class="points">0 Punkte</p>
-        </div>
-        <div class="player me">
-            <p class="name">NiggoTheKingMax32F</p>
-            <p class="points">100 Punkte</p>
+        <div class="player" [class.me]="player.username === myName" *ngFor="let player of players">
+            <p class="name">{{player.username}}</p>
+            <p class="points">{{player.points}} Punkte</p>
         </div>
     </div>
 </main>

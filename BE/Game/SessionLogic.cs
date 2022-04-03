@@ -114,6 +114,7 @@ namespace Game {
       var player = session.Players.First(x => x.Username == username);
       session.Players.Remove(player);
 
+      InformAboutKick(player);
       InformAboutPlayerOrderChanged(sessionId);
 
       return true;
@@ -132,6 +133,12 @@ namespace Game {
         foreach (var connectionId in player.PlayerConnectionIds) {
           _playerOrderHub.Clients.Client(connectionId).SendAsync("reorder", playerViewModels);
         }
+      }
+    }
+
+    private void InformAboutKick(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playerOrderHub.Clients.Client(connectionId).SendAsync("kick");
       }
     }
   }
