@@ -53,7 +53,7 @@ namespace Authentication.Attributes {
         _allowedRoles.Add(RoleType.Owner);
       }
 
-      if (allowedRole == RoleType.Player) {
+      if (allowedRole == RoleType.NunoUser) {
         _allowedRoles.Add(RoleType.Owner);
         _allowedRoles.Add(RoleType.Admin);
       }

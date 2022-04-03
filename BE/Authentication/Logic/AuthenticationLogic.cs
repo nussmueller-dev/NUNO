@@ -44,7 +44,7 @@ namespace Authentication.Logic {
 
       user.Salt = GetSalt();
       user.PasswordHash = HashPassword(registerModel.Password, user.Salt);
-      user.Role = RoleType.Player;
+      user.Role = RoleType.NunoUser;
 
       _dbContext.Users.Add(user);
       _dbContext.SaveChanges();

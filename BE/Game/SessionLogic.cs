@@ -3,15 +3,16 @@ using Data.Interfaces;
 using Game.Entities;
 using Game.Hubs;
 using Game.Interfaces.Entities;
+using Game.Models.ViewModels;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Game {
   public class SessionLogic {
-    private readonly IHubContext<PlayerOrderHub> _playerOrderHub;
+    private readonly IHubContext<PlayersHub> _playerOrderHub;
     private readonly Random Random = new Random();
     private List<Session> Sessions = new List<Session>();
 
-    public SessionLogic(IHubContext<PlayerOrderHub> playerOrderHub) { 
+    public SessionLogic(IHubContext<PlayersHub> playerOrderHub) { 
       _playerOrderHub = playerOrderHub;
     }
 
@@ -50,9 +51,9 @@ namespace Game {
 
     public void RemoveConnectionId(string connectionId) {
       var players = Sessions.SelectMany(x => x.Players).ToList();
-      var player = players.FirstOrDefault(x => x.PlayerOrderConnectionIds.Contains(connectionId));
+      var player = players.FirstOrDefault(x => x.PlayerConnectionIds.Contains(connectionId));
 
-      player?.PlayerOrderConnectionIds.Remove(connectionId);
+      player?.PlayerConnectionIds.Remove(connectionId);
     }
 
     public bool IsUserInSession(int sessionId, IUser user) {
@@ -125,11 +126,11 @@ namespace Game {
         return;
       }
 
-      var playerNames = session.Players.Select(x => x.Username);
+      var playerViewModels = session.Players.Select(x => new PlayerViewModel(x)).ToList();
 
       foreach (var player in session.Players) {
-        foreach (var connectionId in player.PlayerOrderConnectionIds) {
-          _playerOrderHub.Clients.Client(connectionId).SendAsync("reorder", playerNames);
+        foreach (var connectionId in player.PlayerConnectionIds) {
+          _playerOrderHub.Clients.Client(connectionId).SendAsync("reorder", playerViewModels);
         }
       }
     }

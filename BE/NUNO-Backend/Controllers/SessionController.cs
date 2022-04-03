@@ -2,6 +2,7 @@
 using Authentication.Helpers;
 using Game;
 using Game.CustomAuthentication;
+using Game.Models.ViewModels;
 using Game.UNO.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,7 +60,7 @@ namespace NUNO_Backend.Controllers {
 
     [Authorize]
     [AuthorizePlayer]
-    [HttpGet("players/order")]
+    [HttpGet("players")]
     public IActionResult GerPlayerOrder([FromQuery] int sessionId) {
       var session = _sessionLogic.GetSession(sessionId);
 
@@ -67,9 +68,9 @@ namespace NUNO_Backend.Controllers {
         return Unauthorized();
       }
 
-      var playerNames = session.Players.Select(x => x.Username).ToList();
+      var playerViewModels = session.Players.Select(x => new PlayerViewModel(x)).ToList();
 
-      return Ok(playerNames);
+      return Ok(playerViewModels);
     }
 
     [Authorize]

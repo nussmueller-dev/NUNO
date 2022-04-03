@@ -5,6 +5,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
 
 @Component({
   selector: 'app-manage-players',
@@ -13,18 +14,18 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class ManagePlayersComponent implements OnInit, OnDestroy {
   private signalrConnection: SignalrConnection;
-  playerNames: Array<string> = [];
+  players: Array<PlayerViewModel> = [];
   creatorName: string = '';
   sessionId: number = 0;
 
-  loadPlayerOrder: Function = () => {    
-    this.sessionService.getPlayerOrder(this.sessionId).then((playerNames) => {
-      this.playerNames = playerNames;
+  loadPlayers: Function = () => {    
+    this.sessionService.getPlayers(this.sessionId).then((players) => {
+      this.players = players;
     });
   }
   
-  reorderPlayers = (newPlayerNames: Array<string>) => {    
-    this.playerNames = newPlayerNames;
+  reorderPlayers = (newPlayers: Array<PlayerViewModel>) => {    
+    this.players = newPlayers;
   }
 
   constructor(
@@ -33,7 +34,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     private currentUserService: CurrentUserService,
     private sessionService: SessionService
   ) {
-    this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayerOrder);
+    this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
   }
   
   async ngOnInit() {
@@ -61,7 +62,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
       return;
     }
 
-    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder?sessionId=' + sessionId);    
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
   }
   
@@ -70,9 +71,9 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
 
   playerDropped(event: CdkDragDrop<string[]>){
-    moveItemInArray(this.playerNames, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.players, event.previousIndex, event.currentIndex);
 
-    this.sessionService.setPlayerOrder(this.sessionId, this.playerNames);
+    this.sessionService.setPlayerOrder(this.sessionId, this.players.map(x => x.username));
   }
 
   kick(playerName: string){

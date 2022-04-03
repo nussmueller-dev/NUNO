@@ -35,13 +35,13 @@ namespace NUNO_Backend.Controllers {
       return Ok(response);
     }
 
-    [Authorize(RoleType.Player, RoleType.Admin)]
+    [Authorize(RoleType.NunoUser, RoleType.Admin)]
     [HttpGet("token/enddate")]
     public DateTime GetTokenEndDate() {
       return _currentUserHelper.Token.ValidTo;
     }
 
-    [Authorize(RoleType.Player)]
+    [Authorize(RoleType.NunoUser)]
     [HttpPost("authenticate/token")]
     public IActionResult Authenticate() {
       var response = _authenticationLogic.GetUserInformations();

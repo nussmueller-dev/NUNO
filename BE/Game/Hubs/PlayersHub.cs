@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Game.Hubs {
   [Authorize(Policy = "PlayerAuthorization")]
-  public class PlayerOrderHub : Hub {
+  public class PlayersHub : Hub {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly SessionLogic _sessionLogic;
 
-    public PlayerOrderHub(CurrentUserHelper currentUserHelper, IHttpContextAccessor httpContextAccessor, SessionLogic sessionLogic) {
+    public PlayersHub(CurrentUserHelper currentUserHelper, IHttpContextAccessor httpContextAccessor, SessionLogic sessionLogic) {
       _httpContextAccessor = httpContextAccessor;
       _sessionLogic = sessionLogic;
     }
@@ -21,7 +21,7 @@ namespace Game.Hubs {
       var session = _sessionLogic.GetSession(int.Parse(querySessionId));
       var player = session.Players.First(x => x.Username == username);
 
-      player.PlayerOrderConnectionIds.Add(Context.ConnectionId);
+      player.PlayerConnectionIds.Add(Context.ConnectionId);
 
       return base.OnConnectedAsync();
     }

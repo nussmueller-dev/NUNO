@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
+import { PlayerViewModel } from '../models/view-models/player-view-model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +46,8 @@ export class SessionService {
     }));
   }
 
-  public async getPlayerOrder(sessionId: number){
-    return lastValueFrom(this.httpClient.get<Array<string>>(environment.BACKENDURL + 'sessions/players/order', {
+  public async getPlayers(sessionId: number){
+    return lastValueFrom(this.httpClient.get<Array<PlayerViewModel>>(environment.BACKENDURL + 'sessions/players', {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
       },

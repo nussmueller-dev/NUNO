@@ -13,7 +13,7 @@
     <h3>Spieler verwalten</h3>
 
     <div cdkDropList class="players" (cdkDropListDropped)="playerDropped($event)">
-        <div cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".players" class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
+        <div cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".players" class="player" [class.me]="player.username === creatorName" *ngFor="let player of players">
             <div class="placeholder" *cdkDragPlaceholder></div>
 
             <div class="drag-drop-bar">
@@ -21,9 +21,9 @@
                 <svg-icon class="arrow-icon down" src="/assets/icons/expand-down.svg"></svg-icon>
             </div>
 
-            <p class="name">{{player}}</p>
+            <p class="name">{{player.username}}</p>
             
-            <svg-icon class="leave-icon" src="/assets/icons/exit.svg" (click)="kick(player)"></svg-icon>
+            <svg-icon class="leave-icon" src="/assets/icons/exit.svg" (click)="kick(player.username)"></svg-icon>
         </div>
     </div>
 </main>
