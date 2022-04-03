@@ -81,5 +81,18 @@ namespace NUNO_Backend.Controllers {
 
       return Ok(newPlayerOrder);
     }
+
+    [Authorize]
+    [AuthorizeCreator]
+    [HttpPost("players/{username}/kick")]
+    public IActionResult KickPlayer([FromQuery] int sessionId, string username) {
+      var result = _sessionLogic.KickPlayer(sessionId, username);
+
+      if (result) {
+        return Ok();
+      } else {
+        return BadRequest();
+      }
+    }
   }
 }

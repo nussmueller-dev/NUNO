@@ -94,8 +94,28 @@ namespace Game {
 
       var newPlayersList = playerNames.Select(x => session.Players.First(y => y.Username == x)).ToList();
       session.Players = newPlayersList;
-      
+
+      InformAboutPlayerOrderChanged(sessionId);
+
       return newPlayersList;
+    }
+
+    public bool KickPlayer(int sessionId, string username) {
+      var session = GetSession(sessionId);
+
+      if (session is null 
+        || !session.Players.Any(x => x.Username == username) 
+        || session.Creator?.Username == username
+      ) {
+        return false;
+      }
+
+      var player = session.Players.First(x => x.Username == username);
+      session.Players.Remove(player);
+
+      InformAboutPlayerOrderChanged(sessionId);
+
+      return true;
     }
 
     private void InformAboutPlayerOrderChanged(int sessionId) {

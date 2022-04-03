@@ -15,12 +15,16 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   private signalrConnection: SignalrConnection;
   playerNames: Array<string> = [];
   creatorName: string = '';
-  sessionId?: number;
+  sessionId: number = 0;
 
   loadPlayerOrder: Function = () => {    
-    this.sessionService.getPlayerOrder(this.sessionId ?? 0).then((playerNames) => {
+    this.sessionService.getPlayerOrder(this.sessionId).then((playerNames) => {
       this.playerNames = playerNames;
     });
+  }
+  
+  reorderPlayers = (newPlayerNames: Array<string>) => {    
+    this.playerNames = newPlayerNames;
   }
 
   constructor(
@@ -58,7 +62,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     }
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder?sessionId=' + sessionId);    
-    this.signalrConnection.addEvent('reorder', (newPlayerNames: Array<string>) => {this.playerNames = newPlayerNames;});
+    this.signalrConnection.addEvent('reorder', this.reorderPlayers);
   }
   
   ngOnDestroy() {
@@ -68,6 +72,10 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   playerDropped(event: CdkDragDrop<string[]>){
     moveItemInArray(this.playerNames, event.previousIndex, event.currentIndex);
 
-    this.sessionService.setPlayerOrder(this.sessionId ?? 0, this.playerNames);
+    this.sessionService.setPlayerOrder(this.sessionId, this.playerNames);
+  }
+
+  kick(playerName: string){
+    this.sessionService.kickPlayer(this.sessionId, playerName);
   }
 }

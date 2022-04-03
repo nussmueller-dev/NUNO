@@ -66,4 +66,15 @@ export class SessionService {
       }
     }));
   }
+
+  public async kickPlayer(sessionId: number, username: string){
+    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + `sessions/players/${username}/kick`, {}, {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
 }
