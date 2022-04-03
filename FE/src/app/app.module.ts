@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { routes } from './shared/routes';
 import { SuccessAlertComponent } from './shared/components/popups/success-alert/success-alert.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
     MatSnackBarModule,
     AngularSvgIconModule.forRoot(),
     RouterModule.forRoot(routes),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

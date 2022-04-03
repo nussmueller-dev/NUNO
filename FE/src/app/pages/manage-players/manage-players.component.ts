@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-manage-players',
@@ -62,5 +63,11 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   
   ngOnDestroy() {
     this.signalrConnection.stop();
+  }
+
+  playerDropped(event: CdkDragDrop<string[]>){
+    moveItemInArray(this.playerNames, event.previousIndex, event.currentIndex);
+
+    this.sessionService.setPlayerOrder(this.sessionId ?? 0, this.playerNames);
   }
 }

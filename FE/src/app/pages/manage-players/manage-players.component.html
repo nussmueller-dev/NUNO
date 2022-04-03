@@ -12,8 +12,10 @@
 <main>
     <h3>Spieler verwalten</h3>
 
-    <div class="players">
-        <div class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
+    <div cdkDropList class="players" (cdkDropListDropped)="playerDropped($event)">
+        <div cdkDrag cdkDragLockAxis="y" class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
+            <div class="placeholder" *cdkDragPlaceholder></div>
+
             <div class="drag-drop-bar">
                 <svg-icon class="arrow-icon up" src="/assets/icons/expand-down.svg"></svg-icon>
                 <svg-icon class="arrow-icon down" src="/assets/icons/expand-down.svg"></svg-icon>
