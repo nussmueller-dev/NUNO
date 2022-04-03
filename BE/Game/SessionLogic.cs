@@ -1,4 +1,5 @@
-﻿using Data.Interfaces;
+﻿using Authentication.Helpers;
+using Data.Interfaces;
 using Game.Entities;
 using Game.Hubs;
 using Game.Interfaces.Entities;
@@ -30,6 +31,21 @@ namespace Game {
 
     public Session GetSession(int sessionId) {
       return Sessions.FirstOrDefault(x => x.Id == sessionId);
+    }
+
+    public bool JoinSession(int sessionId, IUser user) {
+      var session = GetSession(sessionId);
+      if (session is null 
+        || !session.NewPlayersCanJoin 
+        || session.Players.Any(x => x.Username == user.Username)
+      ) {
+        return false;
+      }
+
+      session.Players.Add(new Player(user));
+      InformAboutPlayerOrderChanged(sessionId);
+
+      return true;
     }
 
     public void RemoveConnectionId(string connectionId) {
@@ -82,7 +98,7 @@ namespace Game {
       return newPlayersList;
     }
 
-    public void InformAboutPlayerOrderChanged(int sessionId) {
+    private void InformAboutPlayerOrderChanged(int sessionId) {
       var session = GetSession(sessionId);
 
       if (session is null) {

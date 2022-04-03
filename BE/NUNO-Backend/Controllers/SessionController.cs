@@ -27,6 +27,22 @@ namespace NUNO_Backend.Controllers {
     }
 
     [Authorize]
+    [HttpPost("join")]
+    public IActionResult JoinSession([FromQuery] int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+
+      if (session is null) {
+        return Unauthorized();
+      }
+
+      if (_sessionLogic.JoinSession(sessionId, _currentUserHelper.CurrentUser)) {
+        return Ok(session.Id);
+      } else {
+        return BadRequest(new { message = "Du bist bereits in diesem Spiel" });
+      }
+    }
+
+    [Authorize]
     [AuthorizePlayer]
     [HttpGet("creator")]
     public IActionResult GetCreator([FromQuery] int sessionId) {

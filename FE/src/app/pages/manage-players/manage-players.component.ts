@@ -57,14 +57,10 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     }
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/playerorder?sessionId=' + sessionId);    
-    this.signalrConnection.addEvent('reorder', this.reorderPlayers);
+    this.signalrConnection.addEvent('reorder', (newPlayerNames: Array<string>) => {this.playerNames = newPlayerNames;});
   }
   
   ngOnDestroy() {
     this.signalrConnection.stop();
-  }
-
-  reorderPlayers(newPlayerNames: Array<string>){
-    this.playerNames = newPlayerNames;
   }
 }

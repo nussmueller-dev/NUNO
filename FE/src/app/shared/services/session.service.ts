@@ -22,6 +22,18 @@ export class SessionService {
     }));
   }
 
+  public async joinSession(sessionId: number){
+    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'sessions/join', {}, {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
+
+
   public async getCreator(sessionId: number){
     return lastValueFrom(this.httpClient.get<string>(environment.BACKENDURL + 'sessions/creator', {
       headers: {
