@@ -78,4 +78,15 @@ export class SessionService {
       }
     }));
   }
+
+  public async quit(sessionId: number){
+    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'sessions/quit', {}, {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  } 
 }

@@ -95,5 +95,18 @@ namespace NUNO_Backend.Controllers {
         return BadRequest();
       }
     }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpPost("quit")]
+    public IActionResult Quit([FromQuery] int sessionId) {
+      var result = _sessionLogic.Quit(sessionId, _currentUserHelper.CurrentUser.Username);
+
+      if (result) {
+        return Ok();
+      } else {
+        return BadRequest();
+      }
+    }
   }
 }

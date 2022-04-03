@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ErrorModal } from './../../services/modals/error-modal';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-leave-header',
   templateUrl: './leave-header.component.html',
   styleUrls: ['./leave-header.component.scss']
 })
-export class LeaveHeaderComponent implements OnInit {
+export class LeaveHeaderComponent {
+  @Output() leave: EventEmitter<void> = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  onLeave(){
+    this.leave.emit();
   }
-
 }

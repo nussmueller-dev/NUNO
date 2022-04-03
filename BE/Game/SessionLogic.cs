@@ -120,6 +120,26 @@ namespace Game {
       return true;
     }
 
+    public bool Quit(int sessionId, string username) {
+      var session = GetSession(sessionId);
+
+      if (session is null || !session.Players.Any(x => x.Username == username)
+      ) {
+        return false;
+      }
+
+      var player = session.Players.First(x => x.Username == username);
+      session.Players.Remove(player);
+
+      if (session.Players.Count > 0) {
+        InformAboutPlayerOrderChanged(sessionId);
+      } else {
+        Sessions.Remove(session);
+      }
+
+      return true;
+    }
+
     private void InformAboutPlayerOrderChanged(int sessionId) {
       var session = GetSession(sessionId);
 

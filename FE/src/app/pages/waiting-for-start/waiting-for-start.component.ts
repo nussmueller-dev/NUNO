@@ -75,4 +75,11 @@ export class WaitingForStartComponent implements OnInit {
   ngOnDestroy() {
     this.signalrConnection.stop();
   }
+
+  async quit(){
+    await this.sessionService.quit(this.sessionId);
+
+    this.popupService.succesModal.showSuccesMessage('Spiel erfolgreich verlassen');
+    this.router.navigate(['/welcome']);
+  }
 }

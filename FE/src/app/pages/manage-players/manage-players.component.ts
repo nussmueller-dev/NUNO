@@ -1,3 +1,4 @@
+import { PopupService } from 'src/app/shared/services/popup.service';
 import { SessionService } from 'src/app/shared/services/session.service';
 import { environment } from './../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +33,8 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private currentUserService: CurrentUserService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private popupService: PopupService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
   }
@@ -78,5 +80,12 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
 
   kick(playerName: string){
     this.sessionService.kickPlayer(this.sessionId, playerName);
+  }
+
+  async quit(){
+    await this.sessionService.quit(this.sessionId);
+
+    this.popupService.succesModal.showSuccesMessage('Spiel erfolgreich verlassen');
+    this.router.navigate(['/welcome']);
   }
 }
