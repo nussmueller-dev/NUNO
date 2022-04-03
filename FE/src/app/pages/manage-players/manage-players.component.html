@@ -13,7 +13,7 @@
     <h3>Spieler verwalten</h3>
 
     <div cdkDropList class="players" (cdkDropListDropped)="playerDropped($event)">
-        <div cdkDrag cdkDragLockAxis="y" class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
+        <div cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".players" class="player" [class.me]="player === creatorName" *ngFor="let player of playerNames">
             <div class="placeholder" *cdkDragPlaceholder></div>
 
             <div class="drag-drop-bar">
