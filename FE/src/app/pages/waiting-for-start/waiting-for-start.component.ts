@@ -33,6 +33,11 @@ export class WaitingForStartComponent implements OnInit {
     this.router.navigate(['/welcome']);
   }
 
+  upgradedToCreator = () => {  
+    this.popupService.succesModal.showSuccesMessage('Du wurdest zum Spielleiter befördert 🥳');
+    this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -70,6 +75,7 @@ export class WaitingForStartComponent implements OnInit {
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
     this.signalrConnection.addEvent('kick', this.gotKickedOut);
+    this.signalrConnection.addEvent('youAreCreatorNow', this.upgradedToCreator);
   }
 
   ngOnDestroy() {

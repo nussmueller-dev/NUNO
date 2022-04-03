@@ -132,6 +132,13 @@ namespace Game {
       session.Players.Remove(player);
 
       if (session.Players.Count > 0) {
+        if (player.IsCreator) {
+          var newCreator = session.Players[0];
+          newCreator.UpgradeToCreator();
+
+          InformAboutUpgradeToCreator(newCreator);
+        } 
+        
         InformAboutPlayerOrderChanged(sessionId);
       } else {
         Sessions.Remove(session);
@@ -159,6 +166,12 @@ namespace Game {
     private void InformAboutKick(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playerOrderHub.Clients.Client(connectionId).SendAsync("kick");
+      }
+    }
+
+    private void InformAboutUpgradeToCreator(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playerOrderHub.Clients.Client(connectionId).SendAsync("youAreCreatorNow");
       }
     }
   }

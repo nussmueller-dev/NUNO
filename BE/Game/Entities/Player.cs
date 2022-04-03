@@ -9,7 +9,7 @@ namespace Game.Entities {
         return User.Username;  
       } 
     }
-    public bool IsCreator { get; }
+    public bool IsCreator { get; private set; }
     public int Points { get; set; }
     public List<ICard> Cards { get; set; }
     public IList<string> PlayerConnectionIds { get; } = new List<string>();
@@ -17,6 +17,10 @@ namespace Game.Entities {
     public Player(IUser user, bool isCreator = false) {
       User = user;
       IsCreator = isCreator;
+    }
+
+    public void UpgradeToCreator() {
+      IsCreator = true;
     }
   }
 }
