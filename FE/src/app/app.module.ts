@@ -26,6 +26,7 @@ import { routes } from './shared/routes';
 import { SuccessAlertComponent } from './shared/components/popups/success-alert/success-alert.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PlayComponent } from './pages/play/play.component';
+import { WrongScreenOrientationComponent } from './shared/components/wrong-screen-orientation/wrong-screen-orientation.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PlayComponent } from './pages/play/play.component';
     ErrorAlertComponent,
     SuccessAlertComponent,
     PlayComponent,
+    WrongScreenOrientationComponent,
   ],
   imports: [
     AppRoutingModule,
