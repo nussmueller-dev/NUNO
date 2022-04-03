@@ -88,6 +88,7 @@ svg-icon{
     justify-content: center;
     text-align: center;
     background: none;
+    color: $primary-color;
     height: 60px;
     aspect-ratio: 1;
     border: $default-border-size solid $secondary-color;
@@ -95,11 +96,14 @@ svg-icon{
     outline: none;
     transition: 0.25s;
 
+    cursor: pointer;
+
     svg-icon{
         height: 80%;
         width: 80%;
 
         svg{
+            fill: $primary-color;
             height: 100%;
             width: 100%;
         }
@@ -119,6 +123,23 @@ svg-icon{
 
         &:hover {
             background-color: $delete-color;
+
+            svg{
+                fill: $primary-color;
+            }
+        }
+    }
+
+    &.warning{
+        border-color: $warning-color;
+
+        svg{
+            fill: $warning-color;
+            transition: 0.25s;
+        }
+
+        &:hover {
+            background-color: $warning-color;
 
             svg{
                 fill: $primary-color;

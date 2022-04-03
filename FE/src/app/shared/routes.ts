@@ -1,3 +1,4 @@
+import { PlayComponent } from './../pages/play/play.component';
 import { RegisterComponent } from './../pages/register/register.component';
 import { LoginComponent } from './../pages/login/login.component';
 import { SelectUsernameComponent } from './../pages/select-username/select-username.component';
@@ -9,7 +10,7 @@ import { RulesComponent } from '../pages/rules/rules.component';
 import { WaitingForStartComponent } from '../pages/waiting-for-start/waiting-for-start.component';
 import { ManagePlayersComponent } from '../pages/manage-players/manage-players.component';
 
-export const STATES = ['welcome', 'username', 'login', 'register', 'join', 'rules', 'waiting', 'managePlayers'] as const;
+export const STATES = ['welcome', 'username', 'login', 'register', 'join', 'rules', 'waiting', 'managePlayers', 'play'] as const;
 
 export type ExampleAppState = typeof STATES[number];
 
@@ -59,6 +60,11 @@ export const stateConfiguration: Record<ExampleAppState, StateConfiguration> = {
         path: 'manage-players', 
         component: ManagePlayersComponent,
         order: 7 
+    },
+    play: { 
+        path: 'play', 
+        component: PlayComponent,
+        order: 8
     }
 };
 
