@@ -1,4 +1,3 @@
-import { ErrorModal } from './../../services/modals/error-modal';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({

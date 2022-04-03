@@ -1,4 +1,5 @@
 @import "sizes";
+@import "colors";
 
 :host {
     display: flex;
@@ -6,6 +7,12 @@
     align-items: center;
     height: 100%;
     width: 100%;
+}
+
+.wrong-screen-orientation {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
 }
 
 .center-buttons{
@@ -31,5 +38,12 @@
 @media only screen and (max-width: $mobile-querry) {
     .icon-button{
         font-size: 25px;
+    }
+}
+
+@media only screen and (orientation: portrait) {
+    .wrong-screen-orientation {
+        visibility: visible;
+        opacity: 1;
     }
 }
