@@ -1,11 +1,23 @@
-<div class="border">
-    <div class="top-left">
+<div class="border" *ngIf="card" (resized)="onResized($event)" [ngClass]="{'red': card.color === color.Red, 'green': card.color === color.Green, 'blue': card.color === color.Blue, 'yellow': card.color === color.Yellow}" [ngStyle]="{'font-size.px': height / 10}">
+    <ng-container *ngIf="card.cardType === cardType.Number">
+        <div class="top-left">
+            <span class="small-number">{{card.number}}</span>
+        </div>
+        <div class="center">
+            <div class="big-number">{{card.number}}</div>
+        </div>
+        <div class="bottom-right">
+            <span class="small-number">{{card.number}}</span>
+        </div>
+    </ng-container>
 
-    </div>
-    <div class="center">
-
-    </div>
-    <div class="bottom-right">
-        
-    </div>
+    <ng-container *ngIf="card.cardType === cardType.DrawTwo">
+        <div class="top-left">
+            <span class="small-number">+2</span>
+        </div>
+        <svg-icon class="draw-two-center" src="assets/images/drawTwo_Center.svg"></svg-icon>
+        <div class="bottom-right">
+            <span class="small-number">+2</span>
+        </div>
+    </ng-container>
 </div>

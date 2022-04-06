@@ -35,6 +35,10 @@
     font-size: 35px;
 }
 
+.card{
+    height: 400px;
+}
+
 @media only screen and (max-width: $mobile-querry) {
     .icon-button{
         font-size: 25px;

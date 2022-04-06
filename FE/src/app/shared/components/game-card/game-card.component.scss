@@ -1,0 +1,61 @@
+@import "colors";
+
+:host{
+    display: flex;
+    aspect-ratio: 63/88;
+}
+
+.border{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    border: 2px solid currentColor;
+    border-radius: 8.8%/6.3%;
+
+    &.red{
+        color: $red;
+    }
+
+    &.green{
+        color: $green;
+    }
+
+    &.blue{
+        color: $blue;
+    }
+
+    &.yellow{
+        color: $yellow;
+    }
+}
+
+.top-left{
+    position: absolute;
+    top: 3.5%;
+    left: 5%;
+    font-size: 1em;
+}
+
+.bottom-right{
+    position: absolute;
+    bottom: 3.5%;
+    right: 5%;
+    font-size: 1em;
+    transform: rotate(180deg);
+}
+
+.small-number{
+    color: white;
+}
+
+.draw-two-center{
+    height: 35%;
+}
+
+.fill-background{
+    fill: $background-color;
+}

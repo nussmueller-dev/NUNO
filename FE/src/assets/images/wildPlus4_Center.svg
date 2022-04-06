@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="132" height="119" viewBox="0 0 132 119">
+  <defs>
+    <clipPath id="clip-Wil_4_Center">
+      <rect width="132" height="119"/>
+    </clipPath>
+  </defs>
+  <g id="Wil_4_Center" data-name="Wil+4_Center" clip-path="url(#clip-Wil_4_Center)">
+    <g id="Gruppe_103" data-name="Gruppe 103" transform="translate(-9 -15)">
+      <path id="Pfad_72" data-name="Pfad 72" d="M11,0H37A11,11,0,0,1,48,11V57A11,11,0,0,1,37,68H11A11,11,0,0,1,0,57V11A11,11,0,0,1,11,0Z" transform="translate(13 62)" fill="#0f0f0f"/>
+      <path id="Pfad_72_-_Kontur" data-name="Pfad 72 - Kontur" d="M11,2a9.01,9.01,0,0,0-9,9V57a9.01,9.01,0,0,0,9,9H37a9.01,9.01,0,0,0,9-9V11a9.01,9.01,0,0,0-9-9H11m0-2H37A11,11,0,0,1,48,11V57A11,11,0,0,1,37,68H11A11,11,0,0,1,0,57V11A11,11,0,0,1,11,0Z" transform="translate(13 62)" fill="#2eff1f"/>
+      <rect id="Rechteck_85" data-name="Rechteck 85" width="48" height="68" rx="11" transform="translate(36 36)" fill="#0f0f0f"/>
+      <path id="Rechteck_85_-_Kontur" data-name="Rechteck 85 - Kontur" d="M11,2a9.01,9.01,0,0,0-9,9V57a9.01,9.01,0,0,0,9,9H37a9.01,9.01,0,0,0,9-9V11a9.01,9.01,0,0,0-9-9H11m0-2H37A11,11,0,0,1,48,11V57A11,11,0,0,1,37,68H11A11,11,0,0,1,0,57V11A11,11,0,0,1,11,0Z" transform="translate(36 36)" fill="#1f6bff"/>
+      <rect id="Rechteck_86" data-name="Rechteck 86" width="48" height="68" rx="11" transform="translate(89 18)" fill="#0f0f0f"/>
+      <path id="Rechteck_86_-_Kontur" data-name="Rechteck 86 - Kontur" d="M11,2a9.01,9.01,0,0,0-9,9V57a9.01,9.01,0,0,0,9,9H37a9.01,9.01,0,0,0,9-9V11a9.01,9.01,0,0,0-9-9H11m0-2H37A11,11,0,0,1,48,11V57A11,11,0,0,1,37,68H11A11,11,0,0,1,0,57V11A11,11,0,0,1,11,0Z" transform="translate(89 18)" fill="#f0ff1f"/>
+      <rect id="Rechteck_87" data-name="Rechteck 87" width="48" height="68" rx="11" transform="translate(70 58)" fill="#0f0f0f"/>
+      <path id="Rechteck_87_-_Kontur" data-name="Rechteck 87 - Kontur" d="M11,2a9.01,9.01,0,0,0-9,9V57a9.01,9.01,0,0,0,9,9H37a9.01,9.01,0,0,0,9-9V11a9.01,9.01,0,0,0-9-9H11m0-2H37A11,11,0,0,1,48,11V57A11,11,0,0,1,37,68H11A11,11,0,0,1,0,57V11A11,11,0,0,1,11,0Z" transform="translate(70 58)" fill="#ff1f1f"/>
+    </g>
+  </g>
+</svg>

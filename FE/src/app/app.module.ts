@@ -28,6 +28,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PlayComponent } from './pages/play/play.component';
 import { WrongScreenOrientationComponent } from './shared/components/wrong-screen-orientation/wrong-screen-orientation.component';
 import { GameCardComponent } from './shared/components/game-card/game-card.component';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { GameCardComponent } from './shared/components/game-card/game-card.compo
     AngularSvgIconModule.forRoot(),
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
-    DragDropModule 
+    DragDropModule ,
+    AngularResizeEventModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
