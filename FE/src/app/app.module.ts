@@ -27,6 +27,7 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { PlayComponent } from './pages/play/play.component';
 import { WrongScreenOrientationComponent } from './shared/components/wrong-screen-orientation/wrong-screen-orientation.component';
+import { GameCardComponent } from './shared/components/game-card/game-card.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { WrongScreenOrientationComponent } from './shared/components/wrong-scree
     SuccessAlertComponent,
     PlayComponent,
     WrongScreenOrientationComponent,
+    GameCardComponent,
   ],
   imports: [
     AppRoutingModule,
