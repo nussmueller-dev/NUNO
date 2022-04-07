@@ -35,8 +35,13 @@
     font-size: 35px;
 }
 
+main{
+    display: flex;
+    flex-direction: row;
+}
 .card{
     height: 400px;
+    margin: 20px;
 }
 
 @media only screen and (max-width: $mobile-querry) {

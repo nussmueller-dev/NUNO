@@ -14,20 +14,17 @@ export class PlayComponent implements OnInit {
   card2?: GameCardViewModel;
   card3?: GameCardViewModel;
 
-  constructor() { }
-
   ngOnInit(): void {
     let newCrad = new GameCardViewModel();
     newCrad.cardType = CardType.Wild;
-    newCrad.color = Color.Green;
-    // newCrad.number = 3;
+    // newCrad.color = Color.Yellow;
 
     this.card1 = newCrad;
 
     let newCrad2 = new GameCardViewModel();
     newCrad2.cardType = CardType.Number;
     newCrad2.color = Color.Red;
-    newCrad2.number = 3;
+    newCrad2.number = 11;
 
     this.card2 = newCrad2;
 

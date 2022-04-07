@@ -22,18 +22,34 @@
 
     &.red{
         color: $red;
+
+        .fill-red-selected{
+            fill: $red;
+        }
     }
 
     &.green{
         color: $green;
+
+        .fill-green-selected{
+            fill: $green;
+        }
     }
 
     &.blue{
         color: $blue;
+
+        .fill-blue-selected{
+            fill: $blue;
+        }
     }
 
     &.yellow{
         color: $yellow;
+
+        .fill-yellow-selected{
+            fill: $yellow;
+        }
     }
 }
 
@@ -61,19 +77,11 @@
     font-size: 5em;
 }
 
-.draw-two-center{
+.center-image{
     height: 35%;
 }
 
-.reverse-center,
-.skip-center,
-.wild-center{
-    height: 35%;
-}
-
-.reverse-corner,
-.skip-corner,
-.wild-corner{
+.corner-image{
     display: flex;
     height: 1em;
 }

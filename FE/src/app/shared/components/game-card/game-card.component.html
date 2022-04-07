@@ -15,7 +15,7 @@
         <div class="top-left">
             <span class="small-number">+2</span>
         </div>
-        <svg-icon class="draw-two-center" src="assets/images/draw_two_center.svg"></svg-icon>
+        <svg-icon class="center-image" src="assets/images/draw_two_center.svg"></svg-icon>
         <div class="bottom-right">
             <span class="small-number">+2</span>
         </div>
@@ -23,31 +23,41 @@
 
     <ng-container *ngIf="card.cardType === cardType.Reverse">
         <div class="top-left">
-            <svg-icon class="reverse-corner" src="assets/images/reverse_corner.svg"></svg-icon>
+            <svg-icon class="corner-image" src="assets/images/reverse_corner.svg"></svg-icon>
         </div>
-        <svg-icon class="reverse-center" src="assets/images/reverse_center.svg"></svg-icon>
+        <svg-icon class="center-image" src="assets/images/reverse_center.svg"></svg-icon>
         <div class="bottom-right">
-            <svg-icon class="reverse-corner" src="assets/images/reverse_corner.svg"></svg-icon>
+            <svg-icon class="corner-image" src="assets/images/reverse_corner.svg"></svg-icon>
         </div>
     </ng-container>
 
     <ng-container *ngIf="card.cardType === cardType.Skip">
         <div class="top-left">
-            <svg-icon class="skip-corner" src="assets/images/skipp_center.svg"></svg-icon>
+            <svg-icon class="corner-image" src="assets/images/skipp_center.svg"></svg-icon>
         </div>
-        <svg-icon class="skip-center" src="assets/images/skipp_center.svg"></svg-icon>
+        <svg-icon class="center-image" src="assets/images/skipp_center.svg"></svg-icon>
         <div class="bottom-right">
-            <svg-icon class="skip-corner" src="assets/images/skipp_center.svg"></svg-icon>
+            <svg-icon class="corner-image" src="assets/images/skipp_center.svg"></svg-icon>
         </div>
     </ng-container>
 
     <ng-container *ngIf="card.cardType === cardType.Wild">
         <div class="top-left">
-            <svg-icon class="wild-corner" [src]="wildCardImageUrl"></svg-icon>
+            <svg-icon class="corner-image" [src]="wildCardImageUrl"></svg-icon>
         </div>
-            <svg-icon class="wild-center" [src]="wildCardImageUrl"></svg-icon>
+            <svg-icon class="center-image" [src]="wildCardImageUrl"></svg-icon>
         <div class="bottom-right">
-            <svg-icon class="wild-corner" [src]="wildCardImageUrl"></svg-icon>
+            <svg-icon class="corner-image" [src]="wildCardImageUrl"></svg-icon>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="card.cardType === cardType.WildDrawFour">
+        <div class="top-left">
+            <span class="small-number">+4</span>
+        </div>
+            <svg-icon class="center-image wild4-image" src="assets/images/wild_plus4_center.svg"></svg-icon>
+        <div class="bottom-right">
+            <span class="small-number">+4</span>
         </div>
     </ng-container>
 </div>
