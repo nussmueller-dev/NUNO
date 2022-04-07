@@ -52,8 +52,22 @@
     color: white;
 }
 
+.big-number{
+    color: white;
+    font-size: 5em;
+}
+
 .draw-two-center{
     height: 35%;
+}
+
+.reverse-center{
+    height: 35%;
+}
+
+.reverse-corner{
+    display: flex;
+    height: 1em;
 }
 
 .fill-background{

@@ -20,4 +20,24 @@
             <span class="small-number">+2</span>
         </div>
     </ng-container>
+
+    <ng-container *ngIf="card.cardType === cardType.Reverse">
+        <div class="top-left">
+            <svg-icon class="reverse-corner" src="assets/images/reverse_Corner.svg"></svg-icon>
+        </div>
+        <svg-icon class="reverse-center" src="assets/images/reverse_Center.svg"></svg-icon>
+        <div class="bottom-right">
+            <svg-icon class="reverse-corner" src="assets/images/reverse_Corner.svg"></svg-icon>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="card.cardType === cardType.Skip">
+        <div class="top-left">
+            <svg-icon class="reverse-corner" src="assets/images/skipp_Center.svg"></svg-icon>
+        </div>
+        <svg-icon class="reverse-center" src="assets/images/skipp_Center.svg"></svg-icon>
+        <div class="bottom-right">
+            <svg-icon class="reverse-corner" src="assets/images/skipp_Center.svg"></svg-icon>
+        </div>
+    </ng-container>
 </div>
