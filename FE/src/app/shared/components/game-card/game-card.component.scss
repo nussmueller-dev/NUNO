@@ -16,6 +16,10 @@
     border: 2px solid currentColor;
     border-radius: 8.8%/6.3%;
 
+    &.wild{
+        border: 2px solid $primary-color;
+    }
+
     &.red{
         color: $red;
     }
@@ -49,11 +53,11 @@
 }
 
 .small-number{
-    color: white;
+    color: $primary-color;
 }
 
 .big-number{
-    color: white;
+    color: $primary-color;
     font-size: 5em;
 }
 
@@ -61,15 +65,35 @@
     height: 35%;
 }
 
-.reverse-center{
+.reverse-center,
+.skip-center,
+.wild-center{
     height: 35%;
 }
 
-.reverse-corner{
+.reverse-corner,
+.skip-corner,
+.wild-corner{
     display: flex;
     height: 1em;
 }
 
 .fill-background{
     fill: $background-color;
+}
+
+.fill-red{
+    fill: $red;
+}
+
+.fill-blue{
+    fill: $blue;
+}
+
+.fill-green{
+    fill: $green;
+}
+
+.fill-yellow{
+    fill: $yellow;
 }

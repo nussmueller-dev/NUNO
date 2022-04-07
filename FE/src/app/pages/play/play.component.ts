@@ -18,8 +18,8 @@ export class PlayComponent implements OnInit {
 
   ngOnInit(): void {
     let newCrad = new GameCardViewModel();
-    newCrad.cardType = CardType.Reverse;
-    newCrad.color = Color.Yellow;
+    newCrad.cardType = CardType.Wild;
+    newCrad.color = Color.Green;
     // newCrad.number = 3;
 
     this.card1 = newCrad;

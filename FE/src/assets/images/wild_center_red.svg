@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="129" height="129" viewBox="0 0 129 129">
+  <defs>
+    <clipPath id="clip-Wild_Center">
+      <rect width="129" height="129"/>
+    </clipPath>
+  </defs>
+  <g id="Wild_Center" clip-path="url(#clip-Wild_Center)">
+    <g id="Gruppe_106" data-name="Gruppe 106">
+      <path id="Differenzmenge_40" class="fill-blue" data-name="Differenzmenge 40" d="M2609.02-6531H2604a58.631,58.631,0,0,1,4.636-22.965,58.8,58.8,0,0,1,12.644-18.753,58.8,58.8,0,0,1,18.754-12.645A58.63,58.63,0,0,1,2663-6590v5.021A55.463,55.463,0,0,0,2609.02-6531Z" transform="translate(-2600 6594)"/>
+      <path id="Differenzmenge_41" class="fill-yellow" data-name="Differenzmenge 41" d="M2720-6531h-5.021A55.462,55.462,0,0,0,2661-6584.979V-6590a58.632,58.632,0,0,1,22.965,4.636,58.807,58.807,0,0,1,18.754,12.644,58.8,58.8,0,0,1,12.644,18.754A58.63,58.63,0,0,1,2720-6531Z" transform="translate(-2595 6594)"/>
+      <path id="Differenzmenge_45" class="fill-green" data-name="Differenzmenge 45" d="M2868-6474h0a58.623,58.623,0,0,1-22.964-4.637,58.8,58.8,0,0,1-18.754-12.645,58.8,58.8,0,0,1-12.645-18.753A58.63,58.63,0,0,1,2809-6533h5.021a55.462,55.462,0,0,0,53.979,53.98V-6474Z" transform="translate(-2805 6599)"/>
+      <path id="Differenzmenge_45_-_Kontur" class="fill-green" data-name="Differenzmenge 45 - Kontur" d="M2868-6474h0a58.623,58.623,0,0,1-22.964-4.637,58.8,58.8,0,0,1-18.754-12.645,58.8,58.8,0,0,1-12.645-18.753A58.63,58.63,0,0,1,2809-6533h5.021a55.462,55.462,0,0,0,53.979,53.98Z" transform="translate(-2805 6599)"/>
+      <path id="Differenzmenge_42" class="fill-red" data-name="Differenzmenge 42" d="M2720-6533a59,59,0,0,1-59,59v-59Z" transform="translate(-2595 6599)"/>
+      <path id="Differenzmenge_42_-_Kontur" class="fill-red" data-name="Differenzmenge 42 - Kontur" d="M2665-6529v50.858a54.465,54.465,0,0,0,17.407-4.178,55.016,55.016,0,0,0,9.341-5.07,55.417,55.417,0,0,0,8.143-6.718,55.441,55.441,0,0,0,6.719-8.143,55.009,55.009,0,0,0,5.07-9.341,54.473,54.473,0,0,0,4.179-17.407H2665m-4-4h59a59,59,0,0,1-59,59Z" transform="translate(-2595 6599)"/>
+    </g>
+  </g>
+</svg>
