@@ -5,5 +5,5 @@ export class GameCardViewModel {
     cardType: CardType = CardType.Number;
 
     color?: Color;
-    number?: Color;
+    number?: number;
 }

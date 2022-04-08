@@ -2,8 +2,8 @@
 using Authentication.Helpers;
 using Game;
 using Game.CustomAuthentication;
+using Game.Entities;
 using Game.Models.ViewModels;
-using Game.UNO.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NUNO_Backend.Controllers {
@@ -21,7 +21,7 @@ namespace NUNO_Backend.Controllers {
 
     [Authorize]
     [HttpPost("create/uno")]
-    public IActionResult CreateUnoSession([FromBody] UnoRules rules) {
+    public IActionResult CreateUnoSession([FromBody] Rules rules) {
       var session = _sessionLogic.CreateSession(rules, _currentUserHelper.CurrentUser);
       
       return Ok(session.Id);

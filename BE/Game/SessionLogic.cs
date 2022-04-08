@@ -1,8 +1,6 @@
-﻿using Authentication.Helpers;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Game.Entities;
 using Game.Hubs;
-using Game.Interfaces.Entities;
 using Game.Models.ViewModels;
 using Microsoft.AspNetCore.SignalR;
 
@@ -16,7 +14,7 @@ namespace Game {
       _playerOrderHub = playerOrderHub;
     }
 
-    public Session CreateSession(IRules rules, IUser creator) {
+    public Session CreateSession(Rules rules, IUser creator) {
       var newSession = new Session();
 
       do {
