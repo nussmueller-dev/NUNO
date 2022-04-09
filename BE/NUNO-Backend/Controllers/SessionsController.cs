@@ -1,8 +1,8 @@
 ﻿using Authentication.Attributes;
 using Authentication.Helpers;
-using Game;
 using Game.CustomAuthentication;
 using Game.Entities;
+using Game.Logic;
 using Game.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +10,11 @@ namespace NUNO_Backend.Controllers {
   [Route("sessions")]
   [ApiController]
   [Produces("application/json")]
-  public class SessionController : ControllerBase {
+  public class SessionsController : ControllerBase {
     private readonly SessionLogic _sessionLogic;
     private readonly CurrentUserHelper _currentUserHelper;
-
-    public SessionController(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
+‌‌ 
+    public SessionsController(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
       _sessionLogic = sessionLogic;
       _currentUserHelper = currentUserHelper;
     }
