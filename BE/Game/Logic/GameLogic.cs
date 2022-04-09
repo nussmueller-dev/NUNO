@@ -43,7 +43,7 @@ namespace Game.Logic {
       }
 
       session.CurrentCard = TakeRandomCardFromStack(session);
-      while(session.CurrentCard.CardType != CardType.Number) {
+      while (session.CurrentCard.CardType != CardType.Number) {
         session.LaidCards.Add(session.CurrentCard);
         session.CurrentCard = TakeRandomCardFromStack(session);
       }
@@ -81,6 +81,25 @@ namespace Game.Logic {
       session.LaidCards.Add(session.CurrentCard);
       session.CurrentCard = card;
       currentPlayer.Cards.Remove(card);
+
+      session.CurrentPlayer = GetNextPlayer(session);
+
+      switch (card.CardType) {
+        case CardType.Skip:
+          Skip(session);
+          break;
+        case CardType.Reverse:
+          Reverse(session);
+          break;
+        case CardType.WildDrawFour:
+          WildDrawFour(session);
+          break;
+        case CardType.DrawTwo:
+          DrawTwo(session);
+          break;
+      }
+
+      InformAboutNewCurrentCard(session);
 
       return currentPlayer.Cards;
     }
@@ -176,6 +195,61 @@ namespace Game.Logic {
       return cards;
     }
 
+    private Player GetNextPlayer(Session session) {
+      var currentPlayerIndex = session.Players.IndexOf(session.CurrentPlayer);
+
+      if (session.IsReversing) {
+        if (currentPlayerIndex == 0) {
+          return session.Players.Last();
+        } else {
+          return session.Players[currentPlayerIndex - 1];
+        }
+      } else {
+        if (currentPlayerIndex == session.Players.Count - 1) {
+          return session.Players.First();
+        } else {
+          return session.Players[currentPlayerIndex + 1];
+        }
+      }
+    }
+
+    #region - Special Cards -
+
+    private void WildDrawFour(Session session) {
+      if (session.Rules.Accumulate) {
+        session.AccumulateCardsDrawFour += 4;
+      } else {
+        for (int i = 0; i < 4; i++) {
+          session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+      }
+    }
+
+    private void DrawTwo(Session session) {
+      if (session.Rules.Accumulate) {
+        session.AccumulateCardsDrawTwo += 2;
+      } else {
+        for (int i = 0; i < 2; i++) {
+          session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+      }
+    }
+
+    private void Reverse(Session session) {
+      session.IsReversing = !session.IsReversing;
+      session.CurrentPlayer = GetNextPlayer(session);
+      session.CurrentPlayer = GetNextPlayer(session);
+
+      InformAboutReverse(session);
+    }
+
+    private void Skip(Session session) {
+      InformAboutGotSkipped(session.CurrentPlayer);
+      session.CurrentPlayer = GetNextPlayer(session);
+    }
+
+    #endregion
+
     #region - Inform -
 
     private void InformAboutGameStart(Session session) {
@@ -188,6 +262,16 @@ namespace Game.Logic {
 
     private void InformAboutNewCurrentCard(Session session) {
       _playersHub.Clients.Group($"session-{session.Id}").SendAsync("currentCard", new CardViewModel(session.CurrentCard));
+    }
+
+    private void InformAboutReverse(Session session) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("reverse", session.IsReversing);
+    }
+
+    private void InformAboutGotSkipped(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("youGotSkipped");
+      }
     }
 
     #endregion

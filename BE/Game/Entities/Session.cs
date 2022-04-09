@@ -12,6 +12,9 @@
     public List<Card> LaidCards { get; set; } = new List<Card> { };
     public Card CurrentCard { get; set; }
     public Player CurrentPlayer { get; set; }
+
     public bool IsReversing { get; set; } = false;
+    public int AccumulateCardsDrawTwo { get; set; } = 0;
+    public int AccumulateCardsDrawFour { get; set; } = 0;
   }
 }
