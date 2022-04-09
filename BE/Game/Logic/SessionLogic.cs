@@ -4,7 +4,7 @@ using Game.Hubs;
 using Game.Models.ViewModels;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Game {
+namespace Game.Logic {
   public class SessionLogic {
     private readonly IHubContext<PlayersHub> _playerOrderHub;
     private readonly Random Random = new Random();
