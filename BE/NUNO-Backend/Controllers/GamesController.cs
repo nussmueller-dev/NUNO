@@ -3,6 +3,7 @@ using Authentication.Helpers;
 using Game.CustomAuthentication;
 using Game.Enums;
 using Game.Logic;
+using Game.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NUNO_Backend.Controllers {
@@ -10,11 +11,13 @@ namespace NUNO_Backend.Controllers {
   [ApiController]
   public class GamesController : ControllerBase {
     private readonly GameLogic _gameLogic;
+    private readonly SessionLogic _sessionLogic;
     private readonly CurrentUserHelper _currentUserHelper;
 
-    public GamesController(GameLogic gameLogic, CurrentUserHelper currentUserHelper) {
+    public GamesController(GameLogic gameLogic, SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
       _gameLogic = gameLogic;
       _currentUserHelper = currentUserHelper;
+      _sessionLogic = sessionLogic;
     }
 
     [Authorize]
@@ -66,6 +69,30 @@ namespace NUNO_Backend.Controllers {
         return BadRequest("Noob");
       } else {
         return Ok();
+      }
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpGet("cards")]
+    public IActionResult LoadCards([FromQuery] int sessionId) {
+      var cards = _gameLogic.GetCards(sessionId);
+      var viewModels = cards.Select(x => new CardViewModel(x)).ToList();
+
+      return Ok(viewModels);
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpGet("current-card")]
+    public IActionResult LoadCurrentCard([FromQuery] int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentCard = session?.CurrentCard;
+
+      if (currentCard is null) {
+        return BadRequest();
+      } else {
+        return Ok(new CardViewModel(currentCard));
       }
     }
   }

@@ -50,7 +50,10 @@ namespace Game.Logic {
         session.CurrentCard = TakeRandomCardFromStack(session);
       }
 
+      session.CurrentPlayer = session.Players.First();
+
       InformAboutGameStart(session);
+      InformAboutMyTurn(session.CurrentPlayer);
 
       return true;
     }
@@ -139,6 +142,17 @@ namespace Game.Logic {
       //Do it
 
       return true;
+    }
+
+    public List<Card> GetCards(int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentPlayer = GetCurrentPlayer(session);
+
+      if (session is null || currentPlayer is null) {
+        return null;
+      }
+
+      return currentPlayer.Cards;
     }
 
     #endregion
@@ -298,7 +312,7 @@ namespace Game.Logic {
     }
 
     private void InformAboutNewCurrentCard(Session session) {
-      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("currentCard", new CardViewModel(session.CurrentCard));
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("newCurrentCard", new CardViewModel(session.CurrentCard));
     }
 
     private void InformAboutReverse(Session session) {
@@ -308,6 +322,12 @@ namespace Game.Logic {
     private void InformAboutGotSkipped(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("youGotSkipped");
+      }
+    }
+
+    private void InformAboutMyTurn(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("myTurn");
       }
     }
 

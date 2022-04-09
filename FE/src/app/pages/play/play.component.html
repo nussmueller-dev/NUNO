@@ -20,7 +20,7 @@
 </div>
 
 <main>
-    <app-game-card [card]="card1" class="card"></app-game-card>
-    <app-game-card [card]="card2" class="card"></app-game-card>
-    <app-game-card [card]="card3" class="card"></app-game-card>
+    <div class="cards">
+        <app-game-card class="card" *ngFor="let card of cards" [card]="card"></app-game-card>
+    </div>
 </main>
