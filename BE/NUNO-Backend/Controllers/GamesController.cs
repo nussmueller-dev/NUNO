@@ -1,19 +1,32 @@
-﻿using Authentication.Helpers;
+﻿using Authentication.Attributes;
+using Authentication.Helpers;
+using Game.CustomAuthentication;
 using Game.Logic;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace NUNO_Backend.Controllers {
   [Route("games")]
   [ApiController]
   public class GamesController : ControllerBase {
-    private readonly SessionLogic _sessionLogic;
+    private readonly GameLogic _gameLogic;
     private readonly CurrentUserHelper _currentUserHelper;
 
-    public GamesController(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
-      _sessionLogic = sessionLogic;
+    public GamesController(GameLogic gameLogic, CurrentUserHelper currentUserHelper) {
+      _gameLogic = gameLogic;
       _currentUserHelper = currentUserHelper;
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpPost("start")]
+    public IActionResult StartGame([FromQuery] int sessionId) {
+      var startedGame = _gameLogic.StartGame(sessionId);
+
+      if (startedGame) {
+        return Ok();
+      } else {
+        return BadRequest("Es befinden sich noch zu wenige Spieler in dieser Runde");
+      }
     }
   }
 }

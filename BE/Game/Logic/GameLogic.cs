@@ -1,17 +1,21 @@
-﻿using Game.Entities;
+﻿using Authentication.Helpers;
+using Game.Entities;
 using Game.Enums;
 using Game.Hubs;
+using Game.Models.ViewModels;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Game.Logic {
   public class GameLogic {
     private readonly SessionLogic _sessionLogic;
+    private readonly CurrentUserHelper _currentUserHelper;
     private readonly IHubContext<PlayersHub> _playersHub;
     private readonly Random _random = new Random();
 
-    public GameLogic(SessionLogic sessionLogic, IHubContext<PlayersHub> playerOrderHub) {
+    public GameLogic(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper, IHubContext<PlayersHub> playerOrderHub) {
       _sessionLogic = sessionLogic;
       _playersHub = playerOrderHub;
+      _currentUserHelper = currentUserHelper;
     }
 
     #region - Public Methodes -
@@ -27,6 +31,8 @@ namespace Game.Logic {
 
       session.NewPlayersCanJoin = false;
       session.CardStack = GenerateCardStack();
+      session.LaidCards = new List<Card>();
+      session.IsReversing = false;
 
       foreach (var player in session.Players) {
         player.Cards.Clear();
@@ -36,12 +42,81 @@ namespace Game.Logic {
         }
       }
 
+      session.CurrentCard = TakeRandomCardFromStack(session);
+      while(session.CurrentCard.CardType != CardType.Number) {
+        session.LaidCards.Add(session.CurrentCard);
+        session.CurrentCard = TakeRandomCardFromStack(session);
+      }
+
+      InformAboutGameStart(session);
+
       return true;
+    }
+
+    public List<Card> LayCard(int sessionId, int cardId, ColorType? selectedColor) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentPlayer = GetCurrentPlayer(session);
+      var card = currentPlayer?.Cards.FirstOrDefault(x => x.Id == cardId);
+
+      if (session is null || currentPlayer is null || card is null) {
+        return null;
+      }
+
+      if (currentPlayer != session.CurrentPlayer) {
+        return null;
+      }
+
+      if (card.CardType == CardType.Wild || card.CardType == CardType.WildDrawFour) {
+        if (selectedColor is null) {
+          return null;
+        } else {
+          card.Color = selectedColor;
+        }
+      }
+
+      if (!CanLayCard(session, card)) {
+        return null;
+      }
+
+      session.LaidCards.Add(session.CurrentCard);
+      session.CurrentCard = card;
+      currentPlayer.Cards.Remove(card);
+
+      return currentPlayer.Cards;
     }
 
     #endregion
 
     #region - Private Methodes -
+
+    private bool CanLayCard(Session session, Card card) {
+      if (card.CardType == CardType.Wild || card.CardType == CardType.WildDrawFour) {
+        return true;
+      }
+
+      if (card.Color == session.CurrentCard.Color) {
+        return true;
+      }
+
+      if (card.CardType == CardType.Number) {
+        return card.Number == session.CurrentCard.Number;
+      }
+
+      if (card.CardType == session.CurrentCard.CardType) {
+        return true;
+      }
+
+      return false;
+    }
+
+    private Player GetCurrentPlayer(Session session) {
+      if (session is null) {
+        return null;
+      }
+
+      var currentUser = _currentUserHelper.CurrentUser;
+      return session.Players.FirstOrDefault(x => x.Username == currentUser.Username);
+    }
 
     private List<Card> GenerateCardStack() {
       var newCardStack = new List<Card>();
@@ -80,7 +155,7 @@ namespace Game.Logic {
       session.CardStack.Remove(randomCard);
 
       if (session.CardStack.Count == 0) {
-        session.CardStack = session.LaidCards;
+        session.CardStack = ResetWildCards(session.LaidCards);
         session.LaidCards = new List<Card>();
       }
 
@@ -91,9 +166,31 @@ namespace Game.Logic {
       return randomCard;
     }
 
+    private List<Card> ResetWildCards(List<Card> cards) {
+      var wildCards = cards.Where(x => x.CardType == CardType.Wild || x.CardType == CardType.WildDrawFour);
+
+      foreach (var wildCard in wildCards) {
+        wildCard.Color = null;
+      }
+
+      return cards;
+    }
+
+    #region - Inform -
+
     private void InformAboutGameStart(Session session) {
       _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameStarts");
     }
+
+    private void InformAboutGameEnd(Session session) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameEnds");
+    }
+
+    private void InformAboutNewCurrentCard(Session session) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("currentCard", new CardViewModel(session.CurrentCard));
+    }
+
+    #endregion
 
     #endregion
 

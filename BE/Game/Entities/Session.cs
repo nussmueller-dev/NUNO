@@ -10,5 +10,8 @@
     public List<Player> Players { get; set; } = new List<Player> { };
     public List<Card> CardStack { get; set; } = new List<Card> { };
     public List<Card> LaidCards { get; set; } = new List<Card> { };
+    public Card CurrentCard { get; set; }
+    public Player CurrentPlayer { get; set; }
+    public bool IsReversing { get; set; } = false;
   }
 }
