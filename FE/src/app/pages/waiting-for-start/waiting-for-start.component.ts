@@ -38,6 +38,10 @@ export class WaitingForStartComponent implements OnInit {
     this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
   }
 
+  gameStarted = () => {    
+    this.router.navigate(['/play'], { queryParamsHandling: 'merge' });
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -76,6 +80,7 @@ export class WaitingForStartComponent implements OnInit {
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
     this.signalrConnection.addEvent('kick', this.gotKickedOut);
     this.signalrConnection.addEvent('youAreCreatorNow', this.upgradedToCreator);
+    this.signalrConnection.addEvent('gameStarts', this.gameStarted);
   }
 
   ngOnDestroy() {

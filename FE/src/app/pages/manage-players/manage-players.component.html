@@ -28,5 +28,5 @@
     </div>
 </main>
 <footer>
-    <button class="button">Spiel starten</button>
+    <button class="button" [disabled]="!canStartGame" (click)="startGame()">Spiel starten</button>
 </footer>

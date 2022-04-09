@@ -25,11 +25,13 @@ namespace Game.Logic {
 
       if (session is null
         || session.Players.Count < 2
+        || !session.CanStarteGame
       ) {
         return false;
       }
 
       session.NewPlayersCanJoin = false;
+      session.CanStarteGame = false;
       session.CardStack = GenerateCardStack();
       session.LaidCards = new List<Card>();
       session.IsReversing = false;

@@ -1,3 +1,4 @@
+import { GameService } from './../../shared/services/game.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { SessionService } from 'src/app/shared/services/session.service';
 import { environment } from './../../../environments/environment';
@@ -18,15 +19,24 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   players: Array<PlayerViewModel> = [];
   creatorName: string = '';
   sessionId: number = 0;
+  canStartGame: boolean = false;
 
   loadPlayers: Function = () => {    
     this.sessionService.getPlayers(this.sessionId).then((players) => {
       this.players = players;
+
+      this.canStartGame = this.players.length >= 2;
     });
   }
   
   reorderPlayers = (newPlayers: Array<PlayerViewModel>) => {    
     this.players = newPlayers;
+
+    this.canStartGame = this.players.length >= 2;
+  }
+
+  gameStarted = () => {    
+    this.router.navigate(['/play'], { queryParamsHandling: 'merge' });
   }
 
   constructor(
@@ -34,6 +44,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private currentUserService: CurrentUserService,
     private sessionService: SessionService,
+    private gameService: GameService,
     private popupService: PopupService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
@@ -66,6 +77,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
+    this.signalrConnection.addEvent('gameStarts', this.gameStarted);
   }
   
   ngOnDestroy() {
@@ -87,5 +99,9 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
 
     this.popupService.succesModal.showSuccesMessage('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
+  }
+
+  async startGame(){
+    await this.gameService.startGame(this.sessionId);
   }
 }

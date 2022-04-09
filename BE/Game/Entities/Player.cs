@@ -9,8 +9,8 @@ namespace Game.Entities {
       } 
     }
     public bool IsCreator { get; private set; }
-    public int Points { get; set; }
-    public List<Card> Cards { get; set; }
+    public int Points { get; set; } = 0;
+    public List<Card> Cards { get; set; } = new List<Card>();
     public IList<string> PlayerConnectionIds { get; } = new List<string>();
 
     public Player(IUser user, bool isCreator = false) {

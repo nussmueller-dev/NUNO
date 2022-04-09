@@ -3,6 +3,7 @@
     public int Id { get; set; }
     public Rules Rules { get; set; }
     public bool NewPlayersCanJoin { get; set; } = true;
+    public bool CanStarteGame { get; set; } = true;
     public Player Creator { get {
         return Players.FirstOrDefault(x => x.IsCreator);  
       } 
