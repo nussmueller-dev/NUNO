@@ -1,13 +1,17 @@
 ﻿using Game.Entities;
 using Game.Enums;
+using Game.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Game.Logic {
   public class GameLogic {
     private readonly SessionLogic _sessionLogic;
+    private readonly IHubContext<PlayersHub> _playersHub;
     private readonly Random _random = new Random();
 
-    public GameLogic(SessionLogic sessionLogic) {
+    public GameLogic(SessionLogic sessionLogic, IHubContext<PlayersHub> playerOrderHub) {
       _sessionLogic = sessionLogic;
+      _playersHub = playerOrderHub;
     }
 
     #region - Public Methodes -
@@ -28,7 +32,7 @@ namespace Game.Logic {
         player.Cards.Clear();
 
         for (int i = 0; i < session.Rules.StartCardCount; i++) {
-          player.Cards.Add();
+          player.Cards.Add(TakeRandomCardFromStack(session));
         }
       }
 
@@ -75,7 +79,24 @@ namespace Game.Logic {
 
       session.CardStack.Remove(randomCard);
 
+      if (session.CardStack.Count == 0) {
+        session.CardStack = session.LaidCards;
+        session.LaidCards = new List<Card>();
+      }
+
+      if (session.CardStack.Count == 0) {
+        session.CardStack = GenerateCardStack();
+      }
+
       return randomCard;
+    }
+
+    private void InformAboutGameStart(Session session) {
+      foreach(var player in session.Players) {
+        foreach (var connectionId in player.PlayerConnectionIds) {
+          _playersHub.Clients.Client(connectionId).SendAsync("gameStarts");
+        }
+      }
     }
 
     #endregion

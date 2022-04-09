@@ -9,5 +9,6 @@
     }
     public List<Player> Players { get; set; } = new List<Player> { };
     public List<Card> CardStack { get; set; } = new List<Card> { };
+    public List<Card> LaidCards { get; set; } = new List<Card> { };
   }
 }

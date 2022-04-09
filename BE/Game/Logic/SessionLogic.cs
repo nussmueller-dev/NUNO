@@ -6,13 +6,15 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Game.Logic {
   public class SessionLogic {
-    private readonly IHubContext<PlayersHub> _playerOrderHub;
+    private readonly IHubContext<PlayersHub> _playersHub;
     private readonly Random Random = new Random();
     private List<Session> Sessions = new List<Session>();
 
     public SessionLogic(IHubContext<PlayersHub> playerOrderHub) { 
-      _playerOrderHub = playerOrderHub;
+      _playersHub = playerOrderHub;
     }
+
+    #region - Public Methodes -
 
     public Session CreateSession(Rules rules, IUser creator) {
       var newSession = new Session();
@@ -145,6 +147,10 @@ namespace Game.Logic {
       return true;
     }
 
+    #endregion
+
+    #region - Private Methodes -
+
     private void InformAboutPlayerOrderChanged(int sessionId) {
       var session = GetSession(sessionId);
 
@@ -156,21 +162,24 @@ namespace Game.Logic {
 
       foreach (var player in session.Players) {
         foreach (var connectionId in player.PlayerConnectionIds) {
-          _playerOrderHub.Clients.Client(connectionId).SendAsync("reorder", playerViewModels);
+          _playersHub.Clients.Client(connectionId).SendAsync("reorder", playerViewModels);
         }
       }
     }
 
     private void InformAboutKick(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
-        _playerOrderHub.Clients.Client(connectionId).SendAsync("kick");
+        _playersHub.Clients.Client(connectionId).SendAsync("kick");
       }
     }
 
     private void InformAboutUpgradeToCreator(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
-        _playerOrderHub.Clients.Client(connectionId).SendAsync("youAreCreatorNow");
+        _playersHub.Clients.Client(connectionId).SendAsync("youAreCreatorNow");
       }
     }
+
+    #endregion
+
   }
 }
