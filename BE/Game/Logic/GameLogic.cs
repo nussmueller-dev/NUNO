@@ -104,6 +104,41 @@ namespace Game.Logic {
       return currentPlayer.Cards;
     }
 
+    public Card TakeCard(int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentPlayer = GetCurrentPlayer(session);
+
+      if (session is null || currentPlayer is null) {
+        return null;
+      }
+
+      if (session.CurrentPlayer != currentPlayer) {
+        return null;
+      }
+
+      var newCard = TakeRandomCardFromStack(session);
+      currentPlayer.Cards.Add(newCard);
+
+      return newCard;
+    }
+
+    public bool CallLastCard(int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentPlayer = GetCurrentPlayer(session);
+
+      if (session is null || currentPlayer is null) {
+        return false;
+      }
+
+      if (session.CurrentPlayer != currentPlayer) {
+        return false;
+      }
+
+      //Do it
+
+      return true;
+    }
+
     #endregion
 
     #region - Private Methodes -
