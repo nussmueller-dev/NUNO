@@ -92,11 +92,7 @@ namespace Game.Logic {
     }
 
     private void InformAboutGameStart(Session session) {
-      foreach(var player in session.Players) {
-        foreach (var connectionId in player.PlayerConnectionIds) {
-          _playersHub.Clients.Client(connectionId).SendAsync("gameStarts");
-        }
-      }
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameStarts");
     }
 
     #endregion

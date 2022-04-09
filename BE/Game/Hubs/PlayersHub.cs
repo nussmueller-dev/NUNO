@@ -24,11 +24,17 @@ namespace Game.Hubs {
 
       player.PlayerConnectionIds.Add(Context.ConnectionId);
 
+      Groups.AddToGroupAsync(Context.ConnectionId, $"session-{ session.Id}");
+
       return base.OnConnectedAsync();
     }
 
     public override Task OnDisconnectedAsync(Exception? exception) {
-      _sessionLogic.RemoveConnectionId(Context.ConnectionId);
+      var sessionId = _sessionLogic.RemoveConnectionId(Context.ConnectionId);
+
+      if (sessionId != null) {
+        Groups.RemoveFromGroupAsync(Context.ConnectionId, $"session-{sessionId}");
+      }
 
       return base.OnDisconnectedAsync(exception);
     }

@@ -49,11 +49,13 @@ namespace Game.Logic {
       return true;
     }
 
-    public void RemoveConnectionId(string connectionId) {
+    public int? RemoveConnectionId(string connectionId) {
       var players = Sessions.SelectMany(x => x.Players).ToList();
       var player = players.FirstOrDefault(x => x.PlayerConnectionIds.Contains(connectionId));
 
       player?.PlayerConnectionIds.Remove(connectionId);
+
+      return player is null ? null : Sessions.FirstOrDefault(x => x.Players.Any(y => y == player))?.Id;
     }
 
     public bool IsUserInSession(int sessionId, IUser user) {
@@ -160,11 +162,7 @@ namespace Game.Logic {
 
       var playerViewModels = session.Players.Select(x => new PlayerViewModel(x)).ToList();
 
-      foreach (var player in session.Players) {
-        foreach (var connectionId in player.PlayerConnectionIds) {
-          _playersHub.Clients.Client(connectionId).SendAsync("reorder", playerViewModels);
-        }
-      }
+      _playersHub.Clients.Group($"session-{sessionId}").SendAsync("reorder", playerViewModels);
     }
 
     private void InformAboutKick(Player player) {
