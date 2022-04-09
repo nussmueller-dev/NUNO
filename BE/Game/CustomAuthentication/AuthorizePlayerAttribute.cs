@@ -1,4 +1,5 @@
 ﻿using Authentication.Helpers;
+using Game.Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

@@ -1,6 +1,7 @@
 ﻿using Authentication.Helpers;
 using Authentication.Logic;
 using Data.Interfaces;
+using Game.Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
