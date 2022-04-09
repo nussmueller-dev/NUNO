@@ -1,4 +1,4 @@
-﻿using Game;
+﻿using Game.Logic;
 
 namespace NUNO_Backend.Extensions {
   public static class GameExtension {

@@ -13,7 +13,7 @@ namespace NUNO_Backend.Controllers {
   public class SessionsController : ControllerBase {
     private readonly SessionLogic _sessionLogic;
     private readonly CurrentUserHelper _currentUserHelper;
-‌‌ 
+
     public SessionsController(SessionLogic sessionLogic, CurrentUserHelper currentUserHelper) {
       _sessionLogic = sessionLogic;
       _currentUserHelper = currentUserHelper;
