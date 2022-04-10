@@ -28,8 +28,8 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
       ]),
       transition(':leave', [
         style({top: '0%', width: '*', minWidth: '5vh', flex: '*',  opacity: 1}),
-        animate('800ms ease-out', keyframes([
-          style({top: '-100vh', opacity: 0, offset: 0.8 }),
+        animate('800ms ease-in-out', keyframes([
+          style({top: '-100vh', opacity: 0, offset: 0.7 }),
           style({width: '0px', minWidth: '0vh', flex: '0 0 0', offset: 1 })
         ]))
       ])
@@ -125,7 +125,7 @@ export class PlayComponent implements OnInit {
     this.orderCards();
   }
 
-  layCard(){
+  layCard(card: GameCardViewModel){
     let randomIndex = _.random(0, this.cards.length -1);
     this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
   }
