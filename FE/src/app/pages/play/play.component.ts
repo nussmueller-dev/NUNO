@@ -18,12 +18,19 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss'],
   animations: [
-    trigger('slideInOut', [
+    trigger('cardsAnimation', [
       transition(':enter', [
         style({top: '-100vh', width: '0px', minWidth: '0vh', flex: '0 0 0', opacity: 0 }),
         animate('800ms ease-out', keyframes([
           style({width: '*', minWidth: '5vh', flex: '*', opacity: 0, offset: 0.2 }),
           style({top: '0%', opacity: 1, offset: 1 })
+        ]))
+      ]),
+      transition(':leave', [
+        style({top: '0%', width: '*', minWidth: '5vh', flex: '*',  opacity: 1}),
+        animate('800ms ease-out', keyframes([
+          style({top: '-100vh', opacity: 0, offset: 0.8 }),
+          style({width: '0px', minWidth: '0vh', flex: '0 0 0', offset: 1 })
         ]))
       ])
     ])
@@ -116,5 +123,10 @@ export class PlayComponent implements OnInit {
     let randomIndex = _.random(0, this.cards.length -1);
     this.cards.push(this.cards[randomIndex]);
     this.orderCards();
+  }
+
+  layCard(){
+    let randomIndex = _.random(0, this.cards.length -1);
+    this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
   }
 }
