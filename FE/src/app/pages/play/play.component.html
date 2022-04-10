@@ -1,4 +1,4 @@
-<app-wrong-screen-orientation class="wrong-screen-orientation"></app-wrong-screen-orientation>
+<!-- <app-wrong-screen-orientation class="wrong-screen-orientation"></app-wrong-screen-orientation> -->
 
 <div class="center-buttons">
     <div class="row">
@@ -13,14 +13,18 @@
         </button>
     </div>
     <div class="row">
-        <button class="icon-button warning last-card-button">
+        <button class="icon-button warning last-card-button" (click)="multiPlayCards()">
             <span>1</span>
         </button>
     </div>
 </div>
 
 <main>
-    <div class="cards">
-        <app-game-card class="card" *ngFor="let card of cards" [card]="card"></app-game-card>
+    <div class="cards-holder">
+        <div class="cards">
+            <div class="card-holder" *ngFor="let card of cards">
+                <app-game-card class="card" [card]="card"></app-game-card>
+            </div>
+        </div>
     </div>
 </main>

@@ -77,4 +77,8 @@ export class PlayComponent implements OnInit {
   ngOnDestroy() {
     this.signalrConnection.stop();
   }
+
+  multiPlayCards(){
+    this.cards.push(...this.cards);
+  }
 }

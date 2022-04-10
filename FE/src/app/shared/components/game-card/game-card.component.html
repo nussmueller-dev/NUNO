@@ -10,12 +10,14 @@
             <span class="small-number">{{card.number}}</span>
         </div>
     </ng-container>
-
+    
     <ng-container *ngIf="card.cardType === cardType.DrawTwo">
         <div class="top-left">
             <span class="small-number">+2</span>
         </div>
-        <svg-icon class="center-image" src="assets/images/draw_two_center.svg"></svg-icon>
+        <div class="center">
+            <svg-icon class="center-image" src="assets/images/draw_two_center.svg"></svg-icon>
+        </div>
         <div class="bottom-right">
             <span class="small-number">+2</span>
         </div>
@@ -25,7 +27,9 @@
         <div class="top-left">
             <svg-icon class="corner-image" src="assets/images/reverse_corner.svg"></svg-icon>
         </div>
-        <svg-icon class="center-image" src="assets/images/reverse_center.svg"></svg-icon>
+        <div class="center">
+            <svg-icon class="center-image" src="assets/images/reverse_center.svg"></svg-icon>
+        </div>
         <div class="bottom-right">
             <svg-icon class="corner-image" src="assets/images/reverse_corner.svg"></svg-icon>
         </div>
@@ -35,7 +39,9 @@
         <div class="top-left">
             <svg-icon class="corner-image" src="assets/images/skipp_center.svg"></svg-icon>
         </div>
-        <svg-icon class="center-image" src="assets/images/skipp_center.svg"></svg-icon>
+        <div class="center">
+            <svg-icon class="center-image" src="assets/images/skipp_center.svg"></svg-icon>
+        </div>
         <div class="bottom-right">
             <svg-icon class="corner-image" src="assets/images/skipp_center.svg"></svg-icon>
         </div>
@@ -45,7 +51,9 @@
         <div class="top-left">
             <svg-icon class="corner-image" [src]="wildCardImageUrl"></svg-icon>
         </div>
+        <div class="center">
             <svg-icon class="center-image" [src]="wildCardImageUrl"></svg-icon>
+        </div>
         <div class="bottom-right">
             <svg-icon class="corner-image" [src]="wildCardImageUrl"></svg-icon>
         </div>
@@ -55,7 +63,9 @@
         <div class="top-left">
             <span class="small-number">+4</span>
         </div>
+        <div class="center">
             <svg-icon class="center-image wild4-image" src="assets/images/wild_plus4_center.svg"></svg-icon>
+        </div>
         <div class="bottom-right">
             <span class="small-number">+4</span>
         </div>
