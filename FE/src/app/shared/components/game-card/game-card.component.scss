@@ -16,6 +16,8 @@
     border: 2px solid currentColor;
     border-radius: 8.8%/6.3%;
 
+    background-color: $background-color;
+
     &.wild{
         border: 2px solid $primary-color;
     }
