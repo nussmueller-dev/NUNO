@@ -11,7 +11,8 @@ namespace NUNO_Backend.Extensions {
       #endif
 
       builder.Services.AddDbContextPool<NunoDbContext>(options =>
-        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), myOptions => myOptions.EnableRetryOnFailure(3))
+      );
     }
   }
 }
