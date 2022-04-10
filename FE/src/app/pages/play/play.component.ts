@@ -1,8 +1,6 @@
+import { CardType } from './../../shared/constants/card-types';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
-import { GameCardComponent } from './../../shared/components/game-card/game-card.component';
 import { Component, OnInit } from '@angular/core';
-import { CardType } from 'src/app/shared/constants/card-types';
-import { Color } from 'src/app/shared/constants/colors';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,11 +9,25 @@ import { SessionService } from 'src/app/shared/services/session.service';
 import { GameService } from 'src/app/shared/services/game.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { environment } from 'src/environments/environment';
+import * as _ from 'lodash';
+import { Color } from 'src/app/shared/constants/colors';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
-  styleUrls: ['./play.component.scss']
+  styleUrls: ['./play.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({top: '-100vh', width: '0px', minWidth: '0vh', flex: '0 0 0', opacity: 0 }),
+        animate('800ms ease-out', keyframes([
+          style({width: '*', minWidth: '5vh', flex: '*', opacity: 0, offset: 0.2 }),
+          style({top: '0%', opacity: 1, offset: 1 })
+        ]))
+      ])
+    ])
+  ]
 })
 export class PlayComponent implements OnInit {
   private signalrConnection: SignalrConnection;
@@ -31,6 +43,7 @@ export class PlayComponent implements OnInit {
 
     this.gameService.getCards(this.sessionId).then((cards) => {
       this.cards = cards;
+      this.orderCards();
     });
 
     this.gameService.getCurrentCard(this.sessionId).then((card: GameCardViewModel) => {
@@ -78,7 +91,30 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.stop();
   }
 
+  orderCards(){
+    let colors = Object.values(Color).filter(x => +x);
+    let sortedCards: Array<GameCardViewModel> = [];
+
+    colors = _.orderBy(colors, x => this.cards.filter(y => y.color === x).length, 'asc');
+
+    colors.forEach(color => {
+        let cards = this.cards.filter(x => x.color === color);
+
+        sortedCards.push(..._.orderBy(cards.filter(x => x.cardType === CardType.Number), x => x.number));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.DrawTwo));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.Skip));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.Reverse));
+    });
+
+    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.Wild)));
+    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.WildDrawFour)));
+
+    this.cards = sortedCards;
+  }
+
   multiPlayCards(){
-    this.cards.push(...this.cards);
+    let randomIndex = _.random(0, this.cards.length -1);
+    this.cards.push(this.cards[randomIndex]);
+    this.orderCards();
   }
 }

@@ -60,6 +60,7 @@ main{
     padding-right: 10vh;
 
     .card-holder{
+        position: relative;
         display: flex;
         flex: 1 0 5vh;
         min-width: 5vh;
@@ -67,7 +68,8 @@ main{
     }
 
     .card{
-        height: 100%;
+        position: fixed;
+        height: 30vh;
     }
 }
 

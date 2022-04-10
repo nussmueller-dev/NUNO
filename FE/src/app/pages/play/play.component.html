@@ -22,7 +22,7 @@
 <main>
     <div class="cards-holder">
         <div class="cards">
-            <div class="card-holder" *ngFor="let card of cards">
+            <div class="card-holder" *ngFor="let card of cards" [@slideInOut]>
                 <app-game-card class="card" [card]="card"></app-game-card>
             </div>
         </div>
