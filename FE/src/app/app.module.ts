@@ -29,6 +29,7 @@ import { PlayComponent } from './pages/play/play.component';
 import { WrongScreenOrientationComponent } from './shared/components/wrong-screen-orientation/wrong-screen-orientation.component';
 import { GameCardComponent } from './shared/components/game-card/game-card.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { GameCardBackComponent } from './shared/components/game-card-back/game-card-back.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     PlayComponent,
     WrongScreenOrientationComponent,
     GameCardComponent,
+    GameCardBackComponent,
   ],
   imports: [
     AppRoutingModule,
