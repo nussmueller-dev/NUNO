@@ -1,12 +1,15 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Data {
   public class NunoDbContext : DbContext {
     public DbSet<User> Users { get; set; }
     public DbSet<TempUser> TempUsers { get; set; }
 
-    public NunoDbContext(DbContextOptions<NunoDbContext> options) : base(options) { }
+    public NunoDbContext(DbContextOptions<NunoDbContext> options) : base(options) {
+      Database.Migrate();
+    }
   }
 
   //Commands for database

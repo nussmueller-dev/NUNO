@@ -32,3 +32,10 @@ packages/
 
 appsettings.json
 
+Deployment/BE/Output
+Deployment/FE/Output
+Deployment/TransferToServer
+
+Deploy.bat
+updateServer.txt
+uploadScript.txt
