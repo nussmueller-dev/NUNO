@@ -40,7 +40,7 @@
     top: 10px;
     left: 10px;
 
-    .card {
+    .top-card {
         height: 200px;
     }
 }
@@ -50,7 +50,7 @@
     top: 10px;
     right: 10px;
 
-    .card {
+    .top-card {
         height: 200px;
     }
 }
@@ -93,9 +93,15 @@ main {
     }
 }
 
-@media only screen and (max-width: $mobile-querry) {
+@media screen and (min-device-width : 320px) 
+and (max-device-width : 480px)  {
     .icon-button {
         font-size: 25px;
+    }
+
+    .top-card{
+        height: 50px;
+        background-color: red;
     }
 }
 
