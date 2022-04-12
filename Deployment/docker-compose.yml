@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  web:   
+    image: "borelio/nuno5-fe"
+    container_name: NUNO-FE
+    depends_on: [ api ] 
+    restart: unless-stopped   
+    ports:
+      - "5050:80"
+  api:  
+    image: "borelio/nuno5-be"
+    container_name: NUNO-BE
+    hostname: NUNO-BE
+    depends_on: [ sql ] 
+    restart: unless-stopped     
+    ports:
+      - "5051:80"
+  sql:
+    image: "mariadb"
+    container_name: NUNO-DB
+    hostname: NUNO-DB
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: "kg4vrJG!J7uNkeULfX!WcpSBuf2iTavdAR*pacB3%TxT%Kk%u%9^FzDw3Gn^Ux^Dk2i*u5qMVqP4TA2Kyzt8dVxvwrSV*W"
+    restart: unless-stopped    
+    ports:
+      - "5052:3306" 
