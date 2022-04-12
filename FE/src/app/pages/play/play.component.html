@@ -3,6 +3,9 @@
     <app-game-card-back class="top-card"></app-game-card-back>
 </div>
 <div class="top-right">
+    <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
+</div>
+<div class="top-right" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
     <app-game-card class="top-card" [card]="currentCard"></app-game-card>
 </div>
 
@@ -14,7 +17,7 @@
         <button class="icon-button delete exit-button">
             <svg-icon src="assets/icons/exit.svg" class="exit-icon"></svg-icon>
         </button>
-        <button class="icon-button settings-button">
+        <button class="icon-button settings-button" (click)="test()">
             <svg-icon src="assets/icons/settings.svg" class="settings-icon"></svg-icon>
         </button>
     </div>

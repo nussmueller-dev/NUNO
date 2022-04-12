@@ -11,7 +11,7 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 import { Color } from 'src/app/shared/constants/colors';
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
 
 @Component({
   selector: 'app-play',
@@ -33,14 +33,22 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
           style({width: '0px', minWidth: '0vh', flex: '0 0 0', offset: 1 })
         ]))
       ])
+    ]),
+    trigger('currentCardAnimation', [
+      transition('visible => hidden', [
+        style({ top: '-200px', opacity: 0, transform: 'scale(0)' }),
+        animate('400ms ease-out', style({ top: '*', opacity: 1, transform: 'scale(1)' }))
+      ])
     ])
   ]
 })
 export class PlayComponent implements OnInit {
   private signalrConnection: SignalrConnection;
+  currentCardAnimationState: string = 'hidden';
   players: Array<PlayerViewModel> = [];
   cards: Array<GameCardViewModel> = [];
   currentCard?: GameCardViewModel;
+  lastCurrentCard?: GameCardViewModel;
   sessionId: number = 0;
 
   load: Function = () => {    
@@ -96,6 +104,25 @@ export class PlayComponent implements OnInit {
   
   ngOnDestroy() {
     this.signalrConnection.stop();
+  }
+
+  test(){
+    let randomIndex = _.random(0, this.cards.length -1);
+    
+    this.changeCurrentCard(this.cards[randomIndex]);
+  }
+
+  changeCurrentCard(newCurrentCard: GameCardViewModel) {
+    this.lastCurrentCard = this.currentCard;
+    this.currentCard = newCurrentCard;
+    this.currentCardAnimationState = 'hidden';
+  }
+
+  currentCardAnimationFinished(event: AnimationEvent) {
+    if (event.toState === 'hidden'){
+      this.currentCardAnimationState = 'visible';
+      this.lastCurrentCard = undefined;
+    }
   }
 
   orderCards(){
