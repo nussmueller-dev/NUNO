@@ -58,20 +58,16 @@
 
 main {
     display: flex;
+    overflow: auto;
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
-    width: 100%;
-}
-
-.cards-holder {
-    display: flex;
-    overflow: auto;
     width: 100%;
     padding-bottom: 10px;
 }
 
 .cards {
+    overflow: visible;
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -89,7 +85,6 @@ main {
     }
 
     .card {
-        position: fixed;
         height: 30vh;
         cursor: pointer;
     }
