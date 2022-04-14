@@ -6,14 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './play-view-players.component.html',
   styleUrls: ['./play-view-players.component.scss']
 })
-export class PlayViewPlayersComponent implements OnInit {
+export class PlayViewPlayersComponent {
   @Input() players: Array<PlayerViewModel> = [];
   @Input() isReverseDirection: boolean = false;
   @Input() mePlayer?: PlayerViewModel;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }
