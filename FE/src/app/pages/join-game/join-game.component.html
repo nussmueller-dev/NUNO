@@ -4,11 +4,11 @@
 <main>
     <h3>Bitte Spiel-Nummer eingeben</h3>
 
-    <div class="input-form">
-        <input placeholder="Spiel-Nummer" type="tel" class="text-box" [(ngModel)]="sessionId">
+    <form class="input-form" (ngSubmit)="joinSession()">
+        <input placeholder="Spiel-Nummer" type="tel" name="sessionId" class="text-box" autocomplete="false" [(ngModel)]="sessionId">
         <div class="buttons">
             <a class="button secondary" routerLink="/welcome">Abbrechen</a>
-            <button class="button" (click)="joinSession()">Beitreten</button>
+            <button class="button">Beitreten</button>
         </div>
-    </div>
+    </form>
 </main>
