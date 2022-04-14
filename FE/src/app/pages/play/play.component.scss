@@ -62,15 +62,15 @@ main {
     justify-content: flex-end;
     height: 100%;
     width: 100%;
-    padding-bottom: 10px;
 }
 
 .cards-holder{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    overflow: auto;
+    overflow-x: scroll;
     height: 100%;
+    padding-bottom: 10px;
 }
 
 .cards {
