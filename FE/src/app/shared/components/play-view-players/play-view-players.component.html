@@ -1,1 +1,76 @@
-<p>play-view-players works!</p>
+<div class="direction-arrow-holder">
+    <svg-icon class="direction-arrow" [class.up]="isReverseDirection" src="/assets/icons/arrow-down.svg"></svg-icon>
+</div>
+<div class="players-holder">
+    <div class="players">
+        <div *ngFor="let player of players" class="player"
+            [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+            <p class="name">{{player.username}}</p>
+            <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+                <span class="cards-count"
+                    [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+            </div>
+        </div>
+        <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+    <div *ngFor="let player of players" class="player" [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+        <p class="name">{{player.username}}</p>
+        <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+            <span class="cards-count" [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
+        </div>
+    </div>
+
+    </div>
+</div>

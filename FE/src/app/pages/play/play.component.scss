@@ -16,9 +16,10 @@
 }
 
 .center-buttons {
+    position: absolute;
+    top: 5px;
     display: flex;
     flex-direction: column;
-    margin-top: 5px;
 
     .row {
         display: flex;
@@ -129,13 +130,23 @@ main {
             height: 50vh;
         }
     }
+
+    .players{
+        display: none;
+    }
 }
 
 @media screen and (orientation: portrait) and (max-width : $mobile-querry) {
     .top-card-holder,
     .center-buttons,
     .cards-holder{
-        visibility: hidden;
+        display: none;
+    }
+
+    .players{
+        position: absolute;
+        height: 100%;
+        width: 100%;
     }
 }
 

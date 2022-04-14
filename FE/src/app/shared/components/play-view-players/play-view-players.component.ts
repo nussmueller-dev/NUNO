@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { PlayerViewModel } from './../../models/view-models/player-view-model';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-play-view-players',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./play-view-players.component.scss']
 })
 export class PlayViewPlayersComponent implements OnInit {
+  @Input() players: Array<PlayerViewModel> = [];
+  @Input() isReverseDirection: boolean = false;
+  @Input() mePlayer?: PlayerViewModel;
 
   constructor() { }
 
