@@ -1,11 +1,11 @@
 <!-- <app-wrong-screen-orientation class="wrong-screen-orientation"></app-wrong-screen-orientation> -->
-<div class="top-left">
+<div class="top-left top-card-holder">
     <app-game-card-back class="top-card"></app-game-card-back>
 </div>
-<div class="top-right">
+<div class="top-right top-card-holder">
     <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
 </div>
-<div class="top-right" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
+<div class="top-right top-card-holder" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
     <app-game-card class="top-card" [card]="currentCard"></app-game-card>
 </div>
 
@@ -36,4 +36,6 @@
             </div>
         </div>
     </div>
+
+    <app-play-view-players></app-play-view-players>
 </main>

@@ -131,6 +131,14 @@ main {
     }
 }
 
+@media screen and (orientation: portrait) and (max-width : $mobile-querry) {
+    .top-card-holder,
+    .center-buttons,
+    .cards-holder{
+        visibility: hidden;
+    }
+}
+
 @media only screen and (orientation: portrait) {
     .wrong-screen-orientation {
         visibility: visible;
