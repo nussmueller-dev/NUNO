@@ -22,7 +22,7 @@ import { animate, keyframes, state, style, transition, trigger, AnimationEvent }
       transition(':enter', [
         style({top: '-100vh', width: '0px', minWidth: '0vh', flex: '0 0 0', opacity: 0 }),
         animate('800ms ease-out', keyframes([
-          style({width: '*', minWidth: '5vh', flex: '*', opacity: 0, offset: 0.2 }),
+          style({width: '*', minWidth: '*', flex: '*', opacity: 0, offset: 0.2 }),
           style({top: '0%', opacity: 1, offset: 1 })
         ]))
       ]),

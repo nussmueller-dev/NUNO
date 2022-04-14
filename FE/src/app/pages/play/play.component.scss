@@ -41,7 +41,6 @@
     left: 10px;
 
     .top-card {
-        height: 200px;
         cursor: pointer;
     }
 }
@@ -50,10 +49,10 @@
     position: absolute;
     top: 10px;
     right: 10px;
+}
 
-    .top-card {
-        height: 200px;
-    }
+.top-card {
+    height: 200px;
 }
 
 main {
@@ -97,15 +96,38 @@ main {
     }
 }
 
-@media screen and (min-device-width : 320px) 
-and (max-device-width : 480px)  {
+@media screen and (orientation: landscape) and (max-height : $mobile-querry) {
     .icon-button {
         font-size: 25px;
     }
 
     .top-card{
-        height: 50px;
-        background-color: red;
+        height: 100px;
+    }
+
+    .icon-button{
+        height: 40px;
+
+        svg-icon{
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .cards {
+        height: 50vh;
+    
+        padding-left: 15vh;
+        padding-right: 20vh;
+    
+        .card-holder {
+            flex: 1 0 10vh;
+            min-width: 10vh;
+        }
+    
+        .card {
+            height: 50vh;
+        }
     }
 }
 
