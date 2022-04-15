@@ -19,7 +19,7 @@
         width: 100%;
 
         transition: transform 0.2s;
-        &.up{
+        &.up {
             transform: rotate(100deg);
         }
     }
@@ -33,7 +33,7 @@
     overflow-y: auto;
 }
 
-.players-holder{
+.players-holder {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -53,12 +53,12 @@
     background-color: $lighter-background-color;
     user-select: none;
 
-    .name{
+    .name {
         text-overflow: ellipsis;
         overflow: hidden;
     }
 
-    .card-symbol{
+    .card-symbol {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -68,15 +68,15 @@
         border-radius: 3px;
         border: 1px solid $primary-color;
 
-        .cards-count{
+        .cards-count {
             font-size: 10px;
 
-            &.one-digit{
+            &.one-digit {
                 font-size: 20px;
             }
         }
 
-        &.last-card{
+        &.last-card {
             border-color: $delete-color;
         }
     }
@@ -85,7 +85,7 @@
         color: $secondary-color;
     }
 
-    &.current{
+    &.current {
         border: 2px solid $secondary-color;
     }
 }
@@ -100,9 +100,18 @@
         margin-top: 10px;
         padding: 0 20px;
         min-width: auto;
-    }
 
-    .arrow-icon {
-        height: 20px;
+        .card-symbol {
+            height: 30px;
+            border-radius: 3px;
+
+            .cards-count {
+                font-size: 10px;
+
+                &.one-digit {
+                    font-size: 20px;
+                }
+            }
+        }
     }
 }
