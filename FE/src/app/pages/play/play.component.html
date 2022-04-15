@@ -1,34 +1,33 @@
-<!-- <app-wrong-screen-orientation class="wrong-screen-orientation"></app-wrong-screen-orientation> -->
-<div class="top-left top-card-holder">
-    <app-game-card-back class="top-card"></app-game-card-back>
-</div>
-<div class="top-right top-card-holder">
-    <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
-</div>
-<div class="top-right top-card-holder" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
-    <app-game-card class="top-card" [card]="currentCard"></app-game-card>
-</div>
-
-<div class="center-buttons">
-    <div class="row">
-        <button class="icon-button info-button">
-            <svg-icon src="assets/icons/info.svg" class="info-icon"></svg-icon>
-        </button>
-        <button class="icon-button delete exit-button">
-            <svg-icon src="assets/icons/exit.svg" class="exit-icon"></svg-icon>
-        </button>
-        <button class="icon-button settings-button" (click)="test()">
-            <svg-icon src="assets/icons/settings.svg" class="settings-icon"></svg-icon>
-        </button>
-    </div>
-    <div class="row">
-        <button class="icon-button warning last-card-button" (click)="multiPlayCards()">
-            <span>1</span>
-        </button>
-    </div>
-</div>
-
 <main>
+    <div class="top-left top-card-holder">
+        <app-game-card-back class="top-card"></app-game-card-back>
+    </div>
+    <div class="top-right top-card-holder">
+        <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
+    </div>
+    <div class="top-right top-card-holder" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
+        <app-game-card class="top-card" [card]="currentCard"></app-game-card>
+    </div>
+    
+    <div class="center-buttons">
+        <div class="row">
+            <button class="icon-button info-button">
+                <svg-icon src="assets/icons/info.svg" class="info-icon"></svg-icon>
+            </button>
+            <button class="icon-button delete exit-button">
+                <svg-icon src="assets/icons/exit.svg" class="exit-icon"></svg-icon>
+            </button>
+            <button class="icon-button settings-button" (click)="test()">
+                <svg-icon src="assets/icons/settings.svg" class="settings-icon"></svg-icon>
+            </button>
+        </div>
+        <div class="row">
+            <button class="icon-button warning last-card-button" (click)="multiPlayCards()">
+                <span>1</span>
+            </button>
+        </div>
+    </div>
+    
     <div class="cards-holder">
         <div class="cards">
             <div class="card-holder" *ngFor="let card of cards" [@cardsAnimation]>
@@ -36,6 +35,6 @@
             </div>
         </div>
     </div>
-
-    <app-play-view-players class="players" [players]="players"></app-play-view-players>
 </main>
+
+<app-play-view-players class="players" [players]="players"></app-play-view-players>

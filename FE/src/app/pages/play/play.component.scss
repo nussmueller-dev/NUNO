@@ -3,7 +3,7 @@
 
 :host {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     height: 100%;
     width: 100%;
@@ -18,6 +18,7 @@
 .center-buttons {
     position: absolute;
     top: 5px;
+    width: 100%;
     display: flex;
     flex-direction: column;
 
@@ -36,32 +37,40 @@
     font-size: 35px;
 }
 
-.top-left {
+.top-card-holder{
     position: absolute;
     top: 10px;
-    left: 10px;
+    z-index: 10;
 
+    &.top-left {
+        left: 10px;
+    
+        .top-card {
+            cursor: pointer;
+        }
+    }
+    
+    &.top-right {
+        right: 10px;
+    }
+    
     .top-card {
-        cursor: pointer;
+        height: 200px;
     }
 }
 
-.top-right {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.top-card {
-    height: 200px;
-}
-
 main {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     height: 100%;
-    width: 100%;
+    flex: 1;
+    min-width: 0;
+}
+
+.players{
+    border-left: 2px solid $primary-color;
 }
 
 .cards-holder{
@@ -102,8 +111,10 @@ main {
         font-size: 25px;
     }
 
-    .top-card{
-        height: 100px;
+    .top-card-holder{
+        .top-card{
+            height: 100px;
+        }
     }
 
     .icon-button{
@@ -147,6 +158,7 @@ main {
         position: absolute;
         height: 100%;
         width: 100%;
+        border: none;
     }
 }
 
