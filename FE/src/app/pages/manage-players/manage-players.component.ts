@@ -95,9 +95,13 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
 
   async quit(){
+    if(!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)){
+      return;
+    }
+    
     await this.sessionService.quit(this.sessionId);
 
-    this.popupService.succesModal.showSuccesMessage('Spiel erfolgreich verlassen');
+    this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
   }
 

@@ -145,6 +145,17 @@ export class PlayComponent implements OnInit {
     this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
   }
 
+  async quit(){
+    if(!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)){
+      return;
+    }
+
+    await this.sessionService.quit(this.sessionId);
+
+    this.popupService.succesModal.show('Spiel erfolgreich verlassen');
+    this.router.navigate(['/welcome']);
+  }
+
   switchFullscreenMode() {
     if(this.fullscreenState){
       document.exitFullscreen();
