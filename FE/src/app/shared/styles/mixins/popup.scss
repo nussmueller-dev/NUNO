@@ -21,5 +21,12 @@
         align-items: center;
         background-color: rgb(40, 40, 40);
         border-radius: 20px;
+        padding: 20px;
+    }
+
+    .message{
+        margin-bottom: 30px;
+        white-space: pre-line;
+        text-align: center;
     }
 }

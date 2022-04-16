@@ -90,7 +90,11 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     this.sessionService.setPlayerOrder(this.sessionId, this.players.map(x => x.username));
   }
 
-  kick(playerName: string){
+  async kick(playerName: string){
+    if(!await this.popupService.boolQuestionModal.show(`Möchtest du "${playerName}" wirklich aus dem Spiel entfernen?`, 'RAUS!', true)){
+      return;
+    }
+
     this.sessionService.kickPlayer(this.sessionId, playerName);
   }
 

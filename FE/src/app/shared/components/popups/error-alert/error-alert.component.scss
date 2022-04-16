@@ -4,19 +4,10 @@
     @include popup;
 }
 
-.error-popup-holder{
-    padding: 20px;
-}
-
 .error-icon{
     height: 120px;
     margin-bottom: 30px;
     transform: scale(2);
-}
-
-.message{
-    margin-bottom: 30px;
-    white-space: pre-line;
 }
 
 .buttons{
