@@ -56,7 +56,8 @@ namespace NUNO_Backend.Controllers {
       if (newCards is null) {
         return BadRequest("Nope");
       } else {
-        return Ok(newCards);
+        var viewModels = newCards.Select(x => new CardViewModel(x)).ToList();
+        return Ok(viewModels);
       }
     }
 
@@ -69,7 +70,7 @@ namespace NUNO_Backend.Controllers {
       if (newCard is null) {
         return BadRequest("Nope");
       } else {
-        return Ok(newCard);
+        return Ok(new CardViewModel(newCard));
       }
     }
 

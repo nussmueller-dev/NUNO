@@ -47,34 +47,49 @@ export class PlayComponent implements OnInit {
   fullscreenState = false;
   currentCardAnimationState: string = 'hidden';
   players: Array<PlayerViewModel> = [];
+  currentPlayerName?: string;
+
   cards: Array<GameCardViewModel> = [];
   currentCard?: GameCardViewModel;
   lastCurrentCard?: GameCardViewModel;
+
+  isReverseDirection: boolean = false;
   sessionId: number = 0;
 
   load: Function = () => {    
-    this.sessionService.getPlayers(this.sessionId).then((players) => {
-      this.players = players;
+    this.gameService.getAllInfos(this.sessionId).then((infos) => {
+      this.players = infos.players;
+      this.currentPlayerName = infos.currentPlayer?.username;
+      this.currentCard = infos.currentCard;
+      this.isReverseDirection = infos.isReverseDirection;
+      this.cards = infos.myCards;
     });
-
-    this.gameService.getCards(this.sessionId).then((cards) => {
-      this.cards = cards;
-      this.orderCards();
-    });
-
-    this.gameService.getCurrentCard(this.sessionId).then((card: GameCardViewModel) => {
-      this.currentCard = card;
-    });
-  }
-
-  myTurn = () => {    
-    
   }
 
   newCurrentCard = (newCurrentCard: GameCardViewModel) => {    
     this.lastCurrentCard = this.currentCard;
     this.currentCard = newCurrentCard;
     this.currentCardAnimationState = 'hidden';
+  }
+
+  reverse = (isDirectionReverse: boolean) => {    
+    this.isReverseDirection = isDirectionReverse;
+  }
+
+  playersChanged = (players: Array<PlayerViewModel>) => {    
+    this.players = players;
+  }
+
+  newCurrentPlayer = (newCurrentPlayer: PlayerViewModel) => {    
+    this.currentPlayerName = newCurrentPlayer.username;
+  }
+
+  gotSkipped = () => {    
+    
+  }
+
+  myCardsChanged = (cards: Array<GameCardViewModel>) => {    
+    this.cards = cards;
   }
 
   constructor(
@@ -102,7 +117,11 @@ export class PlayComponent implements OnInit {
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
     this.signalrConnection.addEvent('newCurrentCard', this.newCurrentCard);
-    this.signalrConnection.addEvent('myTurn', this.myTurn);
+    this.signalrConnection.addEvent('reverse', this.reverse);
+    this.signalrConnection.addEvent('players-info', this.playersChanged);
+    this.signalrConnection.addEvent('currentPlayerChanged', this.newCurrentPlayer);
+    this.signalrConnection.addEvent('youGotSkipped', this.newCurrentPlayer);
+    this.signalrConnection.addEvent('myCardsChanged', this.myCardsChanged);
 
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();
@@ -119,9 +138,12 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  layCard(card: GameCardViewModel){
-    let randomIndex = _.random(0, this.cards.length -1);
-    this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
+  async layCard(card: GameCardViewModel){
+    if(this.currentPlayerName === this.currentUserService.username){
+      await this.gameService.layCard(this.sessionId, card.id).then((newCards) => { this.cards = newCards; }).catch(() => {
+        
+      });
+    }
   }
 
   lastCard(){

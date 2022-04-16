@@ -1,8 +1,9 @@
-import { GameCardViewModel } from './../models/view-models/game-card-model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AllGameInfosViewModel } from '../models/view-models/all-game-infos-view-model';
+import { GameCardViewModel } from './../models/view-models/game-card-model';
 import { CurrentUserService } from './current-user.service';
 
 @Injectable({
@@ -13,6 +14,17 @@ export class GameService {
     private httpClient: HttpClient,
     private currentUserService: CurrentUserService
   ) { }
+
+  public async getAllInfos(sessionId: number) {
+    return lastValueFrom(this.httpClient.get<AllGameInfosViewModel>(environment.BACKENDURL + 'games/all-infos', {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
 
   public async startGame(sessionId: number) {
     return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'games/start', {}, {
@@ -26,7 +38,7 @@ export class GameService {
   }
 
   public async layCard(sessionId: number, cardId: number) {
-    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + `games/lay-card/${cardId}`, {}, {
+    return lastValueFrom(this.httpClient.post<Array<GameCardViewModel>>(environment.BACKENDURL + `games/lay-card/${cardId}`, {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
       },
@@ -37,7 +49,7 @@ export class GameService {
   }
 
   public async takeCard(sessionId: number) {
-    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'games/take-card', {}, {
+    return lastValueFrom(this.httpClient.post<GameCardViewModel>(environment.BACKENDURL + 'games/take-card', {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
       },
@@ -49,28 +61,6 @@ export class GameService {
 
   public async callLastCard(sessionId: number) {
     return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'games/call-last-card', {}, {
-      headers: {
-        'Authorization': this.currentUserService.authenticationKey
-      },
-      params: {
-        sessionId: sessionId
-      }
-    }));
-  }
-
-  public async getCards(sessionId: number) {
-    return lastValueFrom(this.httpClient.get<Array<GameCardViewModel>>(environment.BACKENDURL + 'games/cards', {
-      headers: {
-        'Authorization': this.currentUserService.authenticationKey
-      },
-      params: {
-        sessionId: sessionId
-      }
-    }));
-  }
-
-  public async getCurrentCard(sessionId: number) {
-    return lastValueFrom(this.httpClient.get<GameCardViewModel>(environment.BACKENDURL + 'games/current-card', {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
       },
