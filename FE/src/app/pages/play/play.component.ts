@@ -1,17 +1,17 @@
-import { CardType } from './../../shared/constants/card-types';
-import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
-import { Component, HostListener, OnInit } from '@angular/core';
-import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
-import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
+import { animate, AnimationEvent, keyframes, style, transition, trigger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CurrentUserService } from 'src/app/shared/services/current-user.service';
-import { SessionService } from 'src/app/shared/services/session.service';
-import { GameService } from 'src/app/shared/services/game.service';
-import { PopupService } from 'src/app/shared/services/popup.service';
-import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 import { Color } from 'src/app/shared/constants/colors';
-import { animate, keyframes, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
+import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
+import { GameService } from 'src/app/shared/services/game.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { SessionService } from 'src/app/shared/services/session.service';
+import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
+import { environment } from 'src/environments/environment';
+import { CardType } from './../../shared/constants/card-types';
+import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
 
 @Component({
   selector: 'app-play',
@@ -119,30 +119,13 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  orderCards(){
-    let colors = Object.values(Color).filter(x => +x);
-    let sortedCards: Array<GameCardViewModel> = [];
-
-    colors = _.orderBy(colors, x => this.cards.filter(y => y.color === x).length, 'asc');
-
-    colors.forEach(color => {
-        let cards = this.cards.filter(x => x.color === color);
-
-        sortedCards.push(..._.orderBy(cards.filter(x => x.cardType === CardType.Number), x => x.number));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.DrawTwo));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.Skip));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.Reverse));
-    });
-
-    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.Wild)));
-    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.WildDrawFour)));
-
-    this.cards = sortedCards;
-  }
-
   layCard(card: GameCardViewModel){
     let randomIndex = _.random(0, this.cards.length -1);
     this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
+  }
+
+  lastCard(){
+    
   }
 
   async quit(){
@@ -166,5 +149,26 @@ export class PlayComponent implements OnInit {
 
   updateFullscreenState(){
     this.fullscreenState = (screen.availHeight || screen.height-30) <= window.innerHeight;
+  }
+
+  orderCards(){
+    let colors = Object.values(Color).filter(x => +x);
+    let sortedCards: Array<GameCardViewModel> = [];
+
+    colors = _.orderBy(colors, x => this.cards.filter(y => y.color === x).length, 'asc');
+
+    colors.forEach(color => {
+        let cards = this.cards.filter(x => x.color === color);
+
+        sortedCards.push(..._.orderBy(cards.filter(x => x.cardType === CardType.Number), x => x.number));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.DrawTwo));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.Skip));
+        sortedCards.push(...cards.filter(x => x.cardType === CardType.Reverse));
+    });
+
+    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.Wild)));
+    sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.WildDrawFour)));
+
+    this.cards = sortedCards;
   }
 }
