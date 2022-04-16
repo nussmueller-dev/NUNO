@@ -1,6 +1,6 @@
 import { CardType } from './../../shared/constants/card-types';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,6 +44,7 @@ import { animate, keyframes, state, style, transition, trigger, AnimationEvent }
 })
 export class PlayComponent implements OnInit {
   private signalrConnection: SignalrConnection;
+  fullscreenState = false;
   currentCardAnimationState: string = 'hidden';
   players: Array<PlayerViewModel> = [];
   cards: Array<GameCardViewModel> = [];
@@ -70,8 +71,10 @@ export class PlayComponent implements OnInit {
     
   }
 
-  newCurrentCard = (card: GameCardViewModel) => {    
-    this.currentCard = card;
+  newCurrentCard = (newCurrentCard: GameCardViewModel) => {    
+    this.lastCurrentCard = this.currentCard;
+    this.currentCard = newCurrentCard;
+    this.currentCardAnimationState = 'hidden';
   }
 
   constructor(
@@ -100,22 +103,13 @@ export class PlayComponent implements OnInit {
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
     this.signalrConnection.addEvent('newCurrentCard', this.newCurrentCard);
     this.signalrConnection.addEvent('myTurn', this.myTurn);
+
+    window.addEventListener('resize', () => this.updateFullscreenState());
+    this.updateFullscreenState();
   }
   
   ngOnDestroy() {
     this.signalrConnection.stop();
-  }
-
-  test(){
-    let randomIndex = _.random(0, this.cards.length -1);
-    
-    this.changeCurrentCard(this.cards[randomIndex]);
-  }
-
-  changeCurrentCard(newCurrentCard: GameCardViewModel) {
-    this.lastCurrentCard = this.currentCard;
-    this.currentCard = newCurrentCard;
-    this.currentCardAnimationState = 'hidden';
   }
 
   currentCardAnimationFinished(event: AnimationEvent) {
@@ -146,14 +140,20 @@ export class PlayComponent implements OnInit {
     this.cards = sortedCards;
   }
 
-  multiPlayCards(){
-    let randomIndex = _.random(0, this.cards.length -1);
-    this.cards.push(this.cards[randomIndex]);
-    this.orderCards();
-  }
-
   layCard(card: GameCardViewModel){
     let randomIndex = _.random(0, this.cards.length -1);
     this.cards = _.remove(this.cards, (x, i) => i != randomIndex);
+  }
+
+  switchFullscreenMode() {
+    if(this.fullscreenState){
+      document.exitFullscreen();
+    }else{
+      document.body.requestFullscreen();
+    }
+  }
+
+  updateFullscreenState(){
+    this.fullscreenState = (screen.availHeight || screen.height-30) <= window.innerHeight;
   }
 }
