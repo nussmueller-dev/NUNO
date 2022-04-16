@@ -6,4 +6,6 @@ export class GameCardViewModel {
 
     color?: Color;
     number?: number;
+
+    cantLayThisCardCount = 0;
 }

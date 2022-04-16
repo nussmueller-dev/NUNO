@@ -1,12 +1,12 @@
 export class BoolQuestionModal {
     public modalShown = false;
-    public question = ''; 
-    public acceptButtonText: string | null = null; 
+    public question = '';
+    public acceptButtonText: string | null = null;
     public buttonColorRed = false;
     private promiseResolve: any;
     private answer = false;
 
-    async show(question: string, acceptButtonText: string | null = null, acceptButtonRed = false): Promise<boolean>{
+    async show(question: string, acceptButtonText: string | null = null, acceptButtonRed = false): Promise<boolean> {
         this.modalShown = true;
         this.question = question;
         this.acceptButtonText = acceptButtonText;
@@ -17,17 +17,21 @@ export class BoolQuestionModal {
         });
 
         this.modalShown = false;
-        
+
         return this.answer;
     }
 
-    okay(){
-        this.answer = true;
-        this.promiseResolve();
+    okay() {
+        if (this.promiseResolve) {
+            this.answer = true;
+            this.promiseResolve();
+        }
     }
 
-    cancel(){
-        this.answer = false;
-        this.promiseResolve();
+    cancel() {
+        if (this.promiseResolve) {
+            this.answer = false;
+            this.promiseResolve();
+        }
     }
 }

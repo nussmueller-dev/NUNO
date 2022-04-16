@@ -20,17 +20,30 @@ import { GameCardViewModel } from './../../shared/models/view-models/game-card-m
   animations: [
     trigger('cardsAnimation', [
       transition(':enter', [
-        style({top: '-100vh', width: '0px', minWidth: '0vh', flex: '0 0 0', opacity: 0 }),
+        style({ top: '-100vh', width: '0px', minWidth: '0vh', flex: '0 0 0', opacity: 0 }),
         animate('800ms ease-out', keyframes([
-          style({width: '*', minWidth: '*', flex: '*', opacity: 0, offset: 0.2 }),
-          style({top: '0%', opacity: 1, offset: 1 })
+          style({ width: '*', minWidth: '*', flex: '*', opacity: 0, offset: 0.2 }),
+          style({ top: '0%', opacity: 1, offset: 1 })
         ]))
       ]),
       transition(':leave', [
-        style({top: '0%', width: '*', minWidth: '5vh', flex: '*',  opacity: 1}),
+        style({ top: '0%', width: '*', minWidth: '5vh', flex: '*', opacity: 1 }),
         animate('800ms ease-in-out', keyframes([
-          style({top: '-100vh', opacity: 0, offset: 0.7 }),
-          style({width: '0px', minWidth: '0vh', flex: '0 0 0', offset: 1 })
+          style({ top: '-100vh', opacity: 0, offset: 0.7 }),
+          style({ width: '0px', minWidth: '0vh', flex: '0 0 0', offset: 1 })
+        ]))
+      ])
+    ]),
+    trigger('cardShakeAnimation', [
+      transition('* => *', [
+        animate('500ms linear', keyframes([
+          style({ transform: 'rotate(0deg)', offset: 0 }),
+          style({ transform: 'rotate(5deg)', offset: 0.16 }),
+          style({ transform: 'rotate(0deg)', offset: 0.32 }),
+          style({ transform: 'rotate(-5deg)', offset: 0.49 }),
+          style({ transform: 'rotate(0deg)', offset: 0.65 }),
+          style({ transform: 'rotate(2deg)', offset: 0.82 }),
+          style({ transform: 'rotate(0deg)', offset: 1 }),
         ]))
       ])
     ]),
@@ -56,7 +69,9 @@ export class PlayComponent implements OnInit {
   isReverseDirection: boolean = false;
   sessionId: number = 0;
 
-  load: Function = () => {    
+  shakeingCards: Array<GameCardViewModel> = [];
+
+  load: Function = () => {
     this.gameService.getAllInfos(this.sessionId).then((infos) => {
       this.players = infos.players;
       this.currentPlayerName = infos.currentPlayer?.username;
@@ -66,30 +81,39 @@ export class PlayComponent implements OnInit {
     });
   }
 
-  newCurrentCard = (newCurrentCard: GameCardViewModel) => {    
+  newCurrentCard = (newCurrentCard: GameCardViewModel) => {
     this.lastCurrentCard = this.currentCard;
     this.currentCard = newCurrentCard;
     this.currentCardAnimationState = 'hidden';
   }
 
-  reverse = (isDirectionReverse: boolean) => {    
+  reverse = (isDirectionReverse: boolean) => {
     this.isReverseDirection = isDirectionReverse;
   }
 
-  playersChanged = (players: Array<PlayerViewModel>) => {    
+  playersChanged = (players: Array<PlayerViewModel>) => {
     this.players = players;
   }
 
-  newCurrentPlayer = (newCurrentPlayer: PlayerViewModel) => {    
+  newCurrentPlayer = (newCurrentPlayer: PlayerViewModel) => {
     this.currentPlayerName = newCurrentPlayer.username;
   }
 
-  gotSkipped = () => {    
-    
+  gotSkipped = () => {
+
   }
 
-  myCardsChanged = (cards: Array<GameCardViewModel>) => {    
-    this.cards = cards;
+  myCardsChanged = (cards: Array<GameCardViewModel>) => {
+    let newCardIds = cards.map(x => x.id);
+    let oldCardIds = this.cards.map(x => x.id);
+
+    cards.forEach(card => {
+      if (!oldCardIds.includes(card.id)) {
+        this.cards.push(card);
+      }
+    });
+
+    this.cards = this.cards.filter(x => newCardIds.includes(x.id));
   }
 
   constructor(
@@ -102,20 +126,20 @@ export class PlayComponent implements OnInit {
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
   }
-  
+
   async ngOnInit() {
     await this.currentUserService.checkAuthentication();
 
     let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
-    
-    if(sessionId){
+
+    if (sessionId) {
       this.sessionId = +sessionId;
-    }else{
+    } else {
       this.router.navigate(['/welcome']);
       return;
     }
 
-    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('newCurrentCard', this.newCurrentCard);
     this.signalrConnection.addEvent('reverse', this.reverse);
     this.signalrConnection.addEvent('players-info', this.playersChanged);
@@ -126,32 +150,38 @@ export class PlayComponent implements OnInit {
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();
   }
-  
+
   ngOnDestroy() {
     this.signalrConnection.stop();
   }
 
   currentCardAnimationFinished(event: AnimationEvent) {
-    if (event.toState === 'hidden'){
+    if (event.toState === 'hidden') {
       this.currentCardAnimationState = 'visible';
       this.lastCurrentCard = undefined;
     }
   }
 
-  async layCard(card: GameCardViewModel){
-    if(this.currentPlayerName === this.currentUserService.username){
-      await this.gameService.layCard(this.sessionId, card.id).then((newCards) => { this.cards = newCards; }).catch(() => {
-        
+  async layCard(card: GameCardViewModel) {
+    if (this.currentPlayerName === this.currentUserService.username) {
+      await this.gameService.layCard(this.sessionId, card.id).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
+        card.cantLayThisCardCount ? card.cantLayThisCardCount++ : card.cantLayThisCardCount = 1;
       });
     }
   }
 
-  lastCard(){
-    
+  async takeCard() {
+    if (this.currentPlayerName === this.currentUserService.username) {
+      await this.gameService.takeCard(this.sessionId);
+    }
   }
 
-  async quit(){
-    if(!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)){
+  lastCard() {
+
+  }
+
+  async quit() {
+    if (!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)) {
       return;
     }
 
@@ -162,30 +192,30 @@ export class PlayComponent implements OnInit {
   }
 
   switchFullscreenMode() {
-    if(this.fullscreenState){
+    if (this.fullscreenState) {
       document.exitFullscreen();
-    }else{
+    } else {
       document.body.requestFullscreen();
     }
   }
 
-  updateFullscreenState(){
-    this.fullscreenState = (screen.availHeight || screen.height-30) <= window.innerHeight;
+  updateFullscreenState() {
+    this.fullscreenState = (screen.availHeight || screen.height - 30) <= window.innerHeight;
   }
 
-  orderCards(){
+  orderCards() {
     let colors = Object.values(Color).filter(x => +x);
     let sortedCards: Array<GameCardViewModel> = [];
 
     colors = _.orderBy(colors, x => this.cards.filter(y => y.color === x).length, 'asc');
 
     colors.forEach(color => {
-        let cards = this.cards.filter(x => x.color === color);
+      let cards = this.cards.filter(x => x.color === color);
 
-        sortedCards.push(..._.orderBy(cards.filter(x => x.cardType === CardType.Number), x => x.number));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.DrawTwo));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.Skip));
-        sortedCards.push(...cards.filter(x => x.cardType === CardType.Reverse));
+      sortedCards.push(..._.orderBy(cards.filter(x => x.cardType === CardType.Number), x => x.number));
+      sortedCards.push(...cards.filter(x => x.cardType === CardType.DrawTwo));
+      sortedCards.push(...cards.filter(x => x.cardType === CardType.Skip));
+      sortedCards.push(...cards.filter(x => x.cardType === CardType.Reverse));
     });
 
     sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.Wild)));

@@ -37,23 +37,23 @@
     font-size: 35px;
 }
 
-.top-card-holder{
+.top-card-holder {
     position: absolute;
     top: 10px;
     z-index: 10;
 
     &.top-left {
         left: 10px;
-    
+
         .top-card {
             cursor: pointer;
         }
     }
-    
+
     &.top-right {
         right: 10px;
     }
-    
+
     .top-card {
         height: 200px;
     }
@@ -69,15 +69,16 @@ main {
     min-width: 0;
 }
 
-.players{
+.players {
     border-left: 2px solid $primary-color;
 }
 
-.cards-holder{
+.cards-holder {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     overflow-x: scroll;
+    overflow-y: hidden;
     height: 100%;
     padding-bottom: 10px;
 }
@@ -106,21 +107,21 @@ main {
     }
 }
 
-@media screen and (orientation: landscape) and (max-height : $mobile-querry) {
+@media screen and (orientation: landscape) and (max-height: $mobile-querry) {
     .icon-button {
         font-size: 25px;
     }
 
-    .top-card-holder{
-        .top-card{
+    .top-card-holder {
+        .top-card {
             height: 100px;
         }
     }
 
-    .icon-button{
+    .icon-button {
         height: 40px;
 
-        svg-icon{
+        svg-icon {
             height: 100%;
             width: 100%;
         }
@@ -128,33 +129,33 @@ main {
 
     .cards {
         height: 50vh;
-    
+
         padding-left: 15vh;
         padding-right: 20vh;
-    
+
         .card-holder {
             flex: 1 0 10vh;
             min-width: 10vh;
         }
-    
+
         .card {
             height: 50vh;
         }
     }
 
-    .players{
+    .players {
         display: none;
     }
 }
 
-@media screen and (orientation: portrait) and (max-width : $mobile-querry) {
+@media screen and (orientation: portrait) and (max-width: $mobile-querry) {
     .top-card-holder,
     .center-buttons,
-    .cards-holder{
+    .cards-holder {
         display: none;
     }
 
-    .players{
+    .players {
         position: absolute;
         height: 100%;
         width: 100%;

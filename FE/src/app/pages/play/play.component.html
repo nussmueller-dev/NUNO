@@ -1,14 +1,15 @@
 <main>
     <div class="top-left top-card-holder">
-        <app-game-card-back class="top-card"></app-game-card-back>
+        <app-game-card-back class="top-card" (click)="takeCard()"></app-game-card-back>
     </div>
     <div class="top-right top-card-holder">
         <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
     </div>
-    <div class="top-right top-card-holder" [@currentCardAnimation]="currentCardAnimationState" (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
+    <div class="top-right top-card-holder" [@currentCardAnimation]="currentCardAnimationState"
+        (@currentCardAnimation.done)="currentCardAnimationFinished($event)">
         <app-game-card class="top-card" [card]="currentCard"></app-game-card>
     </div>
-    
+
     <div class="center-buttons">
         <div class="row">
             <button class="icon-button settings-button">
@@ -18,7 +19,8 @@
                 <svg-icon src="assets/icons/exit.svg" class="exit-icon"></svg-icon>
             </button>
             <button class="icon-button fullscreen-button" (click)="switchFullscreenMode()">
-                <svg-icon [src]="fullscreenState ? 'assets/icons/exit-fullscreen.svg' : 'assets/icons/fullscreen.svg'" class="fullscreen-icon"></svg-icon>
+                <svg-icon [src]="fullscreenState ? 'assets/icons/exit-fullscreen.svg' : 'assets/icons/fullscreen.svg'"
+                    class="fullscreen-icon"></svg-icon>
             </button>
         </div>
         <div class="row">
@@ -27,11 +29,13 @@
             </button>
         </div>
     </div>
-    
+
     <div class="cards-holder">
         <div class="cards">
             <div class="card-holder" *ngFor="let card of cards" [@cardsAnimation]>
-                <app-game-card class="card" [card]="card" (click)="layCard(card)"></app-game-card>
+                <app-game-card class="card" [card]="card" (click)="layCard(card)"
+                    [@cardShakeAnimation]="card.cantLayThisCardCount">
+                </app-game-card>
             </div>
         </div>
     </div>
