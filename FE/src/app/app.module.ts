@@ -32,6 +32,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { GameCardBackComponent } from './shared/components/game-card-back/game-card-back.component';
 import { PlayPortraitComponent } from './shared/components/play-portrait/play-portrait.component';
 import { PlayViewPlayersComponent } from './shared/components/play-view-players/play-view-players.component';
+import { BoolQuestionModalComponent } from './shared/components/popups/bool-question-modal/bool-question-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PlayViewPlayersComponent } from './shared/components/play-view-players/
     GameCardBackComponent,
     PlayPortraitComponent,
     PlayViewPlayersComponent,
+    BoolQuestionModalComponent,
   ],
   imports: [
     AppRoutingModule,

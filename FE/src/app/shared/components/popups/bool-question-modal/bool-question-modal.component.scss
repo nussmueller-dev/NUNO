@@ -1,0 +1,31 @@
+@import "src/app/shared/styles/mixins/popup.scss";
+
+:host {
+    @include popup;
+}
+
+.bool-question-popup-holder {
+    padding: 20px;
+}
+
+.question-icon {
+    height: 120px;
+    margin-bottom: 30px;
+}
+
+.message {
+    margin-bottom: 30px;
+    white-space: pre-line;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    .okay{
+        margin-right: 20px;
+    }
+}
