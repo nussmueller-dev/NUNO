@@ -7,11 +7,11 @@
     height: 100%;
 }
 
-.title{
+.title {
     padding: 20px;
 }
 
-main{
+main {
     flex: 1;
     min-height: 0;
 }
@@ -31,14 +31,14 @@ main{
     height: 100%;
     width: 100px;
     align-self: center;
-    
+
     .direction-arrow {
         width: 100%;
         width: 100%;
-        
+
         transition: transform 0.2s;
         &.up {
-            transform: rotate(100deg);
+            transform: rotate(180deg);
         }
     }
 }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { PlayerViewModel } from './../../models/view-models/player-view-model';
 
 @Component({
@@ -9,6 +10,10 @@ import { PlayerViewModel } from './../../models/view-models/player-view-model';
 export class PlayViewPlayersComponent {
   @Input() players: Array<PlayerViewModel> = [];
   @Input() isReverseDirection: boolean = false;
-  @Input() mePlayer?: PlayerViewModel;
   @Input() currentPlayerName?: string;
+  currentUserService: CurrentUserService;
+
+  constructor(currentUserService: CurrentUserService) {
+    this.currentUserService = currentUserService;
+  }
 }
