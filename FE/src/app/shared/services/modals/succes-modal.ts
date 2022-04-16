@@ -2,7 +2,7 @@ export class SuccesModal {
     public succesModalShown = false;
     public message?: string;
 
-    showSuccesMessage(message: string){
+    show(message: string){
         this.succesModalShown = true;
         this.message = message;
     }

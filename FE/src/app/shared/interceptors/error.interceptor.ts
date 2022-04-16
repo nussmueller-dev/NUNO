@@ -14,7 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor{
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
                 if(error.status < 400 || error.status >= 500){
-                    this.popupService.errorModal.showErrorMessage('Etwas ist schief gelaufen!');
+                    this.popupService.errorModal.show('Etwas ist schief gelaufen!');
                 }
 
                 return throwError(error);

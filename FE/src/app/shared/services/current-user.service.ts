@@ -115,7 +115,7 @@ export class CurrentUserService {
     this.userIsAuthorized = false;
     this.router.navigate(['/welcome']);
 
-    this.popupService.succesModal.showSuccesMessage('Erfolgreich abgemeldet');
+    this.popupService.succesModal.show('Erfolgreich abgemeldet');
   }
 
   public async awaitInitialCheckCompleted() {

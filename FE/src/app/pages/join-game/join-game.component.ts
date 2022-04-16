@@ -25,7 +25,7 @@ export class JoinGameComponent implements OnInit {
 
   async joinSession() {
     if (!+this.sessionId) {
-      this.popupService.errorModal.showErrorMessage('Spiel konnte nicht gefunden werden');
+      this.popupService.errorModal.show('Spiel konnte nicht gefunden werden');
       return;
     }
 
@@ -33,9 +33,9 @@ export class JoinGameComponent implements OnInit {
       this.router.navigate(['/waiting'], { queryParams: { sessionId: this.sessionId } });
     }).catch((error) => {
       if (error.status === 401) {
-        this.popupService.errorModal.showErrorMessage('Spiel konnte nicht gefunden werden');
+        this.popupService.errorModal.show('Spiel konnte nicht gefunden werden');
       } else {
-        this.popupService.errorModal.showErrorMessage('Es ist etwas schiefgelaufen');
+        this.popupService.errorModal.show('Es ist etwas schiefgelaufen');
       }
     });
   }

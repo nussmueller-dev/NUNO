@@ -2,7 +2,7 @@ export class ErrorModal {
     public errorModalShown = false;
     public message?: string;
 
-    showErrorMessage(message: string){
+    show(message: string){
         this.errorModalShown = true;
         this.message = message;
     }

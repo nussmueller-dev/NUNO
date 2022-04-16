@@ -29,12 +29,12 @@ export class WaitingForStartComponent implements OnInit {
   }
 
   gotKickedOut = () => {  
-    this.popupService.errorModal.showErrorMessage('Du wurdest aus dem Spiel entfernt');
+    this.popupService.errorModal.show('Du wurdest aus dem Spiel entfernt');
     this.router.navigate(['/welcome']);
   }
 
   upgradedToCreator = () => {  
-    this.popupService.succesModal.showSuccesMessage('Du wurdest zum Spielleiter befördert 🥳');
+    this.popupService.succesModal.show('Du wurdest zum Spielleiter befördert 🥳');
     this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
   }
 
@@ -90,7 +90,7 @@ export class WaitingForStartComponent implements OnInit {
   async quit(){
     await this.sessionService.quit(this.sessionId);
 
-    this.popupService.succesModal.showSuccesMessage('Spiel erfolgreich verlassen');
+    this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
   }
 }

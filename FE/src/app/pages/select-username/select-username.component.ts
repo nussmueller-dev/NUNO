@@ -54,7 +54,7 @@ export class SelectUsernameComponent implements OnInit {
         errorMessage = 'Es ist etwas schiefgelaufen'
       }
 
-      this.popupService.errorModal.showErrorMessage(errorMessage);
+      this.popupService.errorModal.show(errorMessage);
     });
 
     if(tempUserViewModel){

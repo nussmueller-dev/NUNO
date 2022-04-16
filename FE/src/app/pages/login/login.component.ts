@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
         errorMessage = 'Es ist etwas schiefgelaufen'
       }
 
-      this.popupService.errorModal.showErrorMessage(errorMessage);
+      this.popupService.errorModal.show(errorMessage);
     });
 
     if(authenticationViewModel){
