@@ -53,7 +53,8 @@ namespace Game.Logic {
       session.CurrentPlayer = session.Players.First();
 
       InformAboutGameStart(session);
-      InformAboutMyTurn(session.CurrentPlayer);
+      InformAboutPlayersInfo(session);
+      InformAboutCurrentPlayerChanged(session);
 
       return true;
     }
@@ -105,6 +106,8 @@ namespace Game.Logic {
       }
 
       InformAboutNewCurrentCard(session);
+      InformAboutPlayersInfo(session);
+      InformAboutCurrentPlayerChanged(session);
 
       return currentPlayer.Cards;
     }
@@ -123,6 +126,10 @@ namespace Game.Logic {
 
       var newCard = TakeRandomCardFromStack(session);
       currentPlayer.Cards.Add(newCard);
+
+      InformAboutMyCardsChanged(currentPlayer);
+      InformAboutPlayersInfo(session);
+      InformAboutCurrentPlayerChanged(session);
 
       return newCard;
     }
@@ -144,7 +151,7 @@ namespace Game.Logic {
       return true;
     }
 
-    public List<Card> GetCards(int sessionId) {
+    public AllGameInfosViewModel GetAllInfos(int sessionId) {
       var session = _sessionLogic.GetSession(sessionId);
       var currentPlayer = GetCurrentPlayer(session);
 
@@ -152,7 +159,8 @@ namespace Game.Logic {
         return null;
       }
 
-      return currentPlayer.Cards;
+      var viewModel = new AllGameInfosViewModel(session, currentPlayer);
+      return viewModel;
     }
 
     #endregion
@@ -273,6 +281,8 @@ namespace Game.Logic {
         for (int i = 0; i < 4; i++) {
           session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
         }
+
+        InformAboutMyCardsChanged(session.CurrentPlayer);
       }
     }
 
@@ -283,6 +293,8 @@ namespace Game.Logic {
         for (int i = 0; i < 2; i++) {
           session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
         }
+
+        InformAboutMyCardsChanged(session.CurrentPlayer);
       }
     }
 
@@ -319,15 +331,27 @@ namespace Game.Logic {
       _playersHub.Clients.Group($"session-{session.Id}").SendAsync("reverse", session.IsReversing);
     }
 
+    private void InformAboutPlayersInfo(Session session) {
+      var playerViewModels = session.Players.Select(x => new PlayerViewModel(x)).ToList();
+
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("players-info", playerViewModels);
+    }
+
+    private void InformAboutCurrentPlayerChanged(Session session) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("currentPlayerChanged", new PlayerViewModel(session.CurrentPlayer));
+    }
+
     private void InformAboutGotSkipped(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("youGotSkipped");
       }
     }
 
-    private void InformAboutMyTurn(Player player) {
+    private void InformAboutMyCardsChanged(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
-        _playersHub.Clients.Client(connectionId).SendAsync("myTurn");
+        var cardViewModels = player.Cards.Select(x => new CardViewModel(x)).ToList();
+
+        _playersHub.Clients.Client(connectionId).SendAsync("myCardsChanged", cardViewModels);
       }
     }
 

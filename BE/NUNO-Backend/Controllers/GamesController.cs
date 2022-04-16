@@ -20,6 +20,20 @@ namespace NUNO_Backend.Controllers {
       _sessionLogic = sessionLogic;
     }
 
+
+    [Authorize]
+    [AuthorizePlayer]
+    [HttpGet("all-infos")]
+    public IActionResult LoadAllInfos([FromQuery] int sessionId) {
+      var infos = _gameLogic.GetAllInfos(sessionId);
+
+      if (infos is null) {
+        return BadRequest("Nope");
+      } else {
+        return Ok(infos);
+      }
+    }
+
     [Authorize]
     [AuthorizePlayer]
     [HttpPost("start")]
@@ -69,30 +83,6 @@ namespace NUNO_Backend.Controllers {
         return BadRequest("Noob");
       } else {
         return Ok();
-      }
-    }
-
-    [Authorize]
-    [AuthorizePlayer]
-    [HttpGet("cards")]
-    public IActionResult LoadCards([FromQuery] int sessionId) {
-      var cards = _gameLogic.GetCards(sessionId);
-      var viewModels = cards.Select(x => new CardViewModel(x)).ToList();
-
-      return Ok(viewModels);
-    }
-
-    [Authorize]
-    [AuthorizePlayer]
-    [HttpGet("current-card")]
-    public IActionResult LoadCurrentCard([FromQuery] int sessionId) {
-      var session = _sessionLogic.GetSession(sessionId);
-      var currentCard = session?.CurrentCard;
-
-      if (currentCard is null) {
-        return BadRequest();
-      } else {
-        return Ok(new CardViewModel(currentCard));
       }
     }
   }
