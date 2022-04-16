@@ -56,7 +56,7 @@ export class SignalrConnection {
 
   private async startConnection(restarting: boolean = false) {
     if (this.connectionClosed && restarting) {
-      console.log('%cSignalR connection closed for ' + this.connectionName, 'color: #356986');
+      console.info('%cSignalR connection closed for ' + this.connectionName, 'color: #356986');
       return;
     }
 
@@ -72,20 +72,20 @@ export class SignalrConnection {
         await sleep(requiredDelay);
       }
       
-      console.log('%cSignalR connection restarting for ' + this.connectionName, 'color: orange');
+      console.info('%cSignalR connection restarting for ' + this.connectionName, 'color: orange');
       this.lastRestartTime = DateTime.local();
     }
 
     await this.hubConnection?.start()
       .then(() => {
-        console.log('%cSignalR connection started for ' + this.connectionName, 'color: lime');
+        console.info('%cSignalR connection started for ' + this.connectionName, 'color: lime');
 
         if(this.onConnectedEvent){
           this.onConnectedEvent();
         }
       })
       .catch(err => {
-        console.log('%cError while starting SignalR connection: ' + err, 'color: red');
+        console.info('%cError while starting SignalR connection: ' + err, 'color: red');
         this.startConnection(true);
       });
 
