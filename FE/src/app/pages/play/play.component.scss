@@ -47,6 +47,10 @@
 
         .top-card {
             cursor: pointer;
+
+            &.disabled {
+                cursor: default;
+            }
         }
     }
 
@@ -104,6 +108,10 @@ main {
     .card {
         height: 30vh;
         cursor: pointer;
+
+        &.disabled {
+            cursor: default;
+        }
     }
 }
 

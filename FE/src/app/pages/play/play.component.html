@@ -1,6 +1,7 @@
 <main>
     <div class="top-left top-card-holder">
-        <app-game-card-back class="top-card" (click)="takeCard()"></app-game-card-back>
+        <app-game-card-back class="top-card" [class.disabled]="currentUserService.username !== currentPlayerName"
+            (click)="takeCard()"></app-game-card-back>
     </div>
     <div class="top-right top-card-holder">
         <app-game-card class="top-card" [card]="lastCurrentCard"></app-game-card>
@@ -33,8 +34,8 @@
     <div class="cards-holder">
         <div class="cards">
             <div class="card-holder" *ngFor="let card of cards" [@cardsAnimation]>
-                <app-game-card class="card" [card]="card" (click)="layCard(card)"
-                    [@cardShakeAnimation]="card.cantLayThisCardCount">
+                <app-game-card class="card" [class.disabled]="currentUserService.username !== currentPlayerName"
+                    [card]="card" (click)="layCard(card)" [@cardShakeAnimation]="card.cantLayThisCardCount">
                 </app-game-card>
             </div>
         </div>

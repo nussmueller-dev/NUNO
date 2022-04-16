@@ -57,6 +57,8 @@ import { GameCardViewModel } from './../../shared/models/view-models/game-card-m
 })
 export class PlayComponent implements OnInit {
   private signalrConnection: SignalrConnection;
+  currentUserService: CurrentUserService;
+
   fullscreenState = false;
   currentCardAnimationState: string = 'hidden';
   players: Array<PlayerViewModel> = [];
@@ -68,8 +70,6 @@ export class PlayComponent implements OnInit {
 
   isReverseDirection: boolean = false;
   sessionId: number = 0;
-
-  shakeingCards: Array<GameCardViewModel> = [];
 
   load: Function = () => {
     this.gameService.getAllInfos(this.sessionId).then((infos) => {
@@ -119,12 +119,13 @@ export class PlayComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private currentUserService: CurrentUserService,
+    currentUserService: CurrentUserService,
     private sessionService: SessionService,
     private gameService: GameService,
     private popupService: PopupService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
+    this.currentUserService = currentUserService;
   }
 
   async ngOnInit() {

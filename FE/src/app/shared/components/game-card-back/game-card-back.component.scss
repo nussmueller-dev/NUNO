@@ -1,12 +1,20 @@
 @import "colors";
 
-:host{
+:host {
     display: flex;
     aspect-ratio: 63/88;
     user-select: none;
+
+    &.disabled {
+        filter: brightness(0.5);
+
+        .border {
+            filter: brightness(2);
+        }
+    }
 }
 
-.border{
+.border {
     position: relative;
     display: flex;
     align-items: center;
@@ -20,7 +28,7 @@
     background-color: $background-color;
 }
 
-.center{
+.center {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -31,7 +39,7 @@
     justify-content: center;
 }
 
-.logo{
+.logo {
     width: 80%;
     transform: rotate(-30deg);
 }

@@ -1,12 +1,22 @@
 @import "colors";
 
-:host{
+:host {
     display: flex;
     aspect-ratio: 63/88;
     user-select: none;
+
+    transition: filter 0.5s;
+
+    &.disabled {
+        filter: brightness(0.5);
+
+        .border {
+            filter: brightness(2);
+        }
+    }
 }
 
-.border{
+.border {
     position: relative;
     display: flex;
     align-items: center;
@@ -19,51 +29,51 @@
 
     background-color: $background-color;
 
-    &.wild{
+    &.wild {
         border: 2px solid $primary-color;
     }
 
-    &.red{
+    &.red {
         color: $red;
 
-        .fill-red-selected{
+        .fill-red-selected {
             fill: $red;
         }
     }
 
-    &.green{
+    &.green {
         color: $green;
 
-        .fill-green-selected{
+        .fill-green-selected {
             fill: $green;
         }
     }
 
-    &.blue{
+    &.blue {
         color: $blue;
 
-        .fill-blue-selected{
+        .fill-blue-selected {
             fill: $blue;
         }
     }
 
-    &.yellow{
+    &.yellow {
         color: $yellow;
 
-        .fill-yellow-selected{
+        .fill-yellow-selected {
             fill: $yellow;
         }
     }
 }
 
-.top-left{
+.top-left {
     position: absolute;
     top: 3.5%;
     left: 5%;
     font-size: 1em;
 }
 
-.bottom-right{
+.bottom-right {
     position: absolute;
     bottom: 3.5%;
     right: 5%;
@@ -71,7 +81,7 @@
     transform: rotate(180deg);
 }
 
-.center{
+.center {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -82,45 +92,45 @@
     justify-content: center;
 }
 
-.small-number{
+.small-number {
     color: $primary-color;
 }
 
-.big-number{
+.big-number {
     color: $primary-color;
     font-size: 5em;
 }
 
-.center-image{
+.center-image {
     height: 35%;
 }
 
-.corner-image{
+.corner-image {
     display: flex;
     height: 1em;
 }
 
-.fill-background{
+.fill-background {
     fill: $background-color;
 }
 
-.fill-red{
+.fill-red {
     fill: $red;
 }
 
-.fill-blue{
+.fill-blue {
     fill: $blue;
 }
 
-.fill-green{
+.fill-green {
     fill: $green;
 }
 
-.fill-yellow{
+.fill-yellow {
     fill: $yellow;
 }
 
 .reverse-image,
-.skip-image{
-    color: white;   
+.skip-image {
+    color: white;
 }
