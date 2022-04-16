@@ -1,5 +1,5 @@
+import { Component, Input } from '@angular/core';
 import { PlayerViewModel } from './../../models/view-models/player-view-model';
-import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-play-view-players',
@@ -10,4 +10,5 @@ export class PlayViewPlayersComponent {
   @Input() players: Array<PlayerViewModel> = [];
   @Input() isReverseDirection: boolean = false;
   @Input() mePlayer?: PlayerViewModel;
+  @Input() currentPlayerName?: string;
 }

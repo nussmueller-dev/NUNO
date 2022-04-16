@@ -7,7 +7,7 @@
         </div>
         <div class="players">
             <div *ngFor="let player of players" class="player"
-                [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.isCurrentPlayer }">
+                [ngClass]="{ 'me': mePlayer?.username === player.username, 'current': player.username === currentPlayerName }">
                 <p class="name">{{player.username}}</p>
                 <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
                     <span class="cards-count"
