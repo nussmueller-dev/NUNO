@@ -7,5 +7,5 @@ export class GameCardViewModel {
     color?: Color;
     number?: number;
 
-    cantLayThisCardCount = 0;
+    cantLayHelper: boolean = false;
 }

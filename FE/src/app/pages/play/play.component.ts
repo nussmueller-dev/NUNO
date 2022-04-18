@@ -35,7 +35,18 @@ import { GameCardViewModel } from './../../shared/models/view-models/game-card-m
       ])
     ]),
     trigger('cardShakeAnimation', [
-      transition('* => *', [
+      transition('true => false', [
+        animate('500ms linear', keyframes([
+          style({ transform: 'rotate(0deg)', offset: 0 }),
+          style({ transform: 'rotate(5deg)', offset: 0.16 }),
+          style({ transform: 'rotate(0deg)', offset: 0.32 }),
+          style({ transform: 'rotate(-5deg)', offset: 0.49 }),
+          style({ transform: 'rotate(0deg)', offset: 0.65 }),
+          style({ transform: 'rotate(2deg)', offset: 0.82 }),
+          style({ transform: 'rotate(0deg)', offset: 1 }),
+        ]))
+      ]),
+      transition('false => true', [
         animate('500ms linear', keyframes([
           style({ transform: 'rotate(0deg)', offset: 0 }),
           style({ transform: 'rotate(5deg)', offset: 0.16 }),
@@ -175,7 +186,7 @@ export class PlayComponent implements OnInit {
       }
 
       await this.gameService.layCard(this.sessionId, card.id, selectedColor ?? undefined).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
-        card.cantLayThisCardCount ? card.cantLayThisCardCount++ : card.cantLayThisCardCount = 1;
+        card.cantLayHelper = !card.cantLayHelper;
       });
     }
   }
