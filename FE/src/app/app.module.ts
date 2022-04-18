@@ -1,3 +1,4 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -27,12 +28,12 @@ import { PlayPortraitComponent } from './shared/components/play-portrait/play-po
 import { PlayViewPlayersComponent } from './shared/components/play-view-players/play-view-players.component';
 import { BoolQuestionModalComponent } from './shared/components/popups/bool-question-modal/bool-question-modal.component';
 import { ErrorAlertComponent } from './shared/components/popups/error-alert/error-alert.component';
+import { InfoAlertComponent } from './shared/components/popups/info-alert/info-alert.component';
 import { SelectColorComponent } from './shared/components/popups/select-color-modal/select-color-modal.component';
 import { SuccessAlertComponent } from './shared/components/popups/success-alert/success-alert.component';
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
-import { InfoAlertComponent } from './shared/components/popups/info-alert/info-alert.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { InfoAlertComponent } from './shared/components/popups/info-alert/info-a
     RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     DragDropModule,
+    ClipboardModule,
     AngularResizeEventModule
   ],
   providers: [

@@ -6,14 +6,15 @@
 
 <h3 class="game-number-title">
     <span>Spiel-Nummer:</span>
-    <span class="game-number">{{sessionId}}</span>
+    <span class="game-number" [cdkCopyToClipboard]="sessionId.toString()">{{sessionId}}</span>
 </h3>
 
 <main>
     <h3>Spieler verwalten</h3>
 
     <div cdkDropList class="players" (cdkDropListDropped)="playerDropped($event)">
-        <div cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".players" class="player" [class.me]="player.username === creatorName" *ngFor="let player of players">
+        <div cdkDrag cdkDragLockAxis="y" cdkDragBoundary=".players" class="player"
+            [class.me]="player.username === creatorName" *ngFor="let player of players">
             <div class="placeholder" *cdkDragPlaceholder></div>
 
             <div class="drag-drop-bar">
@@ -22,7 +23,7 @@
             </div>
 
             <p class="name">{{player.username}}</p>
-            
+
             <svg-icon class="leave-icon" src="/assets/icons/exit.svg" (click)="kick(player.username)"></svg-icon>
         </div>
     </div>
