@@ -22,8 +22,8 @@ table {
     border-collapse: collapse;
 }
 
-svg-icon{
-    svg{
+svg-icon {
+    svg {
         height: 100%;
         width: 100%;
         fill: currentColor;
@@ -47,7 +47,8 @@ svg-icon{
 
     cursor: pointer;
 
-    img, svg-icon{
+    img,
+    svg-icon {
         margin-right: 10px;
     }
 
@@ -55,7 +56,7 @@ svg-icon{
         background-color: $secondary-color;
     }
 
-    &.secondary{
+    &.secondary {
         border-color: $secondary-button-color;
 
         &:hover {
@@ -63,7 +64,7 @@ svg-icon{
         }
     }
 
-    &.red{
+    &.red {
         border-color: $delete-color;
 
         &:hover {
@@ -83,7 +84,7 @@ svg-icon{
     }
 }
 
-.icon-button{
+.icon-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,11 +101,11 @@ svg-icon{
 
     cursor: pointer;
 
-    svg-icon{
+    svg-icon {
         height: 80%;
         width: 80%;
 
-        svg{
+        svg {
             fill: $primary-color;
             height: 100%;
             width: 100%;
@@ -115,10 +116,10 @@ svg-icon{
         background-color: $secondary-color;
     }
 
-    &.delete{
+    &.delete {
         border-color: $delete-color;
 
-        svg{
+        svg {
             fill: $delete-color;
             transition: 0.25s;
         }
@@ -126,16 +127,16 @@ svg-icon{
         &:hover {
             background-color: $delete-color;
 
-            svg{
+            svg {
                 fill: $primary-color;
             }
         }
     }
 
-    &.warning{
+    &.warning {
         border-color: $warning-color;
 
-        svg{
+        svg {
             fill: $warning-color;
             transition: 0.25s;
         }
@@ -143,14 +144,15 @@ svg-icon{
         &:hover {
             background-color: $warning-color;
 
-            svg{
+            svg {
                 fill: $primary-color;
             }
         }
     }
 }
 
-.text-box{
+.text-box,
+.number-input {
     background: none;
     text-align: center;
     font-size: 20px;
@@ -166,7 +168,11 @@ svg-icon{
     }
 }
 
-a{
+.number-input {
+    padding: 14px 0px;
+}
+
+a {
     text-decoration: none;
 }
 
@@ -191,11 +197,11 @@ p {
     font-size: 25px;
 }
 
-.small-icon{
+.small-icon {
     height: 25px;
 }
 
-.medium-icon{
+.medium-icon {
     height: 40px;
 }
 
@@ -217,24 +223,30 @@ p {
     background: #888;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
 @media only screen and (max-width: $mobile-querry) {
     h1 {
         font-size: 50px;
     }
-    
+
     h2 {
         font-size: 25px;
     }
-    
+
     h3 {
         font-size: 20px;
     }
-    
+
     p {
         font-size: 17px;
     }
 
-    .hide-on-mobile{
+    .hide-on-mobile {
         display: none !important;
     }
 
@@ -244,18 +256,18 @@ p {
         padding: 10px 20px;
     }
 
-    .small-icon{
+    .small-icon {
         height: 20px;
     }
 
-    .medium-icon{
+    .medium-icon {
         height: 25px;
     }
 
-    .icon-button{
+    .icon-button {
         height: 40px;
 
-        svg-icon{
+        svg-icon {
             height: 100%;
             width: 100%;
         }

@@ -4,14 +4,27 @@
 <main>
     <table class="rules">
         <tr class="rule">
+            <td class="number-cell">
+                <input class="number-input" type="number" [(ngModel)]="rules.startCardCount" min="2" max="20">
+            </td>
+            <td class="name-cell">
+                <h3>Anzahl Karten beim Start</h3>
+            </td>
+            <td class="info-cell"
+                (click)="showInfo('Es beschreibt die Anzahl Karten, welche jeder Spieler zu Beginn des Spieles in die Hand bekommt.')">
+                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon">
+            </td>
+        </tr>
+        <tr class="rule">
             <td class="switch-cell">
                 <app-switch class="switch" [(state)]="rules.accumulate"></app-switch>
             </td>
             <td class="name-cell">
-                <h3>Kumulieren</h3>
+                <h3>+2 und +4 Karten addieren</h3>
             </td>
-            <td class="info-cell">
-                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon" (click)="showInfo('Kann ein Spieler, der von einer +2-Karte betroffen ist, selbst mit einer solchen Karte aufwarten, so ist dies erlaubt und der nächste Spieler nach ihm muss nun 4 Karten ziehen. Hat dieser ebenfalls eine +2-Karte, so ist auch dies zulässig. Gleiches gilt entsprechend für die +4-Karten. Die Karten dürfen allerdings nicht kombiniert werden.')">
+            <td class="info-cell"
+                (click)="showInfo('Kann ein Spieler, der von einer +2-Karte betroffen ist, selbst mit einer solchen Karte aufwarten, so ist dies erlaubt und der nächste Spieler nach ihm muss nun 4 Karten ziehen. Hat dieser ebenfalls eine +2-Karte, so ist auch dies zulässig. Gleiches gilt entsprechend für die +4-Karten. Die Karten dürfen allerdings nicht kombiniert werden.')">
+                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon">
             </td>
         </tr>
         <tr class="rule">
@@ -21,8 +34,9 @@
             <td class="name-cell">
                 <h3>Dazwischenlegen</h3>
             </td>
-            <td class="info-cell">
-                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon" (click)="showInfo('Wenn ein Spieler exakt die gleiche Karte auf der Hand hat, welche soeben ausgespielt wurde (gleiche Farbe und Zahl), so kann er diese sofort ablegen – auch wenn er nicht am Zug ist. Die Runde geht jedoch bei dem Spieler weiter, welcher regulär an der Reihe gewesen wäre.')">
+            <td class="info-cell"
+                (click)="showInfo('Wenn ein Spieler exakt die gleiche Karte auf der Hand hat, welche soeben ausgespielt wurde (gleiche Farbe und Zahl), so kann er diese sofort ablegen – auch wenn er nicht am Zug ist. Die Runde geht jedoch bei dem Spieler weiter, welcher regulär an der Reihe gewesen wäre.')">
+                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon">
             </td>
         </tr>
         <tr class="rule" *ngIf="isOwner">
@@ -32,8 +46,8 @@
             <td class="name-cell">
                 <h3>Buzzer aktivieren</h3>
             </td>
-            <td class="info-cell">
-                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon" (click)="showInfo('Hiermit kann man den Buzzer in dieser Spielrunde verwenden.')">
+            <td class="info-cell" (click)="showInfo('Hiermit kann man den Buzzer in dieser Spielrunde verwenden.')">
+                <img src="assets/icons/info.svg" alt="Info" class="info-icon medium-icon">
             </td>
         </tr>
     </table>

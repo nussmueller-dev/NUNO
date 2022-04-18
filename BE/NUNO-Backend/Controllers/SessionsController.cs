@@ -22,6 +22,10 @@ namespace NUNO_Backend.Controllers {
     [Authorize]
     [HttpPost("create/uno")]
     public IActionResult CreateUnoSession([FromBody] Rules rules) {
+      if (rules.StartCardCount < 2 || rules.StartCardCount > 20) {
+        return BadRequest("Die Anzahl Karten beim Spielstart muss zwischen 2 und 20 liegen");
+      }
+
       var session = _sessionLogic.CreateSession(rules, _currentUserHelper.CurrentUser);
       
       return Ok(session.Id);

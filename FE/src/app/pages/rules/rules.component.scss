@@ -35,23 +35,24 @@ main {
 
     .info-cell {
         padding-left: 15px;
+        cursor: pointer;
     }
 }
 
-footer{
-    .button{
+footer {
+    .button {
         margin-bottom: 20px;
     }
 }
 
 @media only screen and (max-width: $mobile-querry) {
-    footer{
-        .button{
+    footer {
+        .button {
             margin-bottom: 10px;
         }
     }
 
-    .rule{
+    .rule {
         height: 50px;
     }
 
@@ -63,7 +64,7 @@ footer{
         padding-left: 10px;
     }
 
-    .button{
+    .button {
         position: absolute;
         bottom: 10px;
         right: 10px;
