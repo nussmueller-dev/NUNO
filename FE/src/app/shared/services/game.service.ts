@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AllGameInfosViewModel } from '../models/view-models/all-game-infos-view-model';
+import { Color } from './../constants/colors';
 import { GameCardViewModel } from './../models/view-models/game-card-model';
 import { CurrentUserService } from './current-user.service';
 
@@ -37,13 +38,14 @@ export class GameService {
     }));
   }
 
-  public async layCard(sessionId: number, cardId: number) {
+  public async layCard(sessionId: number, cardId: number, selectedColor?: Color) {
     return lastValueFrom(this.httpClient.post<Array<GameCardViewModel>>(environment.BACKENDURL + `games/lay-card/${cardId}`, {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
       },
       params: {
-        sessionId: sessionId
+        sessionId: sessionId,
+        ...(selectedColor ? { selectedColor: selectedColor } : undefined)
       }
     }));
   }

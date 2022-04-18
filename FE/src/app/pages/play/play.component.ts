@@ -77,7 +77,7 @@ export class PlayComponent implements OnInit {
       this.currentPlayerName = infos.currentPlayer?.username;
       this.currentCard = infos.currentCard;
       this.isReverseDirection = infos.isReverseDirection;
-      this.cards = infos.myCards;
+      this.myCardsChanged(infos.myCards);
     });
   }
 
@@ -114,6 +114,7 @@ export class PlayComponent implements OnInit {
     });
 
     this.cards = this.cards.filter(x => newCardIds.includes(x.id));
+    this.orderCards();
   }
 
   constructor(
@@ -165,7 +166,15 @@ export class PlayComponent implements OnInit {
 
   async layCard(card: GameCardViewModel) {
     if (this.currentPlayerName === this.currentUserService.username) {
-      await this.gameService.layCard(this.sessionId, card.id).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
+      let selectedColor;
+
+      if (card.cardType === CardType.Wild || card.cardType === CardType.WildDrawFour) {
+        selectedColor = await this.popupService.selectColorModal.show();
+
+        card.color = selectedColor ?? undefined;
+      }
+
+      await this.gameService.layCard(this.sessionId, card.id, selectedColor ?? undefined).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
         card.cantLayThisCardCount ? card.cantLayThisCardCount++ : card.cantLayThisCardCount = 1;
       });
     }
