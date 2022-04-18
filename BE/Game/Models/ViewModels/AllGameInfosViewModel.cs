@@ -1,4 +1,5 @@
 ﻿using Game.Entities;
+using Game.Enums;
 
 namespace Game.Models.ViewModels {
   public class AllGameInfosViewModel {
@@ -7,6 +8,9 @@ namespace Game.Models.ViewModels {
     public CardViewModel CurrentCard { get; set; }
     public bool IsReverseDirection { get; set; }
 
+    public PlayerViewModel SessionCreator { get; set; }
+    public SessionState SessionState { get; set; }
+
     public List<CardViewModel> MyCards { get; set; }
 
     public AllGameInfosViewModel(Session session, Player mePlayer) {
@@ -14,6 +18,8 @@ namespace Game.Models.ViewModels {
       CurrentPlayer = new PlayerViewModel(session.CurrentPlayer);
       CurrentCard = new CardViewModel(session.CurrentCard);
       IsReverseDirection = session.IsReversing;
+      SessionState = session.State;
+      SessionCreator = new PlayerViewModel(session.Creator);
 
       MyCards = mePlayer.Cards.Select(x => new CardViewModel(x)).ToList();
     }

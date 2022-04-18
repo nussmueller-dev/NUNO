@@ -11,6 +11,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { environment } from 'src/environments/environment';
 import { CardType } from './../../shared/constants/card-types';
+import { SessionState } from './../../shared/constants/session-states';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
 
 @Component({
@@ -70,6 +71,8 @@ export class PlayComponent implements OnInit {
   private signalrConnection: SignalrConnection;
   currentUserService: CurrentUserService;
 
+  sessionCreator?: PlayerViewModel;
+
   fullscreenState = false;
   currentCardAnimationState: string = 'hidden';
   players: Array<PlayerViewModel> = [];
@@ -88,6 +91,8 @@ export class PlayComponent implements OnInit {
       this.currentPlayerName = infos.currentPlayer?.username;
       this.currentCard = infos.currentCard;
       this.isReverseDirection = infos.isReverseDirection;
+      this.sessionCreator = infos.sessionCreator;
+      this.reactToSessionState(infos.sessionState);
       this.myCardsChanged(infos.myCards);
     });
   }
@@ -151,6 +156,13 @@ export class PlayComponent implements OnInit {
       this.router.navigate(['/welcome']);
       return;
     }
+
+    await this.sessionService.getState(this.sessionId).catch((error) => {
+      if (error.status === 401) {
+        this.router.navigate(['/welcome']);
+        return;
+      }
+    });
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('newCurrentCard', this.newCurrentCard);
@@ -243,5 +255,20 @@ export class PlayComponent implements OnInit {
     sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.WildDrawFour)));
 
     this.cards = sortedCards;
+  }
+
+  reactToSessionState(sessionState: SessionState | null) {
+    switch (sessionState) {
+      case SessionState.ManagePlayers:
+        if (this.sessionCreator?.username === this.currentUserService.username) {
+          this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
+        } else {
+          this.router.navigate(['/waiting'], { queryParamsHandling: 'merge' });
+        }
+        break;
+      case SessionState.ShowResults:
+        this.router.navigate(['/welcome']);
+        break;
+    }
   }
 }

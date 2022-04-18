@@ -1,13 +1,14 @@
-import { GameService } from './../../shared/services/game.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionState } from 'src/app/shared/constants/session-states';
+import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { SessionService } from 'src/app/shared/services/session.service';
-import { environment } from './../../../environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
-import { CurrentUserService } from 'src/app/shared/services/current-user.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
+import { environment } from './../../../environments/environment';
+import { GameService } from './../../shared/services/game.service';
 
 @Component({
   selector: 'app-manage-players',
@@ -21,21 +22,23 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   sessionId: number = 0;
   canStartGame: boolean = false;
 
-  loadPlayers: Function = () => {    
+  loadPlayers: Function = () => {
     this.sessionService.getPlayers(this.sessionId).then((players) => {
       this.players = players;
 
       this.canStartGame = this.players.length >= 2;
     });
+
+    this.checkSessionState();
   }
-  
-  reorderPlayers = (newPlayers: Array<PlayerViewModel>) => {    
+
+  reorderPlayers = (newPlayers: Array<PlayerViewModel>) => {
     this.players = newPlayers;
 
     this.canStartGame = this.players.length >= 2;
   }
 
-  gameStarted = () => {    
+  gameStarted = () => {
     this.router.navigate(['/play'], { queryParamsHandling: 'merge' });
   }
 
@@ -49,67 +52,85 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
   }
-  
+
   async ngOnInit() {
     await this.currentUserService.checkAuthentication();
 
     let sessionId = this.route.snapshot.queryParamMap.get('sessionId');
-    
-    if(sessionId){
+
+    if (sessionId) {
       this.sessionId = +sessionId;
-    }else{
-      this.router.navigate(['/rules']);
+    } else {
+      this.router.navigate(['/welcome']);
       return;
     }
 
     let creator = await this.sessionService.getCreator(this.sessionId).catch((error) => {
-      if(error.status === 401){
-        this.router.navigate(['/rules']);
+      if (error.status === 401) {
+        this.router.navigate(['/welcome']);
         return;
       }
     });
-    if(creator && creator === this.currentUserService.username){
+    if (creator && creator === this.currentUserService.username) {
       this.creatorName = creator;
-    }else{
-      this.router.navigate(['/rules']);
+    } else {
+      this.router.navigate(['/welcome']);
       return;
     }
 
-    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);    
+    await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
     this.signalrConnection.addEvent('gameStarts', this.gameStarted);
   }
-  
+
   ngOnDestroy() {
     this.signalrConnection.stop();
   }
 
-  playerDropped(event: CdkDragDrop<string[]>){
+  playerDropped(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.players, event.previousIndex, event.currentIndex);
 
     this.sessionService.setPlayerOrder(this.sessionId, this.players.map(x => x.username));
   }
 
-  async kick(playerName: string){
-    if(!await this.popupService.boolQuestionModal.show(`Möchtest du "${playerName}" wirklich aus dem Spiel entfernen?`, 'RAUS!', true)){
+  async kick(playerName: string) {
+    if (!await this.popupService.boolQuestionModal.show(`Möchtest du "${playerName}" wirklich aus dem Spiel entfernen?`, 'RAUS!', true)) {
       return;
     }
 
     this.sessionService.kickPlayer(this.sessionId, playerName);
   }
 
-  async quit(){
-    if(!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)){
+  async quit() {
+    if (!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)) {
       return;
     }
-    
+
     await this.sessionService.quit(this.sessionId);
 
     this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
   }
 
-  async startGame(){
+  async startGame() {
     await this.gameService.startGame(this.sessionId);
+  }
+
+  async checkSessionState() {
+    let state = await this.sessionService.getState(this.sessionId).catch((error) => {
+      if (error.status === 401) {
+        this.router.navigate(['/welcome']);
+        return;
+      }
+    });
+
+    switch (state) {
+      case SessionState.Play:
+        this.gameStarted();
+        break;
+      case SessionState.ShowResults:
+        this.router.navigate(['/welcome']);
+        break;
+    }
   }
 }

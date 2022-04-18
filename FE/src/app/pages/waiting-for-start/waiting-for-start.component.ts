@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionState } from 'src/app/shared/constants/session-states';
 import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
@@ -22,6 +23,9 @@ export class WaitingForStartComponent implements OnInit {
     this.sessionService.getPlayers(this.sessionId).then((players) => {
       this.players = players;
     });
+
+    this.checkSessionState();
+    this.checkCreator();
   }
 
   reorderPlayers = (newPlayers: Array<PlayerViewModel>) => {
@@ -65,16 +69,7 @@ export class WaitingForStartComponent implements OnInit {
       return;
     }
 
-    let creator = await this.sessionService.getCreator(this.sessionId).catch((error) => {
-      if (error.status === 401) {
-        this.router.navigate(['/welcome']);
-        return;
-      }
-    });
-    if (!creator) {
-      this.router.navigate(['/welcome']);
-      return;
-    }
+    await this.checkCreator();
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('reorder', this.reorderPlayers);
@@ -96,5 +91,37 @@ export class WaitingForStartComponent implements OnInit {
 
     this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
+  }
+
+  async checkSessionState() {
+    let state = await this.sessionService.getState(this.sessionId).catch((error) => {
+      if (error.status === 401) {
+        this.router.navigate(['/welcome']);
+        return;
+      }
+    });
+
+    switch (state) {
+      case SessionState.Play:
+        this.gameStarted();
+        break;
+      case SessionState.ShowResults:
+        this.router.navigate(['/welcome']);
+        break;
+    }
+  }
+
+  async checkCreator() {
+    let creator = await this.sessionService.getCreator(this.sessionId).catch((error) => {
+      if (error.status === 401) {
+        this.router.navigate(['/welcome']);
+        return;
+      }
+    });
+
+    if (creator === this.currentUserService.username) {
+      this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
+      return;
+    }
   }
 }

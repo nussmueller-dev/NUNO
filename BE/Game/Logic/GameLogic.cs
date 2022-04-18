@@ -51,6 +51,7 @@ namespace Game.Logic {
       }
 
       session.CurrentPlayer = session.Players.First();
+      session.State = SessionState.Play;
 
       InformAboutGameStart(session);
       InformAboutPlayersInfo(session);

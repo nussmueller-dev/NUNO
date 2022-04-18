@@ -1,10 +1,11 @@
-import { CurrentUserService } from 'src/app/shared/services/current-user.service';
-import { UnoRulesBindingModel } from '../models/binding-models/uno-rules-binding-model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
+import { environment } from 'src/environments/environment';
+import { UnoRulesBindingModel } from '../models/binding-models/uno-rules-binding-model';
 import { PlayerViewModel } from '../models/view-models/player-view-model';
+import { SessionState } from './../constants/session-states';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SessionService {
     private currentUserService: CurrentUserService
   ) { }
 
-  public async createUnoSession(rules: UnoRulesBindingModel){
+  public async createUnoSession(rules: UnoRulesBindingModel) {
     return lastValueFrom(this.httpClient.post<number>(environment.BACKENDURL + 'sessions/create/uno', rules, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -23,7 +24,7 @@ export class SessionService {
     }));
   }
 
-  public async joinSession(sessionId: number){
+  public async joinSession(sessionId: number) {
     return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'sessions/join', {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -35,7 +36,7 @@ export class SessionService {
   }
 
 
-  public async getCreator(sessionId: number){
+  public async getCreator(sessionId: number) {
     return lastValueFrom(this.httpClient.get<string>(environment.BACKENDURL + 'sessions/creator', {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -46,7 +47,18 @@ export class SessionService {
     }));
   }
 
-  public async getPlayers(sessionId: number){
+  public async getState(sessionId: number) {
+    return lastValueFrom(this.httpClient.get<SessionState>(environment.BACKENDURL + 'sessions/state', {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
+
+  public async getPlayers(sessionId: number) {
     return lastValueFrom(this.httpClient.get<Array<PlayerViewModel>>(environment.BACKENDURL + 'sessions/players', {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -57,7 +69,7 @@ export class SessionService {
     }));
   }
 
-  public async setPlayerOrder(sessionId: number, usernames: Array<string>){
+  public async setPlayerOrder(sessionId: number, usernames: Array<string>) {
     return lastValueFrom(this.httpClient.post<Array<string>>(environment.BACKENDURL + 'sessions/players/order', usernames, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -68,7 +80,7 @@ export class SessionService {
     }));
   }
 
-  public async kickPlayer(sessionId: number, username: string){
+  public async kickPlayer(sessionId: number, username: string) {
     return lastValueFrom(this.httpClient.post(environment.BACKENDURL + `sessions/players/${username}/kick`, {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -79,7 +91,7 @@ export class SessionService {
     }));
   }
 
-  public async quit(sessionId: number){
+  public async quit(sessionId: number) {
     return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'sessions/quit', {}, {
       headers: {
         'Authorization': this.currentUserService.authenticationKey
@@ -88,5 +100,5 @@ export class SessionService {
         sessionId: sessionId
       }
     }));
-  } 
+  }
 }

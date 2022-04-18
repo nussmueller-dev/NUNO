@@ -1,7 +1,10 @@
-﻿namespace Game.Entities {
+﻿using Game.Enums;
+
+namespace Game.Entities {
   public class Session {
     public int Id { get; set; }
     public Rules Rules { get; set; }
+    public SessionState State { get; set; } = SessionState.ManagePlayers;
     public bool NewPlayersCanJoin { get; set; } = true;
     public bool CanStarteGame { get; set; } = true;
     public Player Creator { get {

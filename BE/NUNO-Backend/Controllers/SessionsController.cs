@@ -64,6 +64,21 @@ namespace NUNO_Backend.Controllers {
 
     [Authorize]
     [AuthorizePlayer]
+    [HttpGet("state")]
+    public IActionResult GetSessionState([FromQuery] int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+
+      if (session is null) {
+        return Unauthorized();
+      }
+
+      var state = session.State;
+
+      return Ok(state);
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
     [HttpGet("players")]
     public IActionResult GerPlayerOrder([FromQuery] int sessionId) {
       var session = _sessionLogic.GetSession(sessionId);
