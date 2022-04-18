@@ -1,4 +1,5 @@
 @import "colors";
+@import "sizes";
 @import "src/app/shared/styles/mixins/popup.scss";
 
 :host {
@@ -62,4 +63,17 @@
     border-bottom-right-radius: 100%;
 
     transform-origin: top left;
+}
+
+@media only screen and (orientation: landscape) and (max-height: $mobile-querry) {
+    .popup-holder {
+        height: 300px;
+        width: 300px;
+    }
+}
+
+@media screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    :host {
+        display: none !important;
+    }
 }

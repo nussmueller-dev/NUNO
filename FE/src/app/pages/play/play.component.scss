@@ -9,12 +9,6 @@
     width: 100%;
 }
 
-.wrong-screen-orientation {
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.3s;
-}
-
 .center-buttons {
     position: absolute;
     top: 5px;
@@ -168,12 +162,5 @@ main {
         height: 100%;
         width: 100%;
         border: none;
-    }
-}
-
-@media only screen and (orientation: portrait) {
-    .wrong-screen-orientation {
-        visibility: visible;
-        opacity: 1;
     }
 }
