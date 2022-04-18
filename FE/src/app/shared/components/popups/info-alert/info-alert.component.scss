@@ -1,0 +1,23 @@
+@import "src/app/shared/styles/mixins/popup.scss";
+@import "colors";
+
+:host {
+    @include popup;
+}
+
+.info-icon {
+    height: 120px;
+    margin-bottom: 30px;
+
+    svg {
+        fill: $third-color;
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

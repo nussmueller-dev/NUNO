@@ -32,6 +32,7 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
+import { InfoAlertComponent } from './shared/components/popups/info-alert/info-alert.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { routes } from './shared/routes';
     PlayViewPlayersComponent,
     BoolQuestionModalComponent,
     SelectColorComponent,
+    InfoAlertComponent,
   ],
   imports: [
     AppRoutingModule,

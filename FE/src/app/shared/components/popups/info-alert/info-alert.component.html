@@ -1,0 +1,10 @@
+<div [@holderShownHidden]="{ value: popupService.infoModal.infoModalShown ? 'shown' : 'hidden' }"
+    class="popup-holder info-popup-holder">
+    <svg-icon src="/assets/icons/info.svg" class="info-icon"></svg-icon>
+
+    <p class="message">{{popupService.infoModal.message}}</p>
+
+    <div class="buttons">
+        <button class="button close" (click)="close()">Okay</button>
+    </div>
+</div>
