@@ -103,6 +103,13 @@ main {
         height: 30vh;
         cursor: pointer;
 
+        transform-origin: bottom;
+        transition: transform 0.2s;
+
+        &:hover:not(.disabled) {
+            transform: scale(1.2);
+        }
+
         &.disabled {
             cursor: default;
         }
@@ -138,6 +145,10 @@ main {
         .card-holder {
             flex: 1 0 10vh;
             min-width: 10vh;
+
+            &:hover {
+                transform: none;
+            }
         }
 
         .card {
