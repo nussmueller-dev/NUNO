@@ -1,6 +1,9 @@
 @import "colors";
+@import "sizes";
 
 .holder {
+    border-radius: $default-border-radius;
+
     &.first {
         background-color: $gold;
     }

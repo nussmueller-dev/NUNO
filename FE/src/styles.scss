@@ -76,7 +76,7 @@ svg-icon {
     &:disabled,
     &.deactivated {
         opacity: 0.2;
-        border: 2px solid $secondary-button-color;
+        border: $default-border-size solid $secondary-button-color;
         cursor: default;
 
         &:hover {
