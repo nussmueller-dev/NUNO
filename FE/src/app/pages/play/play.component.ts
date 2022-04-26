@@ -36,18 +36,7 @@ import { GameCardViewModel } from './../../shared/models/view-models/game-card-m
       ])
     ]),
     trigger('cardShakeAnimation', [
-      transition('true => false', [
-        animate('500ms linear', keyframes([
-          style({ transform: 'rotate(0deg)', offset: 0 }),
-          style({ transform: 'rotate(5deg)', offset: 0.16 }),
-          style({ transform: 'rotate(0deg)', offset: 0.32 }),
-          style({ transform: 'rotate(-5deg)', offset: 0.49 }),
-          style({ transform: 'rotate(0deg)', offset: 0.65 }),
-          style({ transform: 'rotate(2deg)', offset: 0.82 }),
-          style({ transform: 'rotate(0deg)', offset: 1 }),
-        ]))
-      ]),
-      transition('false => true', [
+      transition('true <=> false', [
         animate('500ms linear', keyframes([
           style({ transform: 'rotate(0deg)', offset: 0 }),
           style({ transform: 'rotate(5deg)', offset: 0.16 }),
@@ -158,7 +147,7 @@ export class PlayComponent implements OnInit {
     }
 
     await this.sessionService.getState(this.sessionId).catch((error) => {
-      if (error.status === 401) {
+      if (error.status === 401 || error.status === 404) {
         this.router.navigate(['/welcome']);
         return;
       }

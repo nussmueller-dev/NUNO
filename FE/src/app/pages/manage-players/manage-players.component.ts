@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { isMobile } from 'src/app/shared/constants/mobile-util';
 import { SessionState } from 'src/app/shared/constants/session-states';
 import { PlayerViewModel } from 'src/app/shared/models/view-models/player-view-model';
 import { CurrentUserService } from 'src/app/shared/services/current-user.service';
@@ -113,6 +114,12 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
   }
 
   async startGame() {
+    try {
+      if (isMobile()) {
+        document.body.requestFullscreen();
+      }
+    } catch { }
+
     await this.gameService.startGame(this.sessionId);
   }
 

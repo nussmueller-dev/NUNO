@@ -1,8 +1,9 @@
-import { SessionService } from 'src/app/shared/services/session.service';
-import { PopupService } from './../../shared/services/popup.service';
-import { CurrentUserService } from './../../shared/services/current-user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SessionService } from 'src/app/shared/services/session.service';
+import { isMobile } from '../../shared/constants/mobile-util';
+import { CurrentUserService } from './../../shared/services/current-user.service';
+import { PopupService } from './../../shared/services/popup.service';
 
 @Component({
   selector: 'app-join-game',
@@ -30,6 +31,12 @@ export class JoinGameComponent implements OnInit {
     }
 
     await this.sessionService.joinSession(+this.sessionId).then(() => {
+      try {
+        if (isMobile()) {
+          document.body.requestFullscreen();
+        }
+      } catch { }
+
       this.router.navigate(['/waiting'], { queryParams: { sessionId: this.sessionId } });
     }).catch((error) => {
       if (error.status === 401) {

@@ -33,9 +33,10 @@
 
     <div class="cards-holder">
         <div class="cards">
-            <div class="card-holder" *ngFor="let card of cards" [@cardsAnimation]>
+            <div class="card-holder" *ngFor="let card of cards" [@cardsAnimation]
+                [@cardShakeAnimation]="(!!card.cantLayHelper).toString()">
                 <app-game-card class="card" [class.disabled]="currentUserService.username !== currentPlayerName"
-                    [card]="card" (click)="layCard(card)" [@cardShakeAnimation]="(!!card.cantLayHelper).toString()">
+                    [card]="card" (click)="layCard(card)">
                 </app-game-card>
             </div>
         </div>

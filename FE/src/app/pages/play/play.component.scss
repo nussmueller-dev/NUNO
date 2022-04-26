@@ -145,14 +145,14 @@ main {
         .card-holder {
             flex: 1 0 10vh;
             min-width: 10vh;
-
-            &:hover {
-                transform: none;
-            }
         }
 
         .card {
             height: 50vh;
+
+            &:hover {
+                transform: none;
+            }
         }
     }
 
