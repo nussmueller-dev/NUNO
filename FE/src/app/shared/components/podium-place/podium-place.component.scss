@@ -16,3 +16,7 @@
         background-color: $bronze;
     }
 }
+
+.left {
+    border-right: $default-border-size solid $background-color;
+}
