@@ -1,16 +1,17 @@
+import { transition, trigger } from '@angular/animations';
+import { JoinGameComponent } from '../pages/join-game/join-game.component';
+import { ManagePlayersComponent } from '../pages/manage-players/manage-players.component';
+import { RulesComponent } from '../pages/rules/rules.component';
+import { StatsComponent } from '../pages/stats/stats.component';
+import { WaitingForStartComponent } from '../pages/waiting-for-start/waiting-for-start.component';
+import { LoginComponent } from './../pages/login/login.component';
 import { PlayComponent } from './../pages/play/play.component';
 import { RegisterComponent } from './../pages/register/register.component';
-import { LoginComponent } from './../pages/login/login.component';
 import { SelectUsernameComponent } from './../pages/select-username/select-username.component';
 import { WelcomeComponent } from './../pages/welcome/welcome.component';
-import { transition, trigger } from '@angular/animations';
 import { slideLeft, slideRight } from './animations/route-animations';
-import { JoinGameComponent } from '../pages/join-game/join-game.component';
-import { RulesComponent } from '../pages/rules/rules.component';
-import { WaitingForStartComponent } from '../pages/waiting-for-start/waiting-for-start.component';
-import { ManagePlayersComponent } from '../pages/manage-players/manage-players.component';
 
-export const STATES = ['welcome', 'username', 'login', 'register', 'join', 'rules', 'waiting', 'managePlayers', 'play'] as const;
+export const STATES = ['welcome', 'username', 'login', 'register', 'join', 'rules', 'waiting', 'managePlayers', 'play', 'stats'] as const;
 
 export type ExampleAppState = typeof STATES[number];
 
@@ -41,30 +42,35 @@ export const stateConfiguration: Record<ExampleAppState, StateConfiguration> = {
         component: RegisterComponent,
         order: 3
     },
-    join: { 
-        path: 'join', 
-        component: JoinGameComponent ,
+    join: {
+        path: 'join',
+        component: JoinGameComponent,
         order: 4
     },
-    rules: { 
-        path: 'rules', 
-        component: RulesComponent ,
+    rules: {
+        path: 'rules',
+        component: RulesComponent,
         order: 5
     },
-    waiting: { 
-        path: 'waiting', 
+    waiting: {
+        path: 'waiting',
         component: WaitingForStartComponent,
-        order: 6 
+        order: 6
     },
-    managePlayers: { 
-        path: 'manage-players', 
+    managePlayers: {
+        path: 'manage-players',
         component: ManagePlayersComponent,
-        order: 7 
+        order: 7
     },
-    play: { 
-        path: 'play', 
+    play: {
+        path: 'play',
         component: PlayComponent,
         order: 8
+    },
+    stats: {
+        path: 'stats',
+        component: StatsComponent,
+        order: 9
     }
 };
 
