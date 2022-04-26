@@ -1,0 +1,15 @@
+@import "colors";
+
+.holder {
+    &.first {
+        background-color: $gold;
+    }
+
+    &.second {
+        background-color: $silver;
+    }
+
+    &.third {
+        background-color: $bronze;
+    }
+}

@@ -35,6 +35,7 @@ import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
 import { StatsComponent } from './pages/stats/stats.component';
+import { PodiumPlaceComponent } from './shared/components/podium-place/podium-place.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { StatsComponent } from './pages/stats/stats.component';
     SelectColorComponent,
     InfoAlertComponent,
     StatsComponent,
+    PodiumPlaceComponent,
   ],
   imports: [
     AppRoutingModule,

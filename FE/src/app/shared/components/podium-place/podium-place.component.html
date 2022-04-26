@@ -1,0 +1,13 @@
+<div class="holder" [ngClass]="{'first': rank === 1, 'second': rank === 2, 'third': rank === 3}">
+    <div class="left">
+        {{rank}}
+    </div>
+    <div class="right">
+        <div class="name">
+            {{username}}
+        </div>
+        <div class="points">
+            {{points}}
+        </div>
+    </div>
+</div>
