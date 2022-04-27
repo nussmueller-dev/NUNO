@@ -10,14 +10,18 @@ import { EasterEggService } from './shared/services/easter-egg.service';
   animations: [routerTransition]
 })
 export class AppComponent implements OnInit {
+  easterEggService: EasterEggService;
+
   constructor(
     private currentUserService: CurrentUserService,
-    private easterEggService: EasterEggService
-  ) { }
+    easterEggService: EasterEggService
+  ) {
+    this.easterEggService = easterEggService;
+  }
 
   @HostListener('document:keydown', ['$event'])
   keyDown(event: KeyboardEvent) {
-    this.easterEggService.keyPressed(event);
+    this.easterEggService.keyPressed(event.key);
   }
 
   ngOnInit() {

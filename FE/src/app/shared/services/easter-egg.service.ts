@@ -4,20 +4,32 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EasterEggService {
-  correctTypedJennyText: string = '';
-  possibleJennyText: string = 'jenny';
+  private possibleTexts: Array<string> = ['jenny', 'cello', 'fun'];
+  private correctTypedText: string = '';
   jennyEffect: boolean = false;
+  celloEffect: boolean = false;
 
-  keyPressed(event: KeyboardEvent) {
-    if (event.key === this.possibleJennyText[this.correctTypedJennyText.length]) {
-      this.correctTypedJennyText += event.key;
-    } else {
-      this.correctTypedJennyText = '';
+  keyPressed(key: string) {
+    this.correctTypedText += key;
+
+    if (!this.possibleTexts.some(x => x.startsWith(this.correctTypedText))) {
+      this.correctTypedText = '';
+      return;
     }
 
-    if (this.correctTypedJennyText === this.possibleJennyText) {
-      this.jennyEffect = true;
-      this.correctTypedJennyText = '';
+    if (!this.possibleTexts.some(x => x === this.correctTypedText)) {
+      return;
     }
+
+    switch (this.correctTypedText) {
+      case this.possibleTexts[0]:
+        this.jennyEffect = !this.jennyEffect;
+        break;
+      case this.possibleTexts[1]:
+        this.celloEffect = !this.celloEffect;
+        break;
+    }
+
+    this.correctTypedText = '';
   }
 }

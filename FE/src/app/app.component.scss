@@ -6,10 +6,26 @@
     width: 100%;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
     width: 100%;
+}
+
+.callo-holder {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    .cello {
+        height: 50%;
+    }
 }
