@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { EasterEggService } from './../../services/easter-egg.service';
 
 @Component({
   selector: 'app-game-card-back',
   templateUrl: './game-card-back.component.html',
   styleUrls: ['./game-card-back.component.scss']
 })
-export class GameCardBackComponent implements OnInit {
+export class GameCardBackComponent {
+  easterEggService: EasterEggService;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    easterEggService: EasterEggService
+  ) {
+    this.easterEggService = easterEggService;
   }
-
 }

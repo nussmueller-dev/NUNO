@@ -42,5 +42,8 @@
 
 .logo {
     width: 80%;
-    transform: rotate(-30deg);
+
+    &:not(.jenny) {
+        transform: rotate(-30deg);
+    }
 }

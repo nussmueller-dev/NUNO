@@ -1,5 +1,7 @@
 <div class="border">
     <div class="center">
-        <img class="logo" src="assets/logos/nuno-logo-small.png" alt="NUNO-Logo">
+        <img class="logo" src="assets/logos/nuno-logo-small.png" alt="NUNO-Logo" *ngIf="!easterEggService.jennyEffect">
+        <img class="logo jenny" src="assets/logos/jennyEasterEggLogo.png" alt="NUNO-Logo"
+            *ngIf="easterEggService.jennyEffect">
     </div>
 </div>

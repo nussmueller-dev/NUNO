@@ -30,7 +30,7 @@
     margin: 5px;
     cursor: pointer;
 
-    transition: 0.2s;
+    transition: transform 0.2s;
 
     &:hover {
         transform: scale(1.1);

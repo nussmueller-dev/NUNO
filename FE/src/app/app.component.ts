@@ -1,7 +1,7 @@
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { CurrentUserService } from './shared/services/current-user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { routerTransition } from './shared/routes';
+import { CurrentUserService } from './shared/services/current-user.service';
+import { EasterEggService } from './shared/services/easter-egg.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +9,16 @@ import { routerTransition } from './shared/routes';
   styleUrls: ['./app.component.scss'],
   animations: [routerTransition]
 })
-export class AppComponent implements OnInit { 
+export class AppComponent implements OnInit {
   constructor(
-    private currentUserService: CurrentUserService
-  ){ }
+    private currentUserService: CurrentUserService,
+    private easterEggService: EasterEggService
+  ) { }
+
+  @HostListener('document:keydown', ['$event'])
+  keyDown(event: KeyboardEvent) {
+    this.easterEggService.keyPressed(event);
+  }
 
   ngOnInit() {
     this.currentUserService.tryReAuthentication();
