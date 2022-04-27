@@ -147,7 +147,7 @@ export class PlayComponent implements OnInit {
     }
 
     await this.sessionService.getState(this.sessionId).catch((error) => {
-      if (error.status === 401 || error.status === 404) {
+      if (error.status === 401) {
         this.router.navigate(['/welcome']);
         return;
       }
