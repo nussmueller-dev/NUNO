@@ -1,5 +1,10 @@
-<div class="callo-holder">
-	<img class="cello" src="assets/easterEggs/cello.png" alt="cello" *ngIf="easterEggService.celloEffect">
+<div class="easter-egg" *ngIf="easterEggService.celloEffect">
+	<img class="cello" src="assets/easterEggs/cello.png" alt="cello">
+</div>
+<div class="easter-egg">
+	<div class="help-text" [@easterEggHelpAnimation]="(!!easterEggService.helpEffect).toString()">
+		<span *ngFor="let command of easterEggCommands">{{command}}</span>
+	</div>
 </div>
 <main [@routerTransition]="o.isActivated ? o.activatedRoute.snapshot.data['state'] : ''">
 	<router-outlet #o="outlet"></router-outlet>

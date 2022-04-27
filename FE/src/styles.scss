@@ -19,6 +19,16 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    z-index: 99999;
+
+    pointer-events: none;
+}
+
 table {
     border-collapse: collapse;
 }
