@@ -37,29 +37,29 @@
     }
 }
 
-.red {
-    background-color: $red;
+.blue {
+    background-color: $blue;
     border-top-left-radius: 100%;
 
     transform-origin: bottom right;
 }
 
-.blue {
-    background-color: $blue;
+.yellow {
+    background-color: $yellow;
     border-top-right-radius: 100%;
 
     transform-origin: bottom left;
 }
 
-.yellow {
-    background-color: $yellow;
+.green {
+    background-color: $green;
     border-bottom-left-radius: 100%;
 
     transform-origin: top right;
 }
 
-.green {
-    background-color: $green;
+.red {
+    background-color: $red;
     border-bottom-right-radius: 100%;
 
     transform-origin: top left;
