@@ -2,11 +2,24 @@ import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
 import { SpecialEffectsService } from './special-effects.service';
 
+
+export enum EasterEgg {
+  Jenny = 'jenny',
+  Cello = 'cello',
+  Webi = 'webi',
+  Rick = 'rick',
+  Tobi = 'tobi',
+  Richi = 'richi',
+  Firework = 'firework',
+  Fun = 'fun',
+  Help = 'help'
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class EasterEggService {
-  private possibleTexts: Array<string> = ['jenny', 'cello', 'webi', 'rick', 'tobi', 'richi', 'firework', 'fun', 'help'];
+  private easterEggs: Array<EasterEgg> = [];
   private maxKeyDelay: number = 500;
 
   private correctTypedText: string = '';
@@ -17,13 +30,17 @@ export class EasterEggService {
 
   constructor(
     private specialEffectsService: SpecialEffectsService
-  ) { }
+  ) {
+    this.easterEggs = Object.keys(EasterEgg) as Array<EasterEgg>;
+  }
 
   getAllCommands() {
-    return this.possibleTexts;
+    return this.easterEggs.map(x => x.toLowerCase());;
   }
 
   keyPressed(key: string) {
+    let possibleCommands = this.getAllCommands();
+
     if (key === 'Escape') {
       this.jennyEffect = false;
       this.celloEffect = false;
@@ -40,42 +57,38 @@ export class EasterEggService {
 
     this.correctTypedText += key.toLocaleLowerCase();
 
-    if (!this.possibleTexts.some(x => x.startsWith(this.correctTypedText))) {
+    if (!possibleCommands.some(x => x.startsWith(this.correctTypedText))) {
       this.correctTypedText = '';
       return;
     }
 
-    if (!this.possibleTexts.some(x => x === this.correctTypedText)) {
+    if (!possibleCommands.some(x => x === this.correctTypedText)) {
       return;
     }
 
     switch (this.correctTypedText) {
-      case this.possibleTexts[0]:
+      case EasterEgg.Jenny:
         this.jennyEffect = !this.jennyEffect;
         break;
-      case this.possibleTexts[1]:
-      case this.possibleTexts[2]:
+      case EasterEgg.Cello:
+      case EasterEgg.Webi:
         this.celloEffect = !this.celloEffect;
         break;
-      case this.possibleTexts[3]:
-        //rick
+      case EasterEgg.Rick:
         window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
         break;
-      case this.possibleTexts[4]:
-        //tobi
+      case EasterEgg.Tobi:
         window.location.href = 'https://www.youtube.com/watch?v=1BXKsQ2nbno';
         break;
-      case this.possibleTexts[5]:
-        //richi
+      case EasterEgg.Richi:
         window.location.href = 'https://www.youtube.com/watch?v=5KFJxif2BiU';
         break;
-      case this.possibleTexts[6]:
-      case this.possibleTexts[7]:
+      case EasterEgg.Fun:
+      case EasterEgg.Firework:
         this.specialEffectsService.manyFirework(5);
         break;
-      case this.possibleTexts[8]:
+      case EasterEgg.Help:
         this.helpEffect = !this.helpEffect;
-        console.log(this.helpEffect);
         break;
     }
 
