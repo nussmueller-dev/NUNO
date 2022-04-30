@@ -85,6 +85,9 @@ namespace Game.Logic {
         return null;
       }
 
+      CheckForLastCardCalls(session);
+      currentPlayer.CalledLastCard = false;
+
       session.LaidCards.Add(session.CurrentCard);
       session.CurrentCard = card;
       currentPlayer.Cards.Remove(card);
@@ -134,6 +137,8 @@ namespace Game.Logic {
 
       session.CurrentPlayer = GetNextPlayer(session);
 
+      CheckForLastCardCalls(session);
+
       InformAboutMyCardsChanged(currentPlayer);
       InformAboutPlayersInfo(session);
       InformAboutCurrentPlayerChanged(session);
@@ -145,15 +150,14 @@ namespace Game.Logic {
       var session = _sessionLogic.GetSession(sessionId);
       var currentPlayer = GetCurrentPlayer(session);
 
-      if (session is null || currentPlayer is null) {
+      if (session is null || currentPlayer is null || currentPlayer.Cards.Count != 1 || currentPlayer.CalledLastCard) {
         return false;
       }
 
-      if (session.CurrentPlayer != currentPlayer) {
-        return false;
-      }
+      currentPlayer.CalledLastCard = true;
 
-      //Do it
+      InformAboutLastCard(session, currentPlayer);
+      InformAboutPlayersInfo(session);
 
       return true;
     }
@@ -259,6 +263,19 @@ namespace Game.Logic {
       }
 
       return cards;
+    }
+
+    private void CheckForLastCardCalls(Session session) {
+      foreach (var player in session.Players) {
+        if (player.Cards.Count == 1 && !player.CalledLastCard) {
+          for (int i = 0; i < 2; i++) {
+            player.Cards.Add(TakeRandomCardFromStack(session));
+          }
+
+          InformAboutForgotCallLastCard(player);
+          InformAboutMyCardsChanged(player);
+        }
+      }
     }
 
     private Player GetNextPlayer(Session session) {
@@ -381,6 +398,10 @@ namespace Game.Logic {
       _playersHub.Clients.Group($"session-{session.Id}").SendAsync("currentPlayerChanged", new PlayerViewModel(session.CurrentPlayer));
     }
 
+    private void InformAboutLastCard(Session session, Player player) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("playerCalledLastCard", new PlayerViewModel(player));
+    }
+
     private void InformAboutGotSkipped(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("youGotSkipped");
@@ -392,6 +413,12 @@ namespace Game.Logic {
         var cardViewModels = player.Cards.Select(x => new CardViewModel(x)).ToList();
 
         _playersHub.Clients.Client(connectionId).SendAsync("myCardsChanged", cardViewModels);
+      }
+    }
+
+    private void InformAboutForgotCallLastCard(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("forgotLastCardCall");
       }
     }
 

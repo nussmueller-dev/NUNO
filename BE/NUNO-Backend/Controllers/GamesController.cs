@@ -78,9 +78,9 @@ namespace NUNO_Backend.Controllers {
     [AuthorizePlayer]
     [HttpPost("call-last-card")]
     public IActionResult CallLastCard([FromQuery] int sessionId) {
-      var newCard = _gameLogic.TakeCard(sessionId);
+      var succes = _gameLogic.CallLastCard(sessionId);
 
-      if (true) {
+      if (!succes) {
         return BadRequest("Noob");
       } else {
         return Ok();

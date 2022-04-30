@@ -9,7 +9,7 @@
             <div *ngFor="let player of players" class="player"
                 [ngClass]="{ 'me': currentUserService.username === player.username, 'current': player.username === currentPlayerName }">
                 <p class="name">{{player.username}}</p>
-                <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 }">
+                <div class="card-symbol" [ngClass]="{ 'last-card': player.cardsCount === 1 && player.calledLastCard }">
                     <span class="cards-count"
                         [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
                 </div>

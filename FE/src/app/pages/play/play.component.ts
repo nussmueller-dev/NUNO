@@ -118,6 +118,16 @@ export class PlayComponent implements OnInit {
 
   }
 
+  forgotCallingLastCard = () => {
+    this.popupService.infoModal.show('Du hast vergessen NUNO zu rufen (dies kannst du über den gelben Knopf mit der weissen 1 tun), durch deine Vergesslichkeit spendiert dir das Spiel zwei extra Karten');
+  }
+
+  playerCalledLastCard = (caller: PlayerViewModel) => {
+    if (caller.username !== this.currentUserService.username) {
+      this.popupService.infoModal.show(`Dein Mitspieler "${caller.username}" lässt ausrichten, dass er bei seiner letzten Karte angelangt ist`);
+    }
+  }
+
   myCardsChanged = (cards: Array<GameCardViewModel>) => {
     let newCardIds = cards.map(x => x.id);
     let oldCardIds = this.cards.map(x => x.id);
@@ -173,6 +183,8 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('youGotSkipped', this.newCurrentPlayer);
     this.signalrConnection.addEvent('myCardsChanged', this.myCardsChanged);
     this.signalrConnection.addEvent('gameEnds', this.gameEnds);
+    this.signalrConnection.addEvent('forgotLastCardCall', this.forgotCallingLastCard);
+    this.signalrConnection.addEvent('playerCalledLastCard', this.playerCalledLastCard);
 
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();
@@ -212,7 +224,7 @@ export class PlayComponent implements OnInit {
   }
 
   lastCard() {
-
+    this.gameService.callLastCard(this.sessionId);
   }
 
   async quit() {
