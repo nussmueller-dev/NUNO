@@ -2,21 +2,92 @@
 @import "sizes";
 
 .holder {
-    border-radius: $default-border-radius;
+    display: flex;
+    flex-direction: row;
+    border-radius: 25px;
 
     &.first {
         background-color: $gold;
+        height: 180px;
+        min-width: 320px;
+
+        .left {
+            font-size: 75px;
+        }
     }
 
     &.second {
         background-color: $silver;
+        height: 150px;
+        min-width: 250px;
+
+        .left {
+            font-size: 65px;
+        }
     }
 
     &.third {
         background-color: $bronze;
+        height: 130px;
+        min-width: 230px;
+
+        .left {
+            font-size: 55px;
+        }
     }
 }
 
 .left {
-    border-right: $default-border-size solid $background-color;
+    flex: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-right: 5px solid $background-color;
+
+    padding: 10px;
+    font-weight: bold;
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+
+    padding: 10px;
+}
+
+@media screen and (orientation: landscape) and (max-height: $mobile-querry) {
+    .holder {
+        border-radius: 20px;
+
+        &.first {
+            height: 150px;
+            min-width: 290px;
+
+            .left {
+                font-size: 70px;
+            }
+        }
+
+        &.second {
+            height: 130px;
+            min-width: 230px;
+
+            .left {
+                font-size: 60px;
+            }
+        }
+
+        &.third {
+            height: 110px;
+            min-width: 190px;
+
+            .left {
+                font-size: 50px;
+            }
+        }
+    }
 }

@@ -4,10 +4,12 @@
     </div>
     <div class="right">
         <div class="name">
-            {{username}}
+            <h3 *ngIf="rank === 1">{{player?.username}}</h3>
+            <p *ngIf="rank !== 1">{{player?.username}}</p>
         </div>
         <div class="points">
-            {{points}}
+            <h3 *ngIf="rank === 1">{{player?.points}} Punkte</h3>
+            <p *ngIf="rank !== 1">{{player?.points}} Punkte</p>
         </div>
     </div>
 </div>

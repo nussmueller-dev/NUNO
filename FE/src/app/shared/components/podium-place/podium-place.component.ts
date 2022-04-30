@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PlayerViewModel } from './../../models/view-models/player-view-model';
 import { CurrentUserService } from './../../services/current-user.service';
 
 @Component({
@@ -7,8 +8,7 @@ import { CurrentUserService } from './../../services/current-user.service';
   styleUrls: ['./podium-place.component.scss']
 })
 export class PodiumPlaceComponent implements OnInit {
-  @Input() username?: string;
-  @Input() points?: number;
+  @Input() player?: PlayerViewModel;
   @Input() rank?: number;
 
   meUserName?: string;

@@ -1,1 +1,9 @@
-<app-podium-place></app-podium-place>
+<app-leave-header (leave)="quit()"></app-leave-header>
+<div class="podium">
+    <app-podium-place *ngIf="players.length >= 2" [player]="players[1]" [rank]="2" class="place second">
+    </app-podium-place>
+    <app-podium-place *ngIf="players.length >= 1" [player]="players[0]" [rank]="1" class="place first">
+    </app-podium-place>
+    <app-podium-place *ngIf="players.length >= 3" [player]="players[2]" [rank]="3" class="place third">
+    </app-podium-place>
+</div>

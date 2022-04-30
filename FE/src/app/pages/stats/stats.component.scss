@@ -1,0 +1,28 @@
+@import "sizes";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.podium {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .place:not(:last-child) {
+        margin-right: 50px;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: $mobile-querry) {
+    .podium {
+        .place:not(:last-child) {
+            margin-right: 15px;
+        }
+    }
+}
