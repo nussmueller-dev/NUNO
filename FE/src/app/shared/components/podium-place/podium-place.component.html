@@ -1,4 +1,5 @@
-<div class="holder" [ngClass]="{'first': rank === 1, 'second': rank === 2, 'third': rank === 3}">
+<div class="holder" [ngClass]="{'first': rank === 1, 'second': rank === 2, 'third': rank === 3}"
+    [class.me]="player?.username === meUserName">
     <div class="left">
         {{rank}}
     </div>
