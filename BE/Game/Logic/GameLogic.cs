@@ -88,6 +88,8 @@ namespace Game.Logic {
       CheckForLastCardCalls(session);
       currentPlayer.CalledLastCard = false;
 
+      currentPlayer.TokeLayableCard = false;
+
       session.LaidCards.Add(session.CurrentCard);
       session.CurrentCard = card;
       currentPlayer.Cards.Remove(card);
@@ -120,6 +122,21 @@ namespace Game.Logic {
       return currentPlayer.Cards;
     }
 
+    public bool DontWantToLayCard(int sessionId) {
+      var session = _sessionLogic.GetSession(sessionId);
+      var currentPlayer = GetCurrentPlayer(session);
+
+      if (session is null || currentPlayer is null || session.CurrentPlayer != currentPlayer || !currentPlayer.TokeLayableCard) {
+        return false;
+      }
+
+      currentPlayer.TokeLayableCard = false;
+      session.CurrentPlayer = GetNextPlayer(session);
+      InformAboutCurrentPlayerChanged(session);
+
+      return true;
+    }
+
     public Card TakeCard(int sessionId) {
       var session = _sessionLogic.GetSession(sessionId);
       var currentPlayer = GetCurrentPlayer(session);
@@ -134,14 +151,20 @@ namespace Game.Logic {
 
       var newCard = TakeRandomCardFromStack(session);
       currentPlayer.Cards.Add(newCard);
+      currentPlayer.TokeLayableCard = false;
 
-      session.CurrentPlayer = GetNextPlayer(session);
+      if (CanLayCard(session, newCard)) {
+        currentPlayer.TokeLayableCard = true;
+        InformAboutNewCardIsLayable(currentPlayer, newCard);
+      } else {
+        session.CurrentPlayer = GetNextPlayer(session);
+        InformAboutCurrentPlayerChanged(session);
+      }
 
       CheckForLastCardCalls(session);
 
       InformAboutMyCardsChanged(currentPlayer);
       InformAboutPlayersInfo(session);
-      InformAboutCurrentPlayerChanged(session);
 
       return newCard;
     }
@@ -419,6 +442,12 @@ namespace Game.Logic {
     private void InformAboutForgotCallLastCard(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("forgotLastCardCall");
+      }
+    }
+
+    private void InformAboutNewCardIsLayable(Player player, Card card) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("newCardIsLayable", new CardViewModel(card));
       }
     }
 

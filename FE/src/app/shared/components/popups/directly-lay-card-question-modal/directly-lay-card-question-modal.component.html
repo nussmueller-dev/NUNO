@@ -1,0 +1,13 @@
+<div [@holderShownHidden]="{ value: popupService.directlyLayCardQuestionModal.modalShown ? 'shown' : 'hidden' }"
+    class="popup-holder bool-question-popup-holder">
+    <img src="/assets/icons/question.svg" alt="question-icon" class="question-icon">
+
+    <p class="message">Möchtest du diese Karte behalten oder direkt legen?</p>
+
+    <app-game-card class="card" [card]="popupService.directlyLayCardQuestionModal.card"></app-game-card>
+
+    <div class="buttons">
+        <button class="button yes" (click)="yes()">Legen</button>
+        <button class="button secondary no" (click)="no()">Behalten</button>
+    </div>
+</div>

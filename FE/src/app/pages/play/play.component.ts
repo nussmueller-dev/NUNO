@@ -84,6 +84,8 @@ export class PlayComponent implements OnInit {
       this.sessionCreator = infos.sessionCreator;
       this.utilService.reactToSessionState(infos.sessionState, SessionState.Play, infos.sessionCreator === this.currentUserService.username);
       this.myCardsChanged(infos.myCards);
+
+      this.handleTakenLayableCard();
     });
   }
 
@@ -125,6 +127,16 @@ export class PlayComponent implements OnInit {
   playerCalledLastCard = (caller: PlayerViewModel) => {
     if (caller.username !== this.currentUserService.username) {
       this.popupService.infoModal.show(`Dein Mitspieler "${caller.username}" lässt ausrichten, dass er bei seiner letzten Karte angelangt ist`);
+    }
+  }
+
+  askForDirectlyLayCard = async (card: GameCardViewModel) => {
+    let answer = await this.popupService.directlyLayCardQuestionModal.show(card);
+
+    if (answer) {
+      this.layCard(card);
+    } else {
+      this.gameService.dontLayCard(this.sessionId);
     }
   }
 
@@ -185,6 +197,7 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('gameEnds', this.gameEnds);
     this.signalrConnection.addEvent('forgotLastCardCall', this.forgotCallingLastCard);
     this.signalrConnection.addEvent('playerCalledLastCard', this.playerCalledLastCard);
+    this.signalrConnection.addEvent('newCardIsLayable', this.askForDirectlyLayCard);
 
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();
@@ -213,6 +226,7 @@ export class PlayComponent implements OnInit {
 
       await this.gameService.layCard(this.sessionId, card.id, selectedColor ?? undefined).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
         card.cantLayHelper = !card.cantLayHelper;
+        this.handleTakenLayableCard();
       });
     }
   }
@@ -225,6 +239,13 @@ export class PlayComponent implements OnInit {
 
   lastCard() {
     this.gameService.callLastCard(this.sessionId);
+  }
+
+  handleTakenLayableCard() {
+    let currentPlayer = this.players.find(x => x.username == this.currentUserService.username)
+    if (currentPlayer?.takenLayableCard) {
+      this.askForDirectlyLayCard(currentPlayer?.takenLayableCard);
+    }
   }
 
   async quit() {

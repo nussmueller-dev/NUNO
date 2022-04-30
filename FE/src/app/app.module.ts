@@ -18,6 +18,7 @@ import { PlayComponent } from './pages/play/play.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RulesComponent } from './pages/rules/rules.component';
 import { SelectUsernameComponent } from './pages/select-username/select-username.component';
+import { StatsComponent } from './pages/stats/stats.component';
 import { WaitingForStartComponent } from './pages/waiting-for-start/waiting-for-start.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { BackHeaderComponent } from './shared/components/back-header/back-header.component';
@@ -26,7 +27,9 @@ import { GameCardComponent } from './shared/components/game-card/game-card.compo
 import { LeaveHeaderComponent } from './shared/components/leave-header/leave-header.component';
 import { PlayPortraitComponent } from './shared/components/play-portrait/play-portrait.component';
 import { PlayViewPlayersComponent } from './shared/components/play-view-players/play-view-players.component';
+import { PodiumPlaceComponent } from './shared/components/podium-place/podium-place.component';
 import { BoolQuestionModalComponent } from './shared/components/popups/bool-question-modal/bool-question-modal.component';
+import { DirectlyLayCardQuestionModalComponent } from './shared/components/popups/directly-lay-card-question-modal/directly-lay-card-question-modal.component';
 import { ErrorAlertComponent } from './shared/components/popups/error-alert/error-alert.component';
 import { InfoAlertComponent } from './shared/components/popups/info-alert/info-alert.component';
 import { SelectColorComponent } from './shared/components/popups/select-color-modal/select-color-modal.component';
@@ -34,8 +37,6 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
-import { StatsComponent } from './pages/stats/stats.component';
-import { PodiumPlaceComponent } from './shared/components/podium-place/podium-place.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PodiumPlaceComponent } from './shared/components/podium-place/podium-pl
     InfoAlertComponent,
     StatsComponent,
     PodiumPlaceComponent,
+    DirectlyLayCardQuestionModalComponent,
   ],
   imports: [
     AppRoutingModule,

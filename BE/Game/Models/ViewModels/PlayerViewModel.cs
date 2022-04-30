@@ -5,6 +5,7 @@ namespace Game.Models.ViewModels {
   public class PlayerViewModel {
     public string Username { get; set; }
     public bool CalledLastCard { get; set; }
+    public CardViewModel TakenLayableCard { get; set; }
     public int Points { get; set; }
     public int CardsCount { get; set; }
 
@@ -13,6 +14,7 @@ namespace Game.Models.ViewModels {
       Points = player.Points;
       CardsCount = player.Cards.Count();
       CalledLastCard = player.CalledLastCard;
+      TakenLayableCard = player.TokeLayableCard ? new CardViewModel(player.Cards.Last()) : null;
     }
   }
 }

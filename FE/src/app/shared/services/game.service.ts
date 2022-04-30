@@ -50,6 +50,17 @@ export class GameService {
     }));
   }
 
+  public async dontLayCard(sessionId: number) {
+    return lastValueFrom(this.httpClient.post(environment.BACKENDURL + 'games/dont-lay', {}, {
+      headers: {
+        'Authorization': this.currentUserService.authenticationKey
+      },
+      params: {
+        sessionId: sessionId
+      }
+    }));
+  }
+
   public async takeCard(sessionId: number) {
     return lastValueFrom(this.httpClient.post<GameCardViewModel>(environment.BACKENDURL + 'games/take-card', {}, {
       headers: {

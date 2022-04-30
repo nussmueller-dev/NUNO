@@ -63,8 +63,21 @@ namespace NUNO_Backend.Controllers {
 
     [Authorize]
     [AuthorizePlayer]
+    [HttpPost("dont-lay")]
+    public IActionResult DontLayCard([FromQuery] int sessionId) {
+      var succes = _gameLogic.DontWantToLayCard(sessionId);
+
+      if (succes) {
+        return Ok();
+      } else {
+        return BadRequest("Nope");
+      }
+    }
+
+    [Authorize]
+    [AuthorizePlayer]
     [HttpPost("take-card")]
-    public IActionResult TakeCard([FromQuery] int sessionId, int cardId, [FromQuery] ColorType? selectedColor) {
+    public IActionResult TakeCard([FromQuery] int sessionId, [FromQuery] ColorType? selectedColor) {
       var newCard = _gameLogic.TakeCard(sessionId);
 
       if (newCard is null) {
@@ -80,10 +93,10 @@ namespace NUNO_Backend.Controllers {
     public IActionResult CallLastCard([FromQuery] int sessionId) {
       var succes = _gameLogic.CallLastCard(sessionId);
 
-      if (!succes) {
-        return BadRequest("Noob");
-      } else {
+      if (succes) {
         return Ok();
+      } else {
+        return BadRequest("Noob");
       }
     }
   }

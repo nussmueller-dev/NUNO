@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BoolQuestionModal } from './modals/bool-question-modal';
+import { DirectlyLayCardQuestionModal } from './modals/directly-lay-card-question-modal';
 import { ErrorModal } from './modals/error-modal';
 import { InfoModal } from './modals/info-modal';
 import { SelectColorModal } from './modals/select-color-modal';
@@ -15,6 +16,7 @@ export class PopupService {
     public boolQuestionModal = new BoolQuestionModal();
     public selectColorModal = new SelectColorModal();
     public infoModal = new InfoModal();
+    public directlyLayCardQuestionModal = new DirectlyLayCardQuestionModal();
 
     constructor(
         private snackBar: MatSnackBar
