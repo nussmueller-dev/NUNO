@@ -7,6 +7,7 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 import { SessionService } from 'src/app/shared/services/session.service';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { environment } from 'src/environments/environment';
+import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
   selector: 'app-waiting-for-start',
@@ -51,7 +52,8 @@ export class WaitingForStartComponent implements OnInit {
     private route: ActivatedRoute,
     private currentUserService: CurrentUserService,
     private sessionService: SessionService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private utilService: UtilServiceService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
   }
@@ -101,14 +103,7 @@ export class WaitingForStartComponent implements OnInit {
       }
     });
 
-    switch (state) {
-      case SessionState.Play:
-        this.gameStarted();
-        break;
-      case SessionState.ShowResults:
-        this.router.navigate(['/welcome']);
-        break;
-    }
+    this.utilService.reactToSessionState(state, SessionState.ManagePlayers, this.myName === this.currentUserService.username);
   }
 
   async checkCreator() {

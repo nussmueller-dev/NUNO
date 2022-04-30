@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { CardType } from './../../shared/constants/card-types';
 import { SessionState } from './../../shared/constants/session-states';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
+import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
   selector: 'app-play',
@@ -81,7 +82,7 @@ export class PlayComponent implements OnInit {
       this.currentCard = infos.currentCard;
       this.isReverseDirection = infos.isReverseDirection;
       this.sessionCreator = infos.sessionCreator;
-      this.reactToSessionState(infos.sessionState);
+      this.utilService.reactToSessionState(infos.sessionState, SessionState.Play, infos.sessionCreator === this.currentUserService.username);
       this.myCardsChanged(infos.myCards);
     });
   }
@@ -133,7 +134,8 @@ export class PlayComponent implements OnInit {
     currentUserService: CurrentUserService,
     private sessionService: SessionService,
     private gameService: GameService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private utilService: UtilServiceService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
     this.currentUserService = currentUserService;
@@ -250,20 +252,5 @@ export class PlayComponent implements OnInit {
     sortedCards.push(...(this.cards.filter(x => x.cardType === CardType.WildDrawFour)));
 
     this.cards = sortedCards;
-  }
-
-  reactToSessionState(sessionState: SessionState | null) {
-    switch (sessionState) {
-      case SessionState.ManagePlayers:
-        if (this.sessionCreator?.username === this.currentUserService.username) {
-          this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
-        } else {
-          this.router.navigate(['/waiting'], { queryParamsHandling: 'merge' });
-        }
-        break;
-      case SessionState.ShowResults:
-        this.router.navigate(['/welcome']);
-        break;
-    }
   }
 }

@@ -9,6 +9,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { environment } from 'src/environments/environment';
 import { GameService } from './../../shared/services/game.service';
+import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
   selector: 'app-stats',
@@ -26,7 +27,7 @@ export class StatsComponent implements OnInit {
     this.gameService.getAllInfos(this.sessionId).then((infos) => {
       this.sessionCreator = infos.sessionCreator;
       this.players = this.orderPlayers(infos.players);
-      this.reactToSessionState(infos.sessionState);
+      this.utilService.reactToSessionState(infos.sessionState, SessionState.ShowResults, infos.currentPlayer === this.currentUserService.username);
     });
   }
 
@@ -45,7 +46,8 @@ export class StatsComponent implements OnInit {
     private currentUserService: CurrentUserService,
     private sessionService: SessionService,
     private gameService: GameService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private utilService: UtilServiceService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
   }
@@ -92,22 +94,5 @@ export class StatsComponent implements OnInit {
 
     this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
-  }
-
-  reactToSessionState(sessionState: SessionState | null) {
-    ///NotImplemented
-
-    // switch (sessionState) {
-    //   case SessionState.ManagePlayers:
-    //     if (this.sessionCreator?.username === this.currentUserService.username) {
-    //       this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
-    //     } else {
-    //       this.router.navigate(['/waiting'], { queryParamsHandling: 'merge' });
-    //     }
-    //     break;
-    //   case SessionState.ShowResults:
-    //     this.router.navigate(['/welcome']);
-    //     break;
-    // }
   }
 }

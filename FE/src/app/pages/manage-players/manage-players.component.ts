@@ -10,6 +10,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { environment } from './../../../environments/environment';
 import { GameService } from './../../shared/services/game.service';
+import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
   selector: 'app-manage-players',
@@ -49,7 +50,8 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     private currentUserService: CurrentUserService,
     private sessionService: SessionService,
     private gameService: GameService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private utilService: UtilServiceService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.loadPlayers);
   }
@@ -131,13 +133,6 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
       }
     });
 
-    switch (state) {
-      case SessionState.Play:
-        this.gameStarted();
-        break;
-      case SessionState.ShowResults:
-        this.router.navigate(['/welcome']);
-        break;
-    }
+    this.utilService.reactToSessionState(state, SessionState.ManagePlayers, this.creatorName === this.currentUserService.username);
   }
 }
