@@ -106,6 +106,10 @@ namespace Game.Logic {
           break;
       }
 
+      if (session.Players.Any(x => x.Cards.Count == 0)) {
+        EndGame(session);
+      }
+
       InformAboutNewCurrentCard(session);
       InformAboutPlayersInfo(session);
       InformAboutCurrentPlayerChanged(session);
@@ -127,6 +131,8 @@ namespace Game.Logic {
 
       var newCard = TakeRandomCardFromStack(session);
       currentPlayer.Cards.Add(newCard);
+
+      session.CurrentPlayer = GetNextPlayer(session);
 
       InformAboutMyCardsChanged(currentPlayer);
       InformAboutPlayersInfo(session);
@@ -270,6 +276,38 @@ namespace Game.Logic {
         } else {
           return session.Players[currentPlayerIndex + 1];
         }
+      }
+    }
+
+    private void EndGame(Session session) {
+      var winner = session.Players.FirstOrDefault(x => x.Cards.Count == 0);
+
+      if (winner is null) {
+        return;
+      }
+
+      foreach (var player in session.Players) {
+        var points = player.Cards.Sum(x => GetPointsForCard(x));
+        winner.Points += points;
+      }
+
+      session.State = SessionState.ShowResults;
+      InformAboutGameEnd(session);
+    }
+
+    private int GetPointsForCard(Card card) {
+      switch (card.CardType) { 
+        case CardType.Number:
+          return card.Number ?? 0;
+        case CardType.DrawTwo:
+        case CardType.Reverse:
+        case CardType.Skip:
+          return 20;
+        case CardType.Wild:
+        case CardType.WildDrawFour:
+          return 50;
+        default:
+          return 0;
       }
     }
 

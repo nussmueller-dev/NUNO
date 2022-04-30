@@ -82,7 +82,7 @@ export class StatsComponent implements OnInit {
   }
 
   orderPlayers(players: Array<PlayerViewModel>): Array<PlayerViewModel> {
-    return _.orderBy(players, x => x.points);
+    return _.orderBy(players, x => x.points, 'desc');
   }
 
   next() {

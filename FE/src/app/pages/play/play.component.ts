@@ -110,6 +110,10 @@ export class PlayComponent implements OnInit {
     this.currentPlayerName = newCurrentPlayer.username;
   }
 
+  gameEnds = () => {
+    this.router.navigate(['/stats'], { queryParamsHandling: 'merge' });
+  }
+
   gotSkipped = () => {
 
   }
@@ -168,6 +172,7 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('currentPlayerChanged', this.newCurrentPlayer);
     this.signalrConnection.addEvent('youGotSkipped', this.newCurrentPlayer);
     this.signalrConnection.addEvent('myCardsChanged', this.myCardsChanged);
+    this.signalrConnection.addEvent('gameEnds', this.gameEnds);
 
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();

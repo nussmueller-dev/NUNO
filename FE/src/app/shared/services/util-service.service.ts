@@ -15,6 +15,10 @@ export class UtilServiceService {
       return;
     }
 
+    if (sessionState === SessionState.ShowResults && wishedSessionState === SessionState.ManagePlayers) {
+      return;
+    }
+
     switch (sessionState) {
       case SessionState.ManagePlayers:
         if (isCreator) {
