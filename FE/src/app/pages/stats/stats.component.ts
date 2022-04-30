@@ -40,6 +40,10 @@ export class StatsComponent implements OnInit {
     this.players = this.orderPlayers(players);
   }
 
+  gameStarted = () => {
+    this.router.navigate(['/play'], { queryParamsHandling: 'merge' });
+  }
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -75,6 +79,7 @@ export class StatsComponent implements OnInit {
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('kick', this.gotKickedOut);
     this.signalrConnection.addEvent('players-info', this.playersChanged);
+    this.signalrConnection.addEvent('gameStarts', this.gameStarted);
   }
 
   ngOnDestroy() {
