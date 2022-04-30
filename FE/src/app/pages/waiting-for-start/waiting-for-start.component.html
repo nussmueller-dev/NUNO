@@ -1,4 +1,5 @@
-<app-leave-header (leave)="quit()"></app-leave-header>
+<app-leave-header (leave)="quit()" *ngIf="sessionState !== sessionStates.ShowResults"></app-leave-header>
+<app-back-header [backUrl]="'/stats'" *ngIf="sessionState === sessionStates.ShowResults"></app-back-header>
 <h1 class="hide-on-mobile">Warten auf Spielstart</h1>
 <h1 class="just-on-mobile">Bitte warten</h1>
 

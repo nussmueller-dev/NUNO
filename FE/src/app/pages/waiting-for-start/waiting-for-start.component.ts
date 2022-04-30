@@ -16,6 +16,8 @@ import { UtilServiceService } from './../../shared/services/util-service.service
 })
 export class WaitingForStartComponent implements OnInit {
   private signalrConnection: SignalrConnection;
+  sessionState: SessionState = SessionState.ManagePlayers;
+  sessionStates = SessionState;
   players: Array<PlayerViewModel> = [];
   myName: string = '';
   sessionId: number = 0;
@@ -104,6 +106,8 @@ export class WaitingForStartComponent implements OnInit {
     });
 
     this.utilService.reactToSessionState(state, SessionState.ManagePlayers, this.myName === this.currentUserService.username);
+
+    this.sessionState = state ?? SessionState.ManagePlayers;
   }
 
   async checkCreator() {

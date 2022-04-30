@@ -19,6 +19,8 @@ import { UtilServiceService } from './../../shared/services/util-service.service
 })
 export class ManagePlayersComponent implements OnInit, OnDestroy {
   private signalrConnection: SignalrConnection;
+  sessionState: SessionState = SessionState.ManagePlayers;
+  sessionStates = SessionState;
   players: Array<PlayerViewModel> = [];
   creatorName: string = '';
   sessionId: number = 0;
@@ -134,5 +136,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
     });
 
     this.utilService.reactToSessionState(state, SessionState.ManagePlayers, this.creatorName === this.currentUserService.username);
+
+    this.sessionState = state ?? SessionState.ManagePlayers;
   }
 }
