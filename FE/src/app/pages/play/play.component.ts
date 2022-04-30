@@ -86,6 +86,11 @@ export class PlayComponent implements OnInit {
     });
   }
 
+  gotKickedOut = () => {
+    this.popupService.errorModal.show('Du wurdest aus dem Spiel entfernt');
+    this.router.navigate(['/welcome']);
+  }
+
   newCurrentCard = (newCurrentCard: GameCardViewModel) => {
     this.lastCurrentCard = this.currentCard;
     this.currentCard = newCurrentCard;
@@ -154,6 +159,7 @@ export class PlayComponent implements OnInit {
     });
 
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
+    this.signalrConnection.addEvent('kick', this.gotKickedOut);
     this.signalrConnection.addEvent('newCurrentCard', this.newCurrentCard);
     this.signalrConnection.addEvent('reverse', this.reverse);
     this.signalrConnection.addEvent('players-info', this.playersChanged);
