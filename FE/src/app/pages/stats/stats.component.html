@@ -1,4 +1,4 @@
-<app-leave-header (leave)="quit()"></app-leave-header>
+<app-leave-header class="header" (leave)="quit()"></app-leave-header>
 <div class="podium">
     <app-podium-place *ngIf="players.length >= 2" [player]="players[1]" [rank]="2" class="place second">
     </app-podium-place>
@@ -7,3 +7,19 @@
     <app-podium-place *ngIf="players.length >= 3" [player]="players[2]" [rank]="3" class="place third">
     </app-podium-place>
 </div>
+
+<div class="players-holder">
+    <div class="players">
+        <div class="player" *ngFor="let player of players; let i = index" [class.me]="player.username === myName"
+            [class.podium-place]="i < 3">
+            <h3 class="rank">{{i + 1}}.</h3>
+            <p class="name">{{player.username}}</p>
+            <p class="points">{{player.points}} Punkte</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <h3 class="turn-screen-text">Gerät drehen, um mehr Resultate zu sehen</h3>
+    <button class="button next">Weiter</button>
+</footer>
