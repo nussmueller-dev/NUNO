@@ -22,6 +22,7 @@ main {
 footer {
     .button {
         margin-bottom: 20px;
+        margin-top: 20px;
     }
 }
 
@@ -42,7 +43,8 @@ footer {
     align-items: center;
     height: 70px;
     width: 100%;
-    min-width: 600px;
+    min-width: 0;
+    max-width: 600px;
     margin-top: 20px;
     padding: 0 30px;
     border-radius: 50px;
@@ -67,6 +69,16 @@ footer {
         align-items: center;
         margin-right: 30px;
         cursor: s-resize;
+    }
+
+    .name {
+        padding-right: 5px;
+        min-width: 100px;
+        flex: 1;
+        text-align: start;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 
     .leave-icon {
@@ -101,6 +113,7 @@ footer {
     footer {
         .button {
             margin-bottom: 10px;
+            margin-top: 10px;
         }
     }
 
@@ -112,7 +125,7 @@ footer {
         height: 50px;
         margin-top: 10px;
         padding: 0 20px;
-        min-width: auto;
+        max-width: 90vw;
 
         .drag-drop-bar {
             margin-right: 15px;
