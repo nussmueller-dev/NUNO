@@ -85,6 +85,14 @@ export class StatsComponent implements OnInit {
     return _.orderBy(players, x => x.points);
   }
 
+  next() {
+    if (this.sessionCreator?.username === this.myName) {
+      this.router.navigate(['/manage-players'], { queryParamsHandling: 'merge' });
+    } else {
+      this.router.navigate(['/waiting'], { queryParamsHandling: 'merge' });
+    }
+  }
+
   async quit() {
     if (!await this.popupService.boolQuestionModal.show('Möchtest du das Spiel wirklich verlassen?', 'Verlassen', true)) {
       return;
