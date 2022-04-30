@@ -1,6 +1,6 @@
 @import "sizes";
 
-:host{
+:host {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -9,7 +9,7 @@
     height: 100%;
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,53 +17,54 @@ main{
     flex: 1;
 }
 
-.input{
+.input {
     display: flex;
     flex: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    >*{
+    > * {
         margin-top: 20px;
     }
 }
 
 .use-nuno-account,
-.use-temp-account{
+.use-temp-account {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .button{
+    .button {
         margin-top: 20px;
     }
 
-    .text-box{
+    .text-box {
         margin-top: 20px;
     }
 }
 
-.use-temp-account{
-    .button{
+.use-temp-account {
+    .button {
         margin-top: 15px;
     }
 }
 
-.or{
+.or {
     margin: 0 100px;
 }
 
-@media only screen and (max-width: $mobile-querry) {
-    .title{
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    .title {
         word-spacing: 100vw;
     }
 
-    main{
+    main {
         flex-direction: column;
     }
 
-    .or{
+    .or {
         margin-top: 20px;
         font-size: 20px;
     }

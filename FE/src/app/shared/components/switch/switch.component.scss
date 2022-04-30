@@ -62,8 +62,9 @@
     border-radius: 50%;
 }
 
-@media only screen and (max-width: $mobile-querry) {
-    :host{
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    :host {
         width: 60px;
         height: 34px;
     }

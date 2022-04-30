@@ -13,13 +13,13 @@
     flex-direction: column;
     align-items: center;
 
-    >* {
+    > * {
         margin-top: 40px;
     }
 
-    .nuno-logo{
+    .nuno-logo {
         height: 99px;
-    }    
+    }
 }
 
 .options {
@@ -35,19 +35,20 @@
         margin-top: 40px;
         width: 100%;
 
-        &.logout{
+        &.logout {
             justify-content: center;
         }
     }
 }
 
-@media only screen and (max-width: $mobile-querry) {
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
     .title {
-        >* {
+        > * {
             margin-top: 20px;
         }
-        
-        .nuno-logo{
+
+        .nuno-logo {
             height: 80px;
         }
     }
@@ -56,11 +57,11 @@
         flex-direction: column;
         align-items: center;
 
-        &.logout{
+        &.logout {
             margin-top: 0px !important;
         }
 
-        .button:last-child{
+        .button:last-child {
             margin-top: 30px;
         }
     }

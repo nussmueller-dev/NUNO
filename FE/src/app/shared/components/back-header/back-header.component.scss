@@ -1,6 +1,6 @@
 @import "sizes";
 
-:host{
+:host {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -8,24 +8,25 @@
     width: 100%;
 }
 
-.nuno-logo{
+.nuno-logo {
     margin: 20px;
     height: 75px;
 }
 
-.back-icon{
+.back-icon {
     margin: 20px;
     height: 60px;
     cursor: pointer;
 }
 
-@media only screen and (max-width: $mobile-querry) {
-    .nuno-logo{
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    .nuno-logo {
         margin: 10px;
         height: 35px;
     }
-    
-    .back-icon{
+
+    .back-icon {
         margin: 10px;
         height: 35px;
     }

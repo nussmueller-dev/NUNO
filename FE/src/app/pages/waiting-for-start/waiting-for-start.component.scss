@@ -1,7 +1,7 @@
 @import "sizes";
 @import "colors";
 
-:host{
+:host {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -10,7 +10,7 @@
     height: 100%;
 }
 
-main{
+main {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,18 +19,18 @@ main{
     flex: 1;
 }
 
-.subtitle{
+.subtitle {
     font-weight: normal;
     margin-top: 30px;
     padding: 0 20px;
 
-    span{
+    span {
         display: block;
         margin-top: 10px;
     }
 }
 
-.player{
+.player {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -42,42 +42,43 @@ main{
     border-radius: 50px;
     background-color: $lighter-background-color;
 
-    &.me{
+    &.me {
         color: $secondary-color;
     }
 
-    .name{
+    .name {
         padding-right: 60px;
     }
 
-    .points{
+    .points {
         font-weight: bold;
     }
 }
 
-.just-on-mobile{
+.just-on-mobile {
     display: none;
 }
 
-@media only screen and (max-width: $mobile-querry) {
-    .just-on-mobile{
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    .just-on-mobile {
         display: block;
     }
 
-    .subtitle{
+    .subtitle {
         margin-top: 10px;
     }
 
-    .players{
+    .players {
         margin-top: 10px;
     }
 
-    .player{
+    .player {
         height: 50px;
         margin-top: 10px;
         padding: 0 20px;
-    
-        .name{
+
+        .name {
             padding-right: 50px;
         }
     }

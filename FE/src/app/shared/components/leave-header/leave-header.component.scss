@@ -1,7 +1,7 @@
 @import "sizes";
 @import "colors";
 
-:host{
+:host {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -9,23 +9,24 @@
     width: 100%;
 }
 
-.nuno-logo{
+.nuno-logo {
     margin: 20px;
     height: 75px;
 }
 
-.exit-button{
+.exit-button {
     margin: 20px;
     cursor: pointer;
 }
 
-@media only screen and (max-width: $mobile-querry) {
-    .nuno-logo{
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    .nuno-logo {
         margin: 10px;
         height: 35px;
     }
-    
-    .exit-button{
+
+    .exit-button {
         margin: 10px;
     }
 }

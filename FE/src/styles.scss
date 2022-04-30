@@ -240,7 +240,8 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-@media only screen and (max-width: $mobile-querry) {
+@media screen and (orientation: landscape) and (max-height: $mobile-querry),
+    screen and (orientation: portrait) and (max-width: $mobile-querry) {
     h1 {
         font-size: 50px;
     }
