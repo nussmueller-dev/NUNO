@@ -292,6 +292,7 @@ namespace Game.Logic {
       }
 
       session.State = SessionState.ShowResults;
+      session.CanStarteGame = true;
       InformAboutGameEnd(session);
     }
 
