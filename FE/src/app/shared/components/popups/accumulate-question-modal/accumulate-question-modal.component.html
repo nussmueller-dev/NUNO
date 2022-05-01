@@ -1,0 +1,15 @@
+<div [@holderShownHidden]="{ value: popupService.accumulateQuestionModal.modalShown ? 'shown' : 'hidden' }"
+    class="popup-holder accumulate-question-popup-holder">
+    <img src="/assets/icons/question.svg" alt="question-icon" class="question-icon icon">
+
+    <p class="message">Möchtest du ziehen oder legen?</p>
+
+    <div class="cards">
+        <app-game-card class="card" *ngFor="let card of popupService.accumulateQuestionModal.possibleCards"
+            [card]="card" (click)="lay(card)"></app-game-card>
+    </div>
+
+    <div class="buttons">
+        <button class="button secondary no" (click)="draw()">Ziehen</button>
+    </div>
+</div>

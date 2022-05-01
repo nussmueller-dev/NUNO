@@ -1,0 +1,58 @@
+@import "src/app/shared/styles/mixins/popup.scss";
+@import "sizes";
+
+:host {
+    @include popup;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+
+    .card {
+        height: 200px;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+@media screen and (orientation: landscape) and (max-height: $mobile-querry) {
+    .cards {
+        margin-bottom: 20px;
+
+        .card {
+            height: 100px;
+
+            &:not(:last-child) {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+@media screen and (orientation: portrait) and (max-width: $mobile-querry) {
+    .cards {
+        flex-direction: column;
+
+        .card {
+            height: 100px;
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+    }
+}

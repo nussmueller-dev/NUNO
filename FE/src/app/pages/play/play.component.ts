@@ -87,6 +87,7 @@ export class PlayComponent implements OnInit {
       this.myCardsChanged(infos.myCards);
 
       this.handleTakenLayableCard();
+      this.handleLayDrawCardsOverOthers();
     });
   }
 
@@ -141,6 +142,28 @@ export class PlayComponent implements OnInit {
 
     if (answer) {
       this.layCard(card);
+    } else {
+      this.gameService.dontLayCard(this.sessionId);
+    }
+  }
+
+  askForLayDrawTwo = async () => {
+    let cards = this.cards.filter(x => x.cardType === CardType.DrawTwo);
+    let answer = await this.popupService.accumulateQuestionModal.show(cards);
+
+    if (answer) {
+      this.layCard(answer);
+    } else {
+      this.gameService.dontLayCard(this.sessionId);
+    }
+  }
+
+  askForLayDrawFour = async () => {
+    let cards = this.cards.filter(x => x.cardType === CardType.WildDrawFour);
+    let answer = await this.popupService.accumulateQuestionModal.show(cards);
+
+    if (answer) {
+      this.layCard(answer);
     } else {
       this.gameService.dontLayCard(this.sessionId);
     }
@@ -206,6 +229,8 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('forgotLastCardCall', this.forgotCallingLastCard);
     this.signalrConnection.addEvent('playerCalledLastCard', this.playerCalledLastCard);
     this.signalrConnection.addEvent('newCardIsLayable', this.askForDirectlyLayCard);
+    this.signalrConnection.addEvent('couldLayDrawTwo', this.askForLayDrawTwo);
+    this.signalrConnection.addEvent('couldLayDrawFour', this.askForLayDrawFour);
 
     window.addEventListener('resize', () => this.updateFullscreenState());
     this.updateFullscreenState();
@@ -260,9 +285,21 @@ export class PlayComponent implements OnInit {
   }
 
   handleTakenLayableCard() {
-    let currentPlayer = this.players.find(x => x.username == this.currentUserService.username)
-    if (currentPlayer?.takenLayableCard) {
-      this.askForDirectlyLayCard(currentPlayer?.takenLayableCard);
+    let mePlayer = this.players.find(x => x.username == this.currentUserService.username);
+    if (mePlayer?.takenLayableCard) {
+      this.askForDirectlyLayCard(mePlayer?.takenLayableCard);
+    }
+  }
+
+  handleLayDrawCardsOverOthers() {
+    let mePlayer = this.players.find(x => x.username == this.currentUserService.username)
+
+    if (mePlayer?.couldLayDrawFourCard) {
+      this.askForLayDrawFour();
+    }
+
+    if (mePlayer?.couldLayDrawTwoCard) {
+      this.askForLayDrawTwo();
     }
   }
 

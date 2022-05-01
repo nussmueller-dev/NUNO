@@ -35,6 +35,8 @@ namespace Game.Logic {
       session.CardStack = GenerateCardStack();
       session.LaidCards = new List<Card>();
       session.IsReversing = false;
+      session.AccumulateCardsDrawFour = 0;
+      session.AccumulateCardsDrawTwo = 0;
 
       foreach (var player in session.Players) {
         player.Cards.Clear();
@@ -77,6 +79,10 @@ namespace Game.Logic {
         }
       }
 
+      if ((currentPlayer.CouldLayDrawTwoCard && card.CardType != CardType.DrawTwo) || (currentPlayer.CouldLayDrawFourCard && card.CardType != CardType.WildDrawFour)) {
+        return null;
+      }
+
       if (!CanLayCard(session, card)) {
         return null;
       }
@@ -85,6 +91,8 @@ namespace Game.Logic {
       currentPlayer.CalledLastCard = false;
 
       currentPlayer.TokeLayableCard = false;
+      currentPlayer.CouldLayDrawFourCard = false;
+      currentPlayer.CouldLayDrawTwoCard = false;
 
       session.LaidCards.Add(session.CurrentCard);
       session.CurrentCard = card;
@@ -122,13 +130,41 @@ namespace Game.Logic {
       var session = _sessionLogic.GetSession(sessionId);
       var currentPlayer = GetCurrentPlayer(session);
 
-      if (session is null || currentPlayer is null || session.CurrentPlayer != currentPlayer || !currentPlayer.TokeLayableCard) {
+      if (session is null 
+        || currentPlayer is null 
+        || session.CurrentPlayer != currentPlayer 
+        || (!currentPlayer.TokeLayableCard && !currentPlayer.CouldLayDrawTwoCard && !currentPlayer.CouldLayDrawFourCard)) {
         return false;
       }
 
+      if (currentPlayer.CouldLayDrawTwoCard) {
+        for (int i = 0; i < session.AccumulateCardsDrawTwo; i++) {
+          currentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+
+        session.AccumulateCardsDrawTwo = 0;
+
+        InformAboutMyCardsChanged(currentPlayer);
+      }
+
+      if (currentPlayer.CouldLayDrawFourCard) {
+        for (int i = 0; i < session.AccumulateCardsDrawFour; i++) {
+          currentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+
+        session.AccumulateCardsDrawFour = 0;
+
+        InformAboutMyCardsChanged(currentPlayer);
+      }
+
+      if (currentPlayer.TokeLayableCard) {
+        session.CurrentPlayer = GetNextPlayer(session);
+        InformAboutCurrentPlayerChanged(session);
+      }
+
       currentPlayer.TokeLayableCard = false;
-      session.CurrentPlayer = GetNextPlayer(session);
-      InformAboutCurrentPlayerChanged(session);
+      currentPlayer.CouldLayDrawTwoCard = false;
+      currentPlayer.CouldLayDrawFourCard = false;
 
       return true;
     }
@@ -352,24 +388,42 @@ namespace Game.Logic {
     #region - Special Cards -
 
     private void WildDrawFour(Session session) {
-      if (session.Rules.Accumulate) {
+      if (session.Rules.Accumulate && session.CurrentPlayer.Cards.Any(x => x.CardType == CardType.WildDrawFour)) {
         session.AccumulateCardsDrawFour += 4;
+        session.CurrentPlayer.CouldLayDrawFourCard = true;
+
+        InformAboutCouldLayDrawFour(session.CurrentPlayer);
       } else {
         for (int i = 0; i < 4; i++) {
           session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
         }
+
+        for (int i = 0; i < session.AccumulateCardsDrawFour; i++) {
+          session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+
+        session.AccumulateCardsDrawFour = 0;
 
         InformAboutMyCardsChanged(session.CurrentPlayer);
       }
     }
 
     private void DrawTwo(Session session) {
-      if (session.Rules.Accumulate) {
+      if (session.Rules.Accumulate && session.CurrentPlayer.Cards.Any(x => x.CardType == CardType.DrawTwo)) {
         session.AccumulateCardsDrawTwo += 2;
+        session.CurrentPlayer.CouldLayDrawTwoCard = true;
+
+        InformAboutCouldLayDrawTwo(session.CurrentPlayer);
       } else {
         for (int i = 0; i < 2; i++) {
           session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
         }
+
+        for (int i = 0; i < session.AccumulateCardsDrawTwo; i++) {
+          session.CurrentPlayer.Cards.Add(TakeRandomCardFromStack(session));
+        }
+
+        session.AccumulateCardsDrawTwo = 0;
 
         InformAboutMyCardsChanged(session.CurrentPlayer);
       }
@@ -445,6 +499,18 @@ namespace Game.Logic {
     private void InformAboutNewCardIsLayable(Player player, Card card) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("newCardIsLayable", new CardViewModel(card));
+      }
+    }
+
+    private void InformAboutCouldLayDrawTwo(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("couldLayDrawTwo");
+      }
+    }
+
+    private void InformAboutCouldLayDrawFour(Player player) {
+      foreach (var connectionId in player.PlayerConnectionIds) {
+        _playersHub.Clients.Client(connectionId).SendAsync("couldLayDrawFour");
       }
     }
 

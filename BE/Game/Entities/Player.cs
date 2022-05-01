@@ -11,6 +11,8 @@ namespace Game.Entities {
     public bool IsCreator { get; private set; }
     public bool CalledLastCard { get; set; } = false;
     public bool TokeLayableCard { get; set; } = false;
+    public bool CouldLayDrawTwoCard { get; set; } = false;
+    public bool CouldLayDrawFourCard { get; set; } = false;
     public int Points { get; set; } = 0;
     public List<Card> Cards { get; set; } = new List<Card>();
     public IList<string> PlayerConnectionIds { get; } = new List<string>();

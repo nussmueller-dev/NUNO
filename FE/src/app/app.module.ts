@@ -37,6 +37,7 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
+import { AccumulateQuestionModalComponent } from './shared/components/popups/accumulate-question-modal/accumulate-question-modal.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { routes } from './shared/routes';
     StatsComponent,
     PodiumPlaceComponent,
     DirectlyLayCardQuestionModalComponent,
+    AccumulateQuestionModalComponent,
   ],
   imports: [
     AppRoutingModule,

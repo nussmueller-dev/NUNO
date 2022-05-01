@@ -1,7 +1,7 @@
 export class UnoRulesBindingModel {
     startCardCount: number = 7;
 
-    accumulate: boolean = false;
+    accumulate: boolean = true;
     jumpIn: boolean = false;
     buzzer: boolean = false;
 }
