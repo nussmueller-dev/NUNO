@@ -116,6 +116,11 @@ export class PlayComponent implements OnInit {
     this.router.navigate(['/stats'], { queryParamsHandling: 'merge' });
   }
 
+  gameCancelled = () => {
+    this.popupService.errorModal.show('Das Spiel wurde abgebrochen, da zu viele Spieler das Spiel verlassen haben');
+    this.utilService.reactToSessionState(SessionState.ManagePlayers, SessionState.Play, this.currentUserService.username === this.currentPlayerName);
+  }
+
   gotSkipped = () => {
 
   }
@@ -195,6 +200,7 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('youGotSkipped', this.newCurrentPlayer);
     this.signalrConnection.addEvent('myCardsChanged', this.myCardsChanged);
     this.signalrConnection.addEvent('gameEnds', this.gameEnds);
+    this.signalrConnection.addEvent('gameCancelled', this.gameCancelled);
     this.signalrConnection.addEvent('forgotLastCardCall', this.forgotCallingLastCard);
     this.signalrConnection.addEvent('playerCalledLastCard', this.playerCalledLastCard);
     this.signalrConnection.addEvent('newCardIsLayable', this.askForDirectlyLayCard);
@@ -259,6 +265,7 @@ export class PlayComponent implements OnInit {
 
     await this.sessionService.quit(this.sessionId);
 
+    this.signalrConnection.stop();
     this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
   }

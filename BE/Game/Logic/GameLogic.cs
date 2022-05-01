@@ -329,6 +329,7 @@ namespace Game.Logic {
 
       session.State = SessionState.ShowResults;
       session.CanStarteGame = true;
+      session.NewPlayersCanJoin = true;
       InformAboutGameEnd(session);
     }
 

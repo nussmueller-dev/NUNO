@@ -113,6 +113,7 @@ export class ManagePlayersComponent implements OnInit, OnDestroy {
 
     await this.sessionService.quit(this.sessionId);
 
+    this.signalrConnection.stop();
     this.popupService.succesModal.show('Spiel erfolgreich verlassen');
     this.router.navigate(['/welcome']);
   }

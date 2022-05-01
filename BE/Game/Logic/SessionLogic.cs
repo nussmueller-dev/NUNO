@@ -1,5 +1,6 @@
 ﻿using Data.Interfaces;
 using Game.Entities;
+using Game.Enums;
 using Game.Hubs;
 using Game.Models.ViewModels;
 using Microsoft.AspNetCore.SignalR;
@@ -119,6 +120,8 @@ namespace Game.Logic {
       InformAboutKick(player);
       InformAboutPlayerOrderChanged(sessionId);
 
+      CheckForPlayableSession(session);
+
       return true;
     }
 
@@ -146,6 +149,8 @@ namespace Game.Logic {
         Sessions.Remove(session);
       }
 
+      CheckForPlayableSession(session);
+
       return true;
     }
 
@@ -165,6 +170,16 @@ namespace Game.Logic {
       _playersHub.Clients.Group($"session-{sessionId}").SendAsync("reorder", playerViewModels);
     }
 
+    private void CheckForPlayableSession(Session session) {
+      if (session.State == SessionState.Play && session.Players.Count < 2) {
+        session.State = SessionState.ManagePlayers;
+        session.CanStarteGame = true;
+        session.NewPlayersCanJoin = true;
+
+        InformAboutGameCancelled(session);
+      }
+    }
+
     private void InformAboutKick(Player player) {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("kick");
@@ -175,6 +190,10 @@ namespace Game.Logic {
       foreach (var connectionId in player.PlayerConnectionIds) {
         _playersHub.Clients.Client(connectionId).SendAsync("youAreCreatorNow");
       }
+    }
+
+    private void InformAboutGameCancelled(Session session) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameCancelled");
     }
 
     #endregion
