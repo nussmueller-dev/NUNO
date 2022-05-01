@@ -29,6 +29,10 @@
     justify-content: center;
     flex: 1;
 
+    .text {
+        margin-top: 30px;
+    }
+
     .buttons {
         display: flex;
         justify-content: space-between;

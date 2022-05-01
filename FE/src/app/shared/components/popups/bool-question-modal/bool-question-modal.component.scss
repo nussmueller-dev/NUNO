@@ -4,11 +4,6 @@
     @include popup;
 }
 
-.question-icon {
-    height: 120px;
-    margin-bottom: 30px;
-}
-
 .buttons {
     display: flex;
     flex-direction: row;
@@ -16,7 +11,7 @@
     justify-content: center;
     width: 100%;
 
-    .okay{
+    .okay {
         margin-right: 20px;
     }
 }

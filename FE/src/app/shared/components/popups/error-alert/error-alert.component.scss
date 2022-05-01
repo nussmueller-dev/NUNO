@@ -1,16 +1,14 @@
 @import "src/app/shared/styles/mixins/popup.scss";
 
-:host{
+:host {
     @include popup;
 }
 
-.error-icon{
-    height: 120px;
-    margin-bottom: 30px;
+.error-icon {
     transform: scale(2);
 }
 
-.buttons{
+.buttons {
     display: flex;
     flex-direction: row;
     align-items: center;

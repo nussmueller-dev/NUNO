@@ -1,15 +1,10 @@
 @import "src/app/shared/styles/mixins/popup.scss";
 
-:host{
+:host {
     @include popup;
 }
 
-.succes-icon{
-    height: 120px;
-    margin-bottom: 30px;
-}
-
-.buttons{
+.buttons {
     display: flex;
     flex-direction: row;
     align-items: center;

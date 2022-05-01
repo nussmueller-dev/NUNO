@@ -1,12 +1,8 @@
 @import "src/app/shared/styles/mixins/popup.scss";
+@import "sizes";
 
 :host {
     @include popup;
-}
-
-.question-icon {
-    height: 120px;
-    margin-bottom: 30px;
 }
 
 .card {
@@ -23,5 +19,12 @@
 
     .yes {
         margin-right: 20px;
+    }
+}
+
+@media screen and (orientation: landscape) and (max-height: $mobile-querry) {
+    .card {
+        height: 100px;
+        margin-bottom: 20px;
     }
 }
