@@ -65,11 +65,7 @@ namespace Game.Logic {
       var currentPlayer = GetCurrentPlayer(session);
       var card = currentPlayer?.Cards.FirstOrDefault(x => x.Id == cardId);
 
-      if (session is null || currentPlayer is null || card is null) {
-        return null;
-      }
-
-      if (currentPlayer != session.CurrentPlayer) {
+      if (session is null || currentPlayer is null || card is null || currentPlayer != session.CurrentPlayer || session.State != SessionState.Play) {
         return null;
       }
 

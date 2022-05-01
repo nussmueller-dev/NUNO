@@ -2,7 +2,11 @@
     class="popup-holder info-popup-holder">
     <svg-icon src="/assets/icons/info.svg" class="info-icon"></svg-icon>
 
-    <p class="message">{{popupService.infoModal.message}}</p>
+    <p class="message">
+        {{popupService.infoModal.message}}
+        <a class="link" [href]="popupService.infoModal.link" target="_blank" rel="noopener noreferrer"
+            *ngIf="popupService.infoModal.link">{{popupService.infoModal.link}}</a>
+    </p>
 
     <div class="buttons">
         <button class="button close" (click)="close()">Okay</button>

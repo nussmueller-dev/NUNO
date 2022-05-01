@@ -238,7 +238,11 @@ export class PlayComponent implements OnInit {
   }
 
   lastCard() {
-    this.gameService.callLastCard(this.sessionId);
+    if (this.cards.length === 1) {
+      this.gameService.callLastCard(this.sessionId);
+    } else {
+      this.popupService.infoModal.show('Hier kannst du zählen üben: ', 'https://de.wikihow.com/Auf-deutsch-bis-20-z%C3%A4hlen');
+    }
   }
 
   handleTakenLayableCard() {
