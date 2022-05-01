@@ -9,6 +9,7 @@ import { SessionService } from 'src/app/shared/services/session.service';
 import { SignalrConnection } from 'src/app/shared/services/util/SignalrConnection';
 import { environment } from 'src/environments/environment';
 import { GameService } from './../../shared/services/game.service';
+import { SpecialEffectsService } from './../../shared/services/special-effects.service';
 import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
@@ -18,6 +19,7 @@ import { UtilServiceService } from './../../shared/services/util-service.service
 })
 export class StatsComponent implements OnInit {
   private signalrConnection: SignalrConnection;
+  private madeFirework = false;
   players: Array<PlayerViewModel> = [];
   myName: string = '';
   sessionCreator?: PlayerViewModel;
@@ -28,6 +30,8 @@ export class StatsComponent implements OnInit {
       this.sessionCreator = infos.sessionCreator;
       this.players = this.orderPlayers(infos.players);
       this.utilService.reactToSessionState(infos.sessionState, SessionState.ShowResults, infos.currentPlayer === this.currentUserService.username);
+
+      this.handleFirework();
     });
   }
 
@@ -38,6 +42,7 @@ export class StatsComponent implements OnInit {
 
   playersChanged = (players: Array<PlayerViewModel>) => {
     this.players = this.orderPlayers(players);
+    this.handleFirework();
   }
 
   gameStarted = () => {
@@ -51,7 +56,8 @@ export class StatsComponent implements OnInit {
     private sessionService: SessionService,
     private gameService: GameService,
     private popupService: PopupService,
-    private utilService: UtilServiceService
+    private utilService: UtilServiceService,
+    private specialEffectsService: SpecialEffectsService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
   }
@@ -84,6 +90,16 @@ export class StatsComponent implements OnInit {
 
   ngOnDestroy() {
     this.signalrConnection.stop();
+  }
+
+  handleFirework() {
+    if (!this.madeFirework
+      && this.players.length > 0
+      && this.currentUserService.username === this.players[0].username
+    ) {
+      this.madeFirework = true;
+      this.specialEffectsService.manyFirework(5);
+    }
   }
 
   orderPlayers(players: Array<PlayerViewModel>): Array<PlayerViewModel> {
