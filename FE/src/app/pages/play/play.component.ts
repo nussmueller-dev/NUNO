@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { CardType } from './../../shared/constants/card-types';
 import { SessionState } from './../../shared/constants/session-states';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
+import { LocalStorageService } from './../../shared/services/local-storage.service';
 import { UtilServiceService } from './../../shared/services/util-service.service';
 
 @Component({
@@ -166,7 +167,8 @@ export class PlayComponent implements OnInit {
     private sessionService: SessionService,
     private gameService: GameService,
     private popupService: PopupService,
-    private utilService: UtilServiceService
+    private utilService: UtilServiceService,
+    private localStorageService: LocalStorageService
   ) {
     this.signalrConnection = new SignalrConnection(currentUserService, this.load);
     this.currentUserService = currentUserService;
@@ -247,7 +249,13 @@ export class PlayComponent implements OnInit {
     if (this.cards.length === 1) {
       this.gameService.callLastCard(this.sessionId);
     } else {
-      this.popupService.infoModal.show('Hier kannst du zählen üben: ', 'https://de.wikihow.com/Auf-deutsch-bis-20-z%C3%A4hlen');
+      this.localStorageService.wronglyCalledLastCardCount++;
+
+      if (this.localStorageService.wronglyCalledLastCardCount > 3) {
+        this.popupService.infoModal.show('Hier kannst du zählen üben: ', 'https://de.wikihow.com/Auf-deutsch-bis-20-z%C3%A4hlen');
+      } else {
+        this.popupService.infoModal.show('Dieser Knopf ist dazu da, um den anderen Mitspielern mitzuteilen, dass du bei deiner letzten Karte angelangt bist');
+      }
     }
   }
 
