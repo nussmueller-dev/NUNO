@@ -68,7 +68,7 @@ namespace Game.Logic {
       var card = currentPlayer?.Cards.FirstOrDefault(x => x.Id == cardId);
       var isLayInMove = currentPlayer != session.CurrentPlayer;
 
-      if (session is null || currentPlayer is null || card is null || (currentPlayer != session.CurrentPlayer && !session.Rules.JumpIn) || session.State != SessionState.Play) {
+      if (session is null || currentPlayer is null || card is null || session.State != SessionState.Play) {
         return null;
       }
 
@@ -78,6 +78,10 @@ namespace Game.Logic {
         } else {
           card.Color = selectedColor;
         }
+      }
+
+      if (currentPlayer != session.CurrentPlayer && (!session.Rules.JumpIn || IsSameCard(card, session.CurrentCard))) {
+        return null;
       }
 
       if ((currentPlayer.CouldLayDrawTwoCard && card.CardType != CardType.DrawTwo) || (currentPlayer.CouldLayDrawFourCard && card.CardType != CardType.WildDrawFour)) {
@@ -392,6 +396,35 @@ namespace Game.Logic {
         default:
           return 0;
       }
+    }
+
+    private bool IsSameCard(Card card1, Card card2) {
+      if (card1.CardType != card2.CardType) {
+        return false;
+      }
+
+      if (card1.CardType == CardType.Wild 
+        || card1.CardType == CardType.WildDrawFour
+       ) {
+        return true;
+      }
+
+      if (card1.Color != card2.Color) {
+        return false;
+      }
+
+      if (card1.CardType == CardType.Reverse 
+        || card1.CardType == CardType.Skip
+        || card1.CardType == CardType.DrawTwo  
+      ) {
+        return true;
+      }
+
+      if (card1.CardType == CardType.Number) {
+        return card1.Number == card2.Number;
+      }
+
+      return false;
     }
 
     #region - Special Cards -

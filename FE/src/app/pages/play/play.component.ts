@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { CardType } from './../../shared/constants/card-types';
 import { SessionState } from './../../shared/constants/session-states';
 import { GameCardViewModel } from './../../shared/models/view-models/game-card-model';
+import { RulesViewModel } from './../../shared/models/view-models/rules-view-model';
 import { LocalStorageService } from './../../shared/services/local-storage.service';
 import { UtilServiceService } from './../../shared/services/util-service.service';
 
@@ -63,6 +64,7 @@ export class PlayComponent implements OnInit {
   currentUserService: CurrentUserService;
 
   sessionCreator?: PlayerViewModel;
+  rules?: RulesViewModel;
 
   fullscreenState = false;
   currentCardAnimationState: string = 'hidden';
@@ -78,6 +80,7 @@ export class PlayComponent implements OnInit {
 
   load: Function = () => {
     this.gameService.getAllInfos(this.sessionId).then((infos) => {
+      this.rules = infos.rules;
       this.players = infos.players;
       this.currentPlayerName = infos.currentPlayer?.username;
       this.currentCard = infos.currentCard;
@@ -251,7 +254,13 @@ export class PlayComponent implements OnInit {
   }
 
   async layCard(card: GameCardViewModel) {
-    if (this.currentPlayerName === this.currentUserService.username) {
+    let isJuminMove = this.rules?.jumpIn && this.currentPlayerName !== this.currentUserService.username;
+
+    if (this.currentPlayerName === this.currentUserService.username || isJuminMove) {
+      if (isJuminMove && card.cardType !== this.currentCard?.cardType) {
+        return;
+      }
+
       let selectedColor;
 
       if (card.cardType === CardType.Wild || card.cardType === CardType.WildDrawFour) {
@@ -261,7 +270,10 @@ export class PlayComponent implements OnInit {
       }
 
       await this.gameService.layCard(this.sessionId, card.id, selectedColor ?? undefined).then((newCards) => { this.myCardsChanged(newCards) }).catch(() => {
-        card.cantLayHelper = !card.cantLayHelper;
+        if (!isJuminMove) {
+          card.cantLayHelper = !card.cantLayHelper;
+        }
+
         this.handleTakenLayableCard();
       });
     }

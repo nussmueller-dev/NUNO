@@ -3,6 +3,7 @@ using Game.Enums;
 
 namespace Game.Models.ViewModels {
   public class AllGameInfosViewModel {
+    public RulesViewModel Rules { get; set; }
     public List<PlayerViewModel> Players { get; set; }
     public PlayerViewModel CurrentPlayer { get; set; }
     public CardViewModel CurrentCard { get; set; }
@@ -14,6 +15,7 @@ namespace Game.Models.ViewModels {
     public List<CardViewModel> MyCards { get; set; }
 
     public AllGameInfosViewModel(Session session, Player mePlayer) {
+      Rules = new RulesViewModel(session.Rules);
       Players = session.Players.Select(x => new PlayerViewModel(x)).ToList();
       CurrentPlayer = new PlayerViewModel(session.CurrentPlayer);
       CurrentCard = new CardViewModel(session.CurrentCard);
