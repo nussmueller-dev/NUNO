@@ -263,9 +263,14 @@ input::-webkit-inner-spin-button {
     }
 
     .button,
-    .text-box {
+    .text-box,
+    .number-input {
         font-size: 17px;
         padding: 10px 20px;
+    }
+
+    .number-input {
+        padding: 10px 0px;
     }
 
     .small-icon {
