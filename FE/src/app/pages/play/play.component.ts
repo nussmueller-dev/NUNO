@@ -108,6 +108,9 @@ export class PlayComponent implements OnInit {
 
   playersChanged = (players: Array<PlayerViewModel>) => {
     this.players = players;
+
+    this.handleTakenLayableCard();
+    this.handleLayDrawCardsOverOthers();
   }
 
   newCurrentPlayer = (newCurrentPlayer: PlayerViewModel) => {
@@ -288,6 +291,8 @@ export class PlayComponent implements OnInit {
     let mePlayer = this.players.find(x => x.username == this.currentUserService.username);
     if (mePlayer?.takenLayableCard) {
       this.askForDirectlyLayCard(mePlayer?.takenLayableCard);
+    } else {
+      this.popupService.directlyLayCardQuestionModal.modalShown = false;
     }
   }
 
@@ -300,6 +305,10 @@ export class PlayComponent implements OnInit {
 
     if (mePlayer?.couldLayDrawTwoCard) {
       this.askForLayDrawTwo();
+    }
+
+    if (!mePlayer?.couldLayDrawFourCard && !mePlayer?.couldLayDrawTwoCard) {
+      this.popupService.accumulateQuestionModal.modalShown = false;
     }
   }
 

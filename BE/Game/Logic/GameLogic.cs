@@ -66,8 +66,9 @@ namespace Game.Logic {
       var session = _sessionLogic.GetSession(sessionId);
       var currentPlayer = GetCurrentPlayer(session);
       var card = currentPlayer?.Cards.FirstOrDefault(x => x.Id == cardId);
+      var isLayInMove = currentPlayer != session.CurrentPlayer;
 
-      if (session is null || currentPlayer is null || card is null || currentPlayer != session.CurrentPlayer || session.State != SessionState.Play) {
+      if (session is null || currentPlayer is null || card is null || (currentPlayer != session.CurrentPlayer && !session.Rules.JumpIn) || session.State != SessionState.Play) {
         return null;
       }
 
@@ -85,6 +86,14 @@ namespace Game.Logic {
 
       if (!CanLayCard(session, card)) {
         return null;
+      }
+
+      if (isLayInMove) {
+        session.CurrentPlayer.CouldLayDrawFourCard = false;
+        session.CurrentPlayer.CouldLayDrawTwoCard = false;
+        session.CurrentPlayer.TokeLayableCard = false;
+
+        session.CurrentPlayer = currentPlayer;
       }
 
       CheckForLastCardCalls(session);
