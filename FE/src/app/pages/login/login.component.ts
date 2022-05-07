@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   password: string = '';
 
   targetNavigationPoint?: string;
+  canLogin = true;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -26,38 +27,46 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.targetNavigationPoint = this.route.snapshot.queryParamMap.get('method') ?? undefined;
 
-    if(this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create'){
+    if (this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create') {
       this.router.navigate(['/welcome']);
     }
   }
 
-  async login(){
+  async login() {
+    if (!this.canLogin) {
+      return;
+    }
+
+    this.canLogin = false;
+
     let authenticationViewModel = await this.authenticationService.login(this.username, this.password).catch((e: any) => {
       let errorMessage = '';
 
-      for(let key in e.error.errors){
+      for (let key in e.error.errors) {
         errorMessage += e.error.errors[key][0] + '\n';
       }
 
-      if(e.error.message){
+      if (e.error.message) {
         errorMessage = e.error.message;
       }
 
-      if(errorMessage.length === 0){
+      if (errorMessage.length === 0) {
         errorMessage = 'Es ist etwas schiefgelaufen'
       }
 
       this.popupService.errorModal.show(errorMessage);
     });
 
-    if(authenticationViewModel){
+    if (authenticationViewModel) {
       this.currentUserService.setCurrentUser(authenticationViewModel);
 
-      if(this.targetNavigationPoint === 'join'){
+      if (this.targetNavigationPoint === 'join') {
         this.router.navigate(['/join']);
-      }else{
+      } else {
         this.router.navigate(['/rules']);
       }
     }
+
+    this.canLogin = true;
   }
 }

@@ -1,8 +1,8 @@
-import { PopupService } from 'src/app/shared/services/popup.service';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { CurrentUserService } from 'src/app/shared/services/current-user.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { CurrentUserService } from 'src/app/shared/services/current-user.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-select-username',
@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SelectUsernameComponent implements OnInit {
   tempUserName: string = '';
   targetNavigationPoint?: string;
+
+  canCreateTempUser = true;
 
   constructor(
     private currentUserService: CurrentUserService,
@@ -24,47 +26,55 @@ export class SelectUsernameComponent implements OnInit {
   ngOnInit() {
     this.targetNavigationPoint = this.route.snapshot.queryParamMap.get('method') ?? undefined;
 
-    if(this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create'){
+    if (this.targetNavigationPoint !== 'join' && this.targetNavigationPoint !== 'create') {
       this.router.navigate(['/welcome']);
       return;
     }
 
-    if(this.currentUserService.userIsAuthorized){
-      if(this.targetNavigationPoint === 'join'){
+    if (this.currentUserService.userIsAuthorized) {
+      if (this.targetNavigationPoint === 'join') {
         this.router.navigate(['/join']);
-      }else{
+      } else {
         this.router.navigate(['/rules']);
       }
     }
   }
 
-  async createTempUser(){
+  async createTempUser() {
+    if (!this.canCreateTempUser) {
+      return;
+    }
+
+    this.canCreateTempUser = false;
+
     let tempUserViewModel = await this.authenticationService.createTempUser(this.tempUserName).catch((e: any) => {
       let errorMessage = '';
 
-      for(let key in e.error.errors){
+      for (let key in e.error.errors) {
         errorMessage += e.error.errors[key][0] + '\n';
       }
 
-      if(e.error.message){
+      if (e.error.message) {
         errorMessage = e.error.message;
       }
 
-      if(errorMessage.length === 0){
+      if (errorMessage.length === 0) {
         errorMessage = 'Es ist etwas schiefgelaufen'
       }
 
       this.popupService.errorModal.show(errorMessage);
     });
 
-    if(tempUserViewModel){
+    if (tempUserViewModel) {
       this.currentUserService.setCurrentTempUser(tempUserViewModel);
 
-      if(this.targetNavigationPoint === 'join'){
+      if (this.targetNavigationPoint === 'join') {
         this.router.navigate(['/join']);
-      }else{
+      } else {
         this.router.navigate(['/rules']);
       }
     }
+
+    this.canCreateTempUser = true;
   }
 }

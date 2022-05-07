@@ -14,6 +14,7 @@ import { UnoRulesBindingModel } from './../../shared/models/binding-models/uno-r
 export class RulesComponent implements OnInit {
   isOwner = false;
   rules: UnoRulesBindingModel = new UnoRulesBindingModel();
+  canStartGame = true;
 
   constructor(
     private currentUserService: CurrentUserService,
@@ -27,14 +28,20 @@ export class RulesComponent implements OnInit {
   }
 
   async next() {
+    if (!this.canStartGame) {
+      return;
+    }
+
     if (this.rules.startCardCount < 2 || this.rules.startCardCount > 20) {
       this.popupService.errorModal.show('Die Anzahl Karten beim Spielstart muss zwischen 2 und 20 liegen');
       return;
     }
 
+    this.canStartGame = false;
+
     await this.currentUserService.checkAuthentication();
 
-    let sessionId = await this.sessionService.createUnoSession(this.rules);
+    let sessionId = await this.sessionService.createUnoSession(this.rules).finally(() => this.canStartGame = true);
 
     this.router.navigate(['/manage-players'], { queryParams: { sessionId: sessionId } });
   }

@@ -12,6 +12,7 @@ import { PopupService } from './../../shared/services/popup.service';
 })
 export class JoinGameComponent implements OnInit {
   sessionId: string = '';
+  canJoinGame = true;
 
   constructor(
     private currentUserService: CurrentUserService,
@@ -25,10 +26,16 @@ export class JoinGameComponent implements OnInit {
   }
 
   async joinSession() {
+    if (!this.canJoinGame) {
+      return;
+    }
+
     if (!+this.sessionId) {
       this.popupService.errorModal.show('Spiel konnte nicht gefunden werden');
       return;
     }
+
+    this.canJoinGame = false;
 
     await this.sessionService.joinSession(+this.sessionId).then(() => {
       try {
@@ -45,5 +52,7 @@ export class JoinGameComponent implements OnInit {
         this.popupService.errorModal.show('Es ist etwas schiefgelaufen');
       }
     });
+
+    this.canJoinGame = true;
   }
 }
