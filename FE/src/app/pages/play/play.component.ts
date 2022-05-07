@@ -120,7 +120,13 @@ export class PlayComponent implements OnInit {
     this.currentPlayerName = newCurrentPlayer.username;
   }
 
-  gameEnds = () => {
+  gotWinner = (winner: PlayerViewModel) => {
+    if (winner.username === this.currentUserService.username) {
+      this.popupService.infoModal.show('Du hast diese Runde gewonnen 🥳');
+    } else {
+      this.popupService.infoModal.show(`"${winner.username}" hat diese Runde gewonnen`);
+    }
+
     this.router.navigate(['/stats'], { queryParamsHandling: 'merge' });
   }
 
@@ -230,7 +236,7 @@ export class PlayComponent implements OnInit {
     this.signalrConnection.addEvent('currentPlayerChanged', this.newCurrentPlayer);
     this.signalrConnection.addEvent('youGotSkipped', this.newCurrentPlayer);
     this.signalrConnection.addEvent('myCardsChanged', this.myCardsChanged);
-    this.signalrConnection.addEvent('gameEnds', this.gameEnds);
+    this.signalrConnection.addEvent('gotWinner', this.gotWinner);
     this.signalrConnection.addEvent('gameCancelled', this.gameCancelled);
     this.signalrConnection.addEvent('forgotLastCardCall', this.forgotCallingLastCard);
     this.signalrConnection.addEvent('playerCalledLastCard', this.playerCalledLastCard);

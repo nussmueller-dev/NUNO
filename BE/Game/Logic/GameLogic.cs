@@ -80,7 +80,7 @@ namespace Game.Logic {
         }
       }
 
-      if (currentPlayer != session.CurrentPlayer && (!session.Rules.JumpIn || IsSameCard(card, session.CurrentCard))) {
+      if (currentPlayer != session.CurrentPlayer && (!session.Rules.JumpIn || !IsSameCard(card, session.CurrentCard))) {
         return null;
       }
 
@@ -379,7 +379,7 @@ namespace Game.Logic {
       session.State = SessionState.ShowResults;
       session.CanStarteGame = true;
       session.NewPlayersCanJoin = true;
-      InformAboutGameEnd(session);
+      InformAboutGameEnd(session, winner);
     }
 
     private int GetPointsForCard(Card card) {
@@ -492,8 +492,8 @@ namespace Game.Logic {
       _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameStarts");
     }
 
-    private void InformAboutGameEnd(Session session) {
-      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gameEnds");
+    private void InformAboutGameEnd(Session session, Player winner) {
+      _playersHub.Clients.Group($"session-{session.Id}").SendAsync("gotWinner", new PlayerViewModel(winner));
     }
 
     private void InformAboutNewCurrentCard(Session session) {
