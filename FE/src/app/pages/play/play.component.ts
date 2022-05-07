@@ -358,8 +358,6 @@ export class PlayComponent implements OnInit {
     let colors = Object.values(Color).filter(x => +x);
     let sortedCards: Array<GameCardViewModel> = [];
 
-    colors = _.orderBy(colors, x => this.cards.filter(y => y.color === x).length, 'asc');
-
     colors.forEach(color => {
       let cards = this.cards.filter(x => x.color === color);
 
