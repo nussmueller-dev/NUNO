@@ -12,7 +12,8 @@ export enum EasterEgg {
   Richi = 'richi',
   Firework = 'firework',
   Fun = 'fun',
-  Help = 'help'
+  Help = 'help',
+  Jonathan = 'jonathan'
 }
 
 @Injectable({
@@ -75,13 +76,16 @@ export class EasterEggService {
         this.celloEffect = !this.celloEffect;
         break;
       case EasterEgg.Rick:
-        window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+        this.openUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ');
         break;
       case EasterEgg.Tobi:
-        window.location.href = 'https://www.youtube.com/watch?v=1BXKsQ2nbno';
+        this.openUrl('https://www.youtube.com/watch?v=1BXKsQ2nbno');
         break;
       case EasterEgg.Richi:
-        window.location.href = 'https://www.youtube.com/watch?v=5KFJxif2BiU';
+        this.openUrl('https://www.youtube.com/watch?v=5KFJxif2BiU');
+        break;
+      case EasterEgg.Jonathan:
+        this.openUrl('https://youtube.com/watch?v=hFKUXWnjvAU&feature=share');
         break;
       case EasterEgg.Fun:
       case EasterEgg.Firework:
@@ -93,5 +97,9 @@ export class EasterEggService {
     }
 
     this.correctTypedText = '';
+  }
+
+  private openUrl(url: string) {
+    window.open(url, '_blank')?.focus();
   }
 }
