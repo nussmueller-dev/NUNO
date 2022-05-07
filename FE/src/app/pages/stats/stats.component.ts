@@ -82,6 +82,11 @@ export class StatsComponent implements OnInit {
       }
     });
 
+    this.popupService.accumulateQuestionModal.modalShown = false;
+    this.popupService.boolQuestionModal.modalShown = false;
+    this.popupService.directlyLayCardQuestionModal.modalShown = false;
+    this.popupService.selectColorModal.modalShown = false;
+
     await this.signalrConnection.start(environment.BACKENDURL + 'hubs/players?sessionId=' + sessionId);
     this.signalrConnection.addEvent('kick', this.gotKickedOut);
     this.signalrConnection.addEvent('players-info', this.playersChanged);
