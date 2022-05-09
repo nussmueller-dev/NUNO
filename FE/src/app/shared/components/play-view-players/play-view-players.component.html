@@ -13,6 +13,9 @@
                     <span class="cards-count"
                         [ngClass]="{ 'one-digit': player.cardsCount < 10 }">{{player.cardsCount}}</span>
                 </div>
+                <svg-icon *ngIf="creatorName === currentUserService.username" class="leave-icon"
+                    [class.hidden]="currentUserService.username === player.username" src="/assets/icons/exit.svg"
+                    (click)="kick(player.username)"></svg-icon>
             </div>
         </div>
     </div>

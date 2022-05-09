@@ -96,6 +96,18 @@ main {
         }
     }
 
+    .leave-icon {
+        color: $delete-color;
+        margin-left: 20px;
+        height: 40px;
+        min-width: 40px;
+        cursor: pointer;
+
+        &.hidden {
+            opacity: 0;
+        }
+    }
+
     &.me {
         color: $secondary-color;
     }
@@ -128,6 +140,12 @@ main {
                     font-size: 20px;
                 }
             }
+        }
+
+        .leave-icon {
+            height: 35px;
+            min-width: 35px;
+            margin-left: 20px;
         }
     }
 }
