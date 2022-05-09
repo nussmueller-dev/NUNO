@@ -3,6 +3,11 @@
 <h1 class="hide-on-mobile">Warten auf Spielstart</h1>
 <h1 class="just-on-mobile">Bitte warten</h1>
 
+<h3 class="game-number-title">
+    <span>Spiel-Nummer:</span>
+    <span class="game-number" [cdkCopyToClipboard]="sessionId.toString()">{{sessionId}}</span>
+</h3>
+
 <h3 class="subtitle">
     <span class="hide-on-mobile">Bitte hab etwas Geduld</span>
     <span>Der Spielleiter wird das Spiel in Kürze starten</span>

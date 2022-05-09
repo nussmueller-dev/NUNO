@@ -19,6 +19,17 @@ main {
     flex: 1;
 }
 
+.game-number-title {
+    margin-top: 40px;
+    font-weight: normal;
+
+    .game-number {
+        margin-left: 10px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
 .subtitle {
     font-weight: normal;
     margin-top: 30px;
@@ -71,6 +82,10 @@ main {
     screen and (orientation: portrait) and (max-width: $mobile-querry) {
     .just-on-mobile {
         display: block;
+    }
+
+    .game-number-title {
+        margin: 20px;
     }
 
     .subtitle {
