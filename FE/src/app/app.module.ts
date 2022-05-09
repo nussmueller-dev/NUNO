@@ -25,9 +25,9 @@ import { BackHeaderComponent } from './shared/components/back-header/back-header
 import { GameCardBackComponent } from './shared/components/game-card-back/game-card-back.component';
 import { GameCardComponent } from './shared/components/game-card/game-card.component';
 import { LeaveHeaderComponent } from './shared/components/leave-header/leave-header.component';
-import { PlayPortraitComponent } from './shared/components/play-portrait/play-portrait.component';
 import { PlayViewPlayersComponent } from './shared/components/play-view-players/play-view-players.component';
 import { PodiumPlaceComponent } from './shared/components/podium-place/podium-place.component';
+import { AccumulateQuestionModalComponent } from './shared/components/popups/accumulate-question-modal/accumulate-question-modal.component';
 import { BoolQuestionModalComponent } from './shared/components/popups/bool-question-modal/bool-question-modal.component';
 import { DirectlyLayCardQuestionModalComponent } from './shared/components/popups/directly-lay-card-question-modal/directly-lay-card-question-modal.component';
 import { ErrorAlertComponent } from './shared/components/popups/error-alert/error-alert.component';
@@ -37,7 +37,6 @@ import { SuccessAlertComponent } from './shared/components/popups/success-alert/
 import { SwitchComponent } from './shared/components/switch/switch.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 import { routes } from './shared/routes';
-import { AccumulateQuestionModalComponent } from './shared/components/popups/accumulate-question-modal/accumulate-question-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,6 @@ import { AccumulateQuestionModalComponent } from './shared/components/popups/acc
     PlayComponent,
     GameCardComponent,
     GameCardBackComponent,
-    PlayPortraitComponent,
     PlayViewPlayersComponent,
     BoolQuestionModalComponent,
     SelectColorComponent,
