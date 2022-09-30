@@ -7,10 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["NUNO-Backend.csproj", "."]
-RUN dotnet restore "./NUNO-Backend.csproj"
+COPY ["NUNO-Backend/NUNO-Backend.csproj", "NUNO-Backend/"]
+COPY ["Game/Game.csproj", "Game/"]
+COPY ["Authentication/Authentication.csproj", "Authentication/"]
+COPY ["Data/Data.csproj", "Data/"]
+RUN dotnet restore "NUNO-Backend/NUNO-Backend.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/NUNO-Backend"
 RUN dotnet build "NUNO-Backend.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -1,0 +1,84 @@
+kind: pipeline
+type: docker
+name: frontend
+
+steps:
+- name: build
+  image: plugins/docker
+  settings:
+    registry: 
+      from_secret: docker-registry
+    username: 
+      from_secret: docker-username
+    password: 
+      from_secret: docker-password
+    repo: nuno-fe
+    tags: latest
+    dry_run: true
+    purge: true
+    context: ./FE
+    dockerfile: ./FE/Dockerfile
+
+trigger:
+  event:
+  - push
+  - pull_request
+
+---
+
+kind: pipeline
+type: docker
+name: backend
+
+steps:
+- name: build
+  image: plugins/docker
+  settings:
+    registry: 
+      from_secret: docker-registry
+    username: 
+      from_secret: docker-username
+    password: 
+      from_secret: docker-password
+    repo: nuno-be
+    tags: latest
+    dry_run: true
+    purge: true
+    context: ./BE
+    dockerfile: ./BE/Dockerfile
+
+trigger:
+  event:
+  - push
+  - pull_request
+
+---
+
+kind: pipeline
+type: docker
+name: after
+
+steps:
+- name: deploy-to-server
+  image: appleboy/drone-ssh
+  settings:
+    host: 
+      from_secret: server-url
+    username:
+      from_secret: server-username
+    port: 
+      from_secret: server-port
+    key:
+      from_secret: server-key 
+    command_timeout: 2m
+    script:
+      - cd /home/docker/NUNO
+      - docker compose pull
+      - docker compose down
+      - docker compose up -d
+
+trigger:
+  event:
+  - promote
+  target:
+  - production
