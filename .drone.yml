@@ -22,6 +22,7 @@ steps:
 
 trigger:
   event:
+  - custom
   - push
   - pull_request
 
@@ -51,6 +52,7 @@ steps:
 
 trigger:
   event:
+  - custom
   - push
   - pull_request
 
