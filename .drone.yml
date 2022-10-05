@@ -60,6 +60,25 @@ trigger:
 
 kind: pipeline
 type: docker
+name: notify
+
+steps:
+- name: discord notification
+  image: appleboy/drone-discord
+  settings:
+    webhook_id: 
+      from_secret: discord-webhook-id
+    webhook_token: 
+      from_secret: discord-webhook-token
+
+depends_on:
+  - frontend
+  - backend
+
+---
+
+kind: pipeline
+type: docker
 name: after
 
 steps:
