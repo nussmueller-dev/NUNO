@@ -75,6 +75,11 @@ depends_on:
   - frontend
   - backend
 
+trigger:
+  event:
+  - push
+  - pull_request
+
 ---
 
 kind: pipeline
