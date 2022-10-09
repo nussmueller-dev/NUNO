@@ -33,6 +33,15 @@ type: docker
 name: backend
 
 steps:
+- name: pre-build
+  image: alpine
+  environment:
+    APPSETTINGS:
+      from_secret: appsettings
+  commands:
+    - cd ./BE/NUNO-Backend
+    - echo $${APPSETTINGS} > appsettings.json
+
 - name: build
   image: plugins/docker
   settings:
