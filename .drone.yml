@@ -96,23 +96,11 @@ type: docker
 name: after
 
 steps:
-- name: deploy-to-server
-  image: appleboy/drone-ssh
-  settings:
-    host: 
-      from_secret: server-url
-    username:
-      from_secret: server-username
-    port: 
-      from_secret: server-port
-    key:
-      from_secret: server-key 
-    command_timeout: 2m
-    script:
-      - cd /home/docker/NUNO
-      - docker compose pull
-      - docker compose down
-      - docker compose up -d
+  - name: deploy-to-server
+    image: plugins/webhook
+    settings:
+      urls:
+        from_secret: webhook
 
 trigger:
   event:
