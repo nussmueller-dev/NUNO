@@ -5,10 +5,10 @@
 ---
 
 <p>
-  <a href="https://drone.nussmueller.dev/Borelio/NUNO">
-    <img src="https://drone.nussmueller.dev/api/badges/Borelio/NUNO/status.svg" />
-  </a>
-  <img alt="GitHub" src="https://img.shields.io/github/license/Borelio/NUNO">
+    <a href="https://drone.nussmueller.dev/nussmueller-dev/NUNO">
+      <img src="https://drone.nussmueller.dev/api/badges/nussmueller-dev/NUNO/status.svg" />
+    </a>
+    <img alt="GitHub" src="https://img.shields.io/github/license/Borelio/NUNO">
 </p>
 
 A Web-based multiplayer NUNO game. It's inspired by UNO, but its NUNO.
