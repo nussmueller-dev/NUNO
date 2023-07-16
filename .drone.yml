@@ -3,82 +3,80 @@ type: docker
 name: frontend
 
 steps:
-- name: build
-  image: plugins/docker
-  settings:
-    registry: 
-      from_secret: docker-registry
-    username: 
-      from_secret: docker-username
-    password: 
-      from_secret: docker-password
-    repo: 
-      from_secret: docker-repo-fe
-    tags: latest
-    dry_run: false
-    purge: true
-    context: ./FE
-    dockerfile: ./FE/Dockerfile
+  - name: build
+    image: plugins/docker
+    settings:
+      registry:
+        from_secret: docker-registry
+      username:
+        from_secret: docker-username
+      password:
+        from_secret: docker-password
+      repo:
+        from_secret: docker-repo-fe
+      tags: latest
+      dry_run: false
+      purge: true
+      context: ./FE
+      dockerfile: ./FE/Dockerfile
 
 trigger:
   event:
-  - custom
-  - push
-  - pull_request
+    - custom
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: backend
 
 steps:
-- name: pre-build
-  image: alpine
-  environment:
-    APPSETTINGS:
-      from_secret: appsettings
-  commands:
-    - cd ./BE/NUNO-Backend
-    - echo $${APPSETTINGS} > appsettings.json
+  - name: pre-build
+    image: alpine
+    environment:
+      APPSETTINGS:
+        from_secret: appsettings
+    commands:
+      - cd ./BE/NUNO-Backend
+      - echo $${APPSETTINGS} > appsettings.json
 
-- name: build
-  image: plugins/docker
-  settings:
-    registry: 
-      from_secret: docker-registry
-    username: 
-      from_secret: docker-username
-    password: 
-      from_secret: docker-password
-    repo: 
-      from_secret: docker-repo-be
-    tags: latest
-    dry_run: false
-    purge: true
-    context: ./BE
-    dockerfile: ./BE/Dockerfile
+  - name: build
+    image: plugins/docker
+    settings:
+      registry:
+        from_secret: docker-registry
+      username:
+        from_secret: docker-username
+      password:
+        from_secret: docker-password
+      repo:
+        from_secret: docker-repo-be
+      tags: latest
+      dry_run: false
+      purge: true
+      context: ./BE
+      dockerfile: ./BE/Dockerfile
 
 trigger:
   event:
-  - custom
-  - push
-  - pull_request
+    - custom
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: notify
 
 steps:
-- name: discord notification
-  image: appleboy/drone-discord
-  settings:
-    webhook_id: 
-      from_secret: discord-webhook-id
-    webhook_token: 
-      from_secret: discord-webhook-token
+  - name: discord notification
+    image: appleboy/drone-discord
+    settings:
+      webhook_id:
+        from_secret: discord-webhook-id
+      webhook_token:
+        from_secret: discord-webhook-token
 
 depends_on:
   - frontend
@@ -86,11 +84,11 @@ depends_on:
 
 trigger:
   event:
-  - push
-  - pull_request
+    - custom
+    - push
+    - pull_request
 
 ---
-
 kind: pipeline
 type: docker
 name: after
@@ -102,8 +100,12 @@ steps:
       urls:
         from_secret: webhook
 
+depends_on:
+  - frontend
+  - backend
+
 trigger:
   event:
-  - promote
-  target:
-  - production
+    - custom
+    - push
+    - pull_request
